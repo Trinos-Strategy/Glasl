@@ -18,36 +18,36 @@
   }
 
   body {
-    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #eff6ff 100%);
-    color: #1f2937;
+    background: linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 50%, #1a0a0a 100%);
+    color: #fafafa;
     font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     min-height: 100vh;
+    overflow-x: hidden;
   }
 
-  /* 밝은 테마 스크롤바 */
+  /* 지옥 테마 스크롤바 */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 4px;
+    background: #0a0a0f;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #10B981, #F59E0B, #EF4444);
-    border-radius: 4px;
+    background: linear-gradient(180deg, #34D399, #F59E0B, #DC2626);
+    border-radius: 3px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #059669, #D97706, #DC2626);
+    background: linear-gradient(180deg, #10B981, #D97706, #B91C1C);
   }
 
   /* 선택 영역 */
   ::selection {
-    background-color: rgba(16, 185, 129, 0.2);
-    color: #065f46;
+    background-color: rgba(239, 68, 68, 0.3);
+    color: white;
   }
 }
 
@@ -66,18 +66,26 @@
     -webkit-line-clamp: 2;
   }
 
-  /* 부드러운 그림자 */
-  .shadow-soft {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  /* 3D 효과 유틸리티 */
+  .preserve-3d {
+    transform-style: preserve-3d;
   }
 
-  /* 호버 시 그림자 */
-  .shadow-hover {
-    transition: box-shadow 0.3s ease;
+  .perspective-1000 {
+    perspective: 1000px;
   }
 
-  .shadow-hover:hover {
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  /* 글로우 효과 */
+  .glow-emerald {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
+  }
+
+  .glow-amber {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+  }
+
+  .glow-red {
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
   }
 }
 
@@ -95,11 +103,6 @@
 /* 모바일 터치 최적화 */
 @media (hover: none) {
   button, a, .cursor-pointer {
-    -webkit-tap-highlight-color: rgba(16, 185, 129, 0.1);
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.2);
   }
-}
-
-/* 테이블 호버 효과 */
-table td:hover {
-  background-color: rgba(0, 0, 0, 0.02);
 }
