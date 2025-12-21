@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 
 // ═══════════════════════════════════════════════════════════════
-// DATA - Glasl's 9 Stages (Dante's Inferno Style)
+// DATA - Glasl's 9 Stages (Inverted Cone Style)
 // ═══════════════════════════════════════════════════════════════
 
 const stages = [
@@ -11,8 +11,9 @@ const stages = [
     nameEn: 'Hardening',
     nameKo: '경직화',
     icon: '💬',
-    color: '#34D399',
-    lightColor: '#6EE7B7',
+    color: '#10B981',
+    lightBg: '#ECFDF5',
+    borderColor: '#6EE7B7',
     characteristics: {
       ko: ['입장이 충돌하지만 대화 가능', '아직 협력 의지 존재', '긴장감 있으나 해결 희망'],
       en: ['Positions clash but dialogue possible', 'Still willing to cooperate', 'Tension exists but hope for resolution']
@@ -29,8 +30,9 @@ const stages = [
     nameEn: 'Debate',
     nameKo: '논쟁',
     icon: '⚡',
-    color: '#2DD4BF',
-    lightColor: '#5EEAD4',
+    color: '#059669',
+    lightBg: '#D1FAE5',
+    borderColor: '#34D399',
     characteristics: {
       ko: ['언어적 대립 심화', '논리보다 감정 우세', '승리에 집착 시작'],
       en: ['Verbal confrontation intensifies', 'Emotions over logic', 'Obsession with winning begins']
@@ -47,8 +49,9 @@ const stages = [
     nameEn: 'Actions',
     nameKo: '행동화',
     icon: '🏃',
-    color: '#10B981',
-    lightColor: '#34D399',
+    color: '#047857',
+    lightBg: '#A7F3D0',
+    borderColor: '#10B981',
     characteristics: {
       ko: ['대화 중단', '일방적 행동 시작', '공감 능력 저하'],
       en: ['Dialogue stops', 'Unilateral actions begin', 'Empathy diminishes']
@@ -65,8 +68,9 @@ const stages = [
     nameEn: 'Coalitions',
     nameKo: '연합',
     icon: '👥',
-    color: '#FBBF24',
-    lightColor: '#FCD34D',
+    color: '#F59E0B',
+    lightBg: '#FEF3C7',
+    borderColor: '#FCD34D',
     characteristics: {
       ko: ['상대를 적으로 인식', '동맹 형성 시작', '체면 중시'],
       en: ['Seeing opponent as enemy', 'Alliance forming begins', 'Focus on saving face']
@@ -83,8 +87,9 @@ const stages = [
     nameEn: 'Loss of Face',
     nameKo: '체면 손상',
     icon: '😤',
-    color: '#F59E0B',
-    lightColor: '#FBBF24',
+    color: '#D97706',
+    lightBg: '#FDE68A',
+    borderColor: '#FBBF24',
     characteristics: {
       ko: ['상대 도덕성 공격', '완전한 불신', '공개적 망신'],
       en: ['Attacking moral integrity', 'Complete distrust', 'Public humiliation']
@@ -101,8 +106,9 @@ const stages = [
     nameEn: 'Threats',
     nameKo: '위협',
     icon: '⚠️',
-    color: '#EF4444',
-    lightColor: '#F87171',
+    color: '#B45309',
+    lightBg: '#FCD34D',
+    borderColor: '#F59E0B',
     characteristics: {
       ko: ['위협과 맞위협', '통제력 상실', '요구와 최후통첩'],
       en: ['Threats and counter-threats', 'Loss of control', 'Demands and ultimatums']
@@ -119,8 +125,9 @@ const stages = [
     nameEn: 'Destruction',
     nameKo: '파괴',
     icon: '💥',
-    color: '#DC2626',
-    lightColor: '#EF4444',
+    color: '#EF4444',
+    lightBg: '#FEE2E2',
+    borderColor: '#FCA5A5',
     characteristics: {
       ko: ['상대에게 피해 주기', '소통 완전 단절', '적의 손실이 나의 이득'],
       en: ['Causing harm to opponent', 'No communication', "Enemy's loss = my gain"]
@@ -137,8 +144,9 @@ const stages = [
     nameEn: 'Fragmentation',
     nameKo: '분열',
     icon: '💔',
-    color: '#B91C1C',
-    lightColor: '#DC2626',
+    color: '#DC2626',
+    lightBg: '#FECACA',
+    borderColor: '#F87171',
     characteristics: {
       ko: ['조직적 파괴 시도', '존재 자체 위협', '생존 본능만 남음'],
       en: ['Systematic destruction', 'Existential threat', 'Only survival instinct']
@@ -155,8 +163,9 @@ const stages = [
     nameEn: 'Abyss',
     nameKo: '나락',
     icon: '🕳️',
-    color: '#7F1D1D',
-    lightColor: '#991B1B',
+    color: '#B91C1C',
+    lightBg: '#FCA5A5',
+    borderColor: '#EF4444',
     characteristics: {
       ko: ['자기 파멸 감수', '돌아갈 길 없음', '완전한 파멸 추구'],
       en: ['Self-destruction accepted', 'No way back', 'Total annihilation sought']
@@ -175,23 +184,23 @@ const stages = [
 // ═══════════════════════════════════════════════════════════════
 
 const LanguageToggle = ({ lang, setLang }) => (
-  <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md rounded-full px-4 py-2 border border-white/10">
+  <div className="flex items-center gap-1 bg-gray-100 rounded-full p-1">
     <button
       onClick={() => setLang('en')}
-      className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${
+      className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
         lang === 'en'
-          ? 'bg-gradient-to-r from-amber-500 to-red-500 text-white'
-          : 'text-white/50 hover:text-white/80'
+          ? 'bg-white text-gray-900 shadow-sm'
+          : 'text-gray-500 hover:text-gray-700'
       }`}
     >
       EN
     </button>
     <button
       onClick={() => setLang('ko')}
-      className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${
+      className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
         lang === 'ko'
-          ? 'bg-gradient-to-r from-amber-500 to-red-500 text-white'
-          : 'text-white/50 hover:text-white/80'
+          ? 'bg-white text-gray-900 shadow-sm'
+          : 'text-gray-500 hover:text-gray-700'
       }`}
     >
       한국어
@@ -199,290 +208,220 @@ const LanguageToggle = ({ lang, setLang }) => (
   </div>
 )
 
-// 3D Cone Ring Component
-const ConeRing = ({ stage, index, lang, onClick, isHovered, onHover }) => {
+// Accordion Detail Content
+const AccordionContent = ({ stage, lang }) => (
+  <motion.div
+    initial={{ height: 0, opacity: 0 }}
+    animate={{ height: 'auto', opacity: 1 }}
+    exit={{ height: 0, opacity: 0 }}
+    transition={{ duration: 0.3, ease: 'easeInOut' }}
+    className="overflow-hidden"
+  >
+    <div
+      className="p-4 md:p-5 space-y-4 border-t-2"
+      style={{
+        backgroundColor: `${stage.lightBg}`,
+        borderColor: stage.borderColor
+      }}
+    >
+      {/* Phase Badge */}
+      <div
+        className="inline-block px-3 py-1 rounded-full text-xs font-semibold text-white"
+        style={{ backgroundColor: stage.color }}
+      >
+        {lang === 'ko' ? stage.phase.ko : stage.phase.en}
+      </div>
+
+      {/* Characteristics */}
+      <div>
+        <h4 className="text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
+          <span>📋</span>
+          {lang === 'ko' ? '주요 특징' : 'Key Characteristics'}
+        </h4>
+        <ul className="space-y-1.5">
+          {(lang === 'ko' ? stage.characteristics.ko : stage.characteristics.en).map((item, i) => (
+            <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
+              <span
+                className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
+                style={{ backgroundColor: stage.color }}
+              />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Behaviors */}
+      <div>
+        <h4 className="text-sm font-bold text-gray-700 mb-2 flex items-center gap-2">
+          <span>⚡</span>
+          {lang === 'ko' ? '행동 패턴' : 'Behavioral Patterns'}
+        </h4>
+        <ul className="space-y-1.5">
+          {(lang === 'ko' ? stage.behaviors.ko : stage.behaviors.en).map((item, i) => (
+            <li key={i} className="text-sm text-gray-600 flex items-start gap-2">
+              <span className="text-gray-400">→</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Intervention */}
+      <div
+        className="p-3 rounded-xl"
+        style={{ backgroundColor: `${stage.color}15` }}
+      >
+        <h4
+          className="text-sm font-bold mb-1 flex items-center gap-2"
+          style={{ color: stage.color }}
+        >
+          🛡️ {lang === 'ko' ? '권장 개입' : 'Recommended Intervention'}
+        </h4>
+        <p className="text-sm text-gray-700">
+          {lang === 'ko' ? stage.intervention.ko : stage.intervention.en}
+        </p>
+      </div>
+    </div>
+  </motion.div>
+)
+
+// Stage Card with Accordion
+const StageCard = ({ stage, index, lang, isExpanded, onToggle }) => {
+  const cardRef = useRef(null)
   const totalStages = 9
-  const baseSize = 320
-  const sizeReduction = 28
-  const size = baseSize - (index * sizeReduction)
-  const depth = index * 45
+
+  // Calculate width percentage for inverted cone effect
+  const maxWidth = 100
+  const minWidth = 50
+  const widthPercent = maxWidth - ((index / (totalStages - 1)) * (maxWidth - minWidth))
+
+  // Auto-scroll when expanded
+  useEffect(() => {
+    if (isExpanded && cardRef.current) {
+      setTimeout(() => {
+        cardRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        })
+      }, 100)
+    }
+  }, [isExpanded])
 
   return (
     <motion.div
-      className="absolute left-1/2 cursor-pointer"
-      style={{
-        width: size,
-        height: size,
-        marginLeft: -size / 2,
-        top: depth,
-        zIndex: totalStages - index,
-      }}
-      initial={{ opacity: 0, scale: 0.8, rotateX: -30 }}
-      animate={{
-        opacity: 1,
-        scale: isHovered ? 1.05 : 1,
-        rotateX: 0,
-      }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.1,
-        scale: { duration: 0.3 }
-      }}
-      onMouseEnter={() => onHover(stage.id)}
-      onMouseLeave={() => onHover(null)}
-      onClick={() => onClick(stage)}
+      ref={cardRef}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      className="flex justify-center"
+      style={{ width: '100%' }}
     >
-      {/* Ring shadow */}
       <div
-        className="absolute inset-0 rounded-full blur-xl opacity-50"
-        style={{
-          background: `radial-gradient(circle, ${stage.color}40 0%, transparent 70%)`,
-          transform: 'translateY(10px)'
-        }}
-      />
-
-      {/* Main ring */}
-      <div
-        className="absolute inset-0 rounded-full transition-all duration-300"
-        style={{
-          background: `
-            radial-gradient(ellipse at 30% 30%, ${stage.lightColor} 0%, transparent 50%),
-            radial-gradient(ellipse at 70% 70%, ${stage.color}80 0%, transparent 50%),
-            linear-gradient(180deg, ${stage.lightColor} 0%, ${stage.color} 50%, ${stage.color}90 100%)
-          `,
-          boxShadow: isHovered
-            ? `0 0 40px ${stage.color}80, inset 0 -20px 40px ${stage.color}40, 0 10px 30px rgba(0,0,0,0.5)`
-            : `0 0 20px ${stage.color}40, inset 0 -20px 40px ${stage.color}20, 0 10px 30px rgba(0,0,0,0.3)`,
-          border: `2px solid ${stage.lightColor}60`,
-        }}
+        className="transition-all duration-300"
+        style={{ width: `${widthPercent}%`, minWidth: '280px', maxWidth: '100%' }}
       >
-        {/* Inner dark circle (hole effect) */}
-        <div
-          className="absolute rounded-full"
+        {/* Card Header (Clickable) */}
+        <motion.button
+          onClick={onToggle}
+          whileTap={{ scale: 0.98 }}
+          className="w-full text-left rounded-2xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300"
           style={{
-            top: '15%',
-            left: '15%',
-            right: '15%',
-            bottom: '15%',
-            background: `radial-gradient(circle, #0a0a0f 0%, #1a1a2e 100%)`,
-            boxShadow: `inset 0 5px 20px rgba(0,0,0,0.8), inset 0 0 40px ${stage.color}20`,
+            backgroundColor: stage.lightBg,
+            border: `2px solid ${stage.borderColor}`,
           }}
-        />
+        >
+          <div className="p-4 md:p-5 flex items-center gap-4">
+            {/* Icon & Number */}
+            <div
+              className="w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center text-white font-bold shadow-md flex-shrink-0"
+              style={{ backgroundColor: stage.color }}
+            >
+              <div className="text-center">
+                <span className="text-lg md:text-xl block leading-none">{stage.icon}</span>
+                <span className="text-xs opacity-80">{stage.id}</span>
+              </div>
+            </div>
 
-        {/* Stage content */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center z-10">
-            <motion.span
-              className="text-3xl block mb-1"
-              animate={{
-                scale: isHovered ? [1, 1.2, 1] : 1,
-              }}
-              transition={{ duration: 0.5 }}
-            >
-              {stage.icon}
-            </motion.span>
-            <div
-              className="font-bold text-lg tracking-wide"
-              style={{
-                color: '#fff',
-                textShadow: `0 0 10px ${stage.color}, 0 2px 4px rgba(0,0,0,0.8)`
-              }}
-            >
-              {stage.id}
+            {/* Title */}
+            <div className="flex-1 min-w-0">
+              <h3
+                className="font-bold text-base md:text-lg truncate"
+                style={{ color: stage.color }}
+              >
+                {lang === 'ko' ? stage.nameKo : stage.nameEn}
+              </h3>
+              {lang === 'ko' && (
+                <p className="text-xs text-gray-500 truncate">{stage.nameEn}</p>
+              )}
             </div>
-            <div
-              className="text-xs font-medium mt-0.5 opacity-90"
-              style={{
-                color: '#fff',
-                textShadow: '0 1px 3px rgba(0,0,0,0.8)'
-              }}
+
+            {/* Expand Icon */}
+            <motion.div
+              animate={{ rotate: isExpanded ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: `${stage.color}20` }}
             >
-              {lang === 'ko' ? stage.nameKo : stage.nameEn}
-            </div>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke={stage.color}
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </motion.div>
           </div>
-        </div>
+        </motion.button>
+
+        {/* Accordion Content */}
+        <AnimatePresence>
+          {isExpanded && (
+            <div
+              className="rounded-b-2xl overflow-hidden -mt-2 shadow-md"
+              style={{ border: `2px solid ${stage.borderColor}`, borderTop: 'none' }}
+            >
+              <AccordionContent stage={stage} lang={lang} />
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   )
 }
 
-// Mobile 2D Version
-const MobileView = ({ lang, onStageClick }) => (
-  <div className="lg:hidden py-8 px-4">
-    <div className="relative flex flex-col items-center gap-3">
-      {stages.map((stage, index) => {
-        const width = 100 - (index * 8)
-        return (
-          <motion.div
-            key={stage.id}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="cursor-pointer"
-            style={{ width: `${width}%` }}
-            onClick={() => onStageClick(stage)}
-          >
-            <div
-              className="py-4 px-5 rounded-xl flex items-center gap-4 transition-all duration-300 active:scale-95"
-              style={{
-                background: `linear-gradient(135deg, ${stage.color}20 0%, ${stage.color}40 100%)`,
-                border: `2px solid ${stage.color}60`,
-                boxShadow: `0 4px 15px ${stage.color}30`,
-              }}
-            >
-              <span className="text-2xl">{stage.icon}</span>
-              <div className="flex-1">
-                <div className="flex items-center gap-2">
-                  <span
-                    className="font-bold text-lg"
-                    style={{ color: stage.lightColor }}
-                  >
-                    {stage.id}
-                  </span>
-                  <span className="text-white font-medium">
-                    {lang === 'ko' ? stage.nameKo : stage.nameEn}
-                  </span>
-                </div>
-              </div>
-              <span className="text-white/40">→</span>
-            </div>
-          </motion.div>
-        )
-      })}
-    </div>
-  </div>
-)
+// Phase Divider
+const PhaseDivider = ({ phase, lang }) => {
+  const phaseConfig = {
+    1: { color: '#10B981', label: { ko: '국면 I: 상호 승리 (Win-Win)', en: 'Phase I: Win-Win' } },
+    2: { color: '#F59E0B', label: { ko: '국면 II: 승패 구도 (Win-Lose)', en: 'Phase II: Win-Lose' } },
+    3: { color: '#EF4444', label: { ko: '국면 III: 상호 손실 (Lose-Lose)', en: 'Phase III: Lose-Lose' } },
+  }
 
-// Detail Modal
-const DetailModal = ({ stage, lang, onClose }) => {
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', handleEsc)
-    return () => window.removeEventListener('keydown', handleEsc)
-  }, [onClose])
+  const config = phaseConfig[phase]
 
   return (
-    <>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
-        className="fixed inset-0 bg-black/80 backdrop-blur-md z-50"
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      className="flex items-center gap-3 py-4"
+    >
+      <div
+        className="w-3 h-3 rounded-full shadow-sm"
+        style={{ backgroundColor: config.color }}
       />
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 50 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 50 }}
-        className="fixed left-4 right-4 top-1/2 -translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-lg z-50"
+      <span
+        className="text-sm font-semibold"
+        style={{ color: config.color }}
       >
-        <div
-          className="rounded-3xl overflow-hidden shadow-2xl"
-          style={{
-            background: `linear-gradient(180deg, ${stage.color}20 0%, #0a0a0f 30%)`,
-            border: `2px solid ${stage.color}40`,
-          }}
-        >
-          {/* Header */}
-          <div
-            className="p-6 relative overflow-hidden"
-            style={{
-              background: `linear-gradient(135deg, ${stage.color} 0%, ${stage.lightColor} 100%)`,
-            }}
-          >
-            <div className="absolute inset-0 opacity-30">
-              <div className="absolute inset-0" style={{
-                backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.3) 0%, transparent 50%)'
-              }} />
-            </div>
-
-            <div className="relative flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-2xl bg-black/20 backdrop-blur flex items-center justify-center text-3xl">
-                  {stage.icon}
-                </div>
-                <div>
-                  <div className="text-black/50 text-xs font-medium tracking-wider uppercase">
-                    {lang === 'ko' ? stage.phase.ko : stage.phase.en}
-                  </div>
-                  <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-                    <span className="opacity-60">#{stage.id}</span>
-                    {lang === 'ko' ? stage.nameKo : stage.nameEn}
-                  </h2>
-                  {lang === 'ko' && (
-                    <p className="text-white/70 text-sm">{stage.nameEn}</p>
-                  )}
-                </div>
-              </div>
-              <button
-                onClick={onClose}
-                className="w-10 h-10 rounded-full bg-black/20 hover:bg-black/40 flex items-center justify-center transition-colors text-white"
-              >
-                ✕
-              </button>
-            </div>
-          </div>
-
-          {/* Content */}
-          <div className="p-6 space-y-5 max-h-[50vh] overflow-y-auto">
-            {/* Characteristics */}
-            <div>
-              <h3 className="text-sm font-bold text-white/80 mb-3 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs"
-                  style={{ backgroundColor: `${stage.color}30`, color: stage.lightColor }}>
-                  📋
-                </span>
-                {lang === 'ko' ? '주요 특징' : 'Key Characteristics'}
-              </h3>
-              <ul className="space-y-2">
-                {(lang === 'ko' ? stage.characteristics.ko : stage.characteristics.en).map((item, i) => (
-                  <li key={i} className="text-sm text-white/70 flex items-start gap-2 bg-white/5 p-3 rounded-lg">
-                    <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                      style={{ backgroundColor: stage.color }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Behaviors */}
-            <div>
-              <h3 className="text-sm font-bold text-white/80 mb-3 flex items-center gap-2">
-                <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs"
-                  style={{ backgroundColor: `${stage.color}30`, color: stage.lightColor }}>
-                  ⚡
-                </span>
-                {lang === 'ko' ? '행동 패턴' : 'Behavioral Patterns'}
-              </h3>
-              <ul className="space-y-2">
-                {(lang === 'ko' ? stage.behaviors.ko : stage.behaviors.en).map((item, i) => (
-                  <li key={i} className="text-sm text-white/70 flex items-start gap-2 bg-white/5 p-3 rounded-lg">
-                    <span className="text-white/40">→</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Intervention */}
-            <div
-              className="p-4 rounded-2xl"
-              style={{ backgroundColor: `${stage.color}20`, border: `1px solid ${stage.color}40` }}
-            >
-              <h3 className="text-sm font-bold mb-1 flex items-center gap-2"
-                style={{ color: stage.lightColor }}>
-                🛡️ {lang === 'ko' ? '권장 개입' : 'Recommended Intervention'}
-              </h3>
-              <p className="text-sm text-white/80">
-                {lang === 'ko' ? stage.intervention.ko : stage.intervention.en}
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </>
+        {lang === 'ko' ? config.label.ko : config.label.en}
+      </span>
+      <div
+        className="flex-1 h-px"
+        style={{ backgroundColor: `${config.color}30` }}
+      />
+    </motion.div>
   )
 }
 
@@ -492,224 +431,145 @@ const DetailModal = ({ stage, lang, onClose }) => {
 
 export default function App() {
   const [lang, setLang] = useState('ko')
-  const [selectedStage, setSelectedStage] = useState(null)
-  const [hoveredStage, setHoveredStage] = useState(null)
-  const [rotation, setRotation] = useState({ x: 15, y: 0 })
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const containerRef = useRef(null)
+  const [expandedStage, setExpandedStage] = useState(null)
 
-  // Mouse movement for 3D rotation
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (window.innerWidth < 1024) return
+  const handleToggle = (stageId) => {
+    setExpandedStage(expandedStage === stageId ? null : stageId)
+  }
 
-      const x = (e.clientX / window.innerWidth - 0.5) * 20
-      const y = (e.clientY / window.innerHeight - 0.5) * 10
-      setRotation({ x: 15 + y, y: x })
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
-  // Scroll progress
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      setScrollProgress(Math.min(scrollY / maxScroll, 1))
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  // Group stages by phase
+  const phase1 = stages.filter(s => s.id <= 3)
+  const phase2 = stages.filter(s => s.id >= 4 && s.id <= 6)
+  const phase3 = stages.filter(s => s.id >= 7)
 
   return (
-    <div
-      className="min-h-[200vh] relative overflow-hidden"
-      style={{
-        background: `
-          radial-gradient(ellipse at 50% 0%, #1a1a2e 0%, transparent 50%),
-          radial-gradient(ellipse at 50% 100%, #7f1d1d20 0%, transparent 50%),
-          linear-gradient(180deg, #0a0a0f 0%, #0f0f1a 50%, #1a0a0a 100%)
-        `
-      }}
-    >
-      {/* Animated background particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: -10,
-              opacity: 0
-            }}
-            animate={{
-              y: window.innerHeight + 10,
-              opacity: [0, 0.5, 0]
-            }}
-            transition={{
-              duration: 10 + Math.random() * 10,
-              repeat: Infinity,
-              delay: Math.random() * 10,
-              ease: 'linear'
-            }}
-          />
-        ))}
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center flex-1"
-          >
-            <h1 className="text-xl md:text-2xl font-bold">
-              <span className="bg-gradient-to-r from-emerald-400 via-amber-400 to-red-500 bg-clip-text text-transparent">
-                {lang === 'ko' ? 'Glasl 갈등 격화 9단계' : "Glasl's 9 Stages"}
-              </span>
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex-1">
+            <h1 className="text-lg md:text-xl font-bold text-gray-900">
+              {lang === 'ko' ? 'Glasl 갈등 격화 9단계' : "Glasl's 9 Stages"}
             </h1>
-            <p className="text-white/40 text-xs mt-1">
-              {lang === 'ko' ? '단테의 지옥편처럼, 갈등은 아래로 내려갈수록 깊어집니다' : "Like Dante's Inferno, conflict deepens as it descends"}
-            </p>
-          </motion.div>
+            <p className="text-xs text-gray-500">Friedrich Glasl, 1980</p>
+          </div>
           <LanguageToggle lang={lang} setLang={setLang} />
         </div>
       </header>
 
-      {/* Progress indicator */}
-      <div className="fixed left-4 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col gap-2">
-        {stages.map((stage, i) => (
-          <motion.div
-            key={stage.id}
-            className="w-2 h-2 rounded-full cursor-pointer transition-all duration-300"
-            style={{
-              backgroundColor: hoveredStage === stage.id || scrollProgress > (i / 9)
-                ? stage.color
-                : 'rgba(255,255,255,0.2)',
-              boxShadow: hoveredStage === stage.id ? `0 0 10px ${stage.color}` : 'none'
-            }}
-            whileHover={{ scale: 1.5 }}
-            onClick={() => setSelectedStage(stage)}
-          />
-        ))}
-      </div>
-
-      {/* Main 3D Cone - Desktop */}
-      <div
-        ref={containerRef}
-        className="hidden lg:block fixed inset-0 flex items-center justify-center"
-        style={{
-          perspective: '1200px',
-          perspectiveOrigin: '50% 40%',
-        }}
-      >
+      {/* Main Content */}
+      <main className="max-w-2xl mx-auto px-4 py-6">
+        {/* Intro */}
         <motion.div
-          className="relative"
-          style={{
-            transformStyle: 'preserve-3d',
-            transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) translateY(${-scrollProgress * 100}px)`,
-            transition: 'transform 0.1s ease-out',
-          }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-6"
         >
-          {/* Cone container */}
-          <div
-            className="relative"
-            style={{
-              width: 400,
-              height: 500,
-            }}
-          >
-            {stages.map((stage, index) => (
-              <ConeRing
-                key={stage.id}
-                stage={stage}
-                index={index}
-                lang={lang}
-                onClick={setSelectedStage}
-                isHovered={hoveredStage === stage.id}
-                onHover={setHoveredStage}
-              />
-            ))}
+          <p className="text-gray-600 text-sm md:text-base">
+            {lang === 'ko'
+              ? '각 단계를 탭하여 상세 정보를 확인하세요'
+              : 'Tap each stage for detailed information'}
+          </p>
+          <div className="flex items-center justify-center gap-2 mt-3">
+            <span className="text-xs text-emerald-600 font-medium">
+              {lang === 'ko' ? '협력' : 'Cooperation'}
+            </span>
+            <div className="w-24 h-1.5 rounded-full bg-gradient-to-r from-emerald-400 via-amber-400 to-red-500" />
+            <span className="text-xs text-red-600 font-medium">
+              {lang === 'ko' ? '파괴' : 'Destruction'}
+            </span>
+          </div>
+        </motion.div>
 
-            {/* Central abyss effect */}
-            <div
-              className="absolute left-1/2 -translate-x-1/2 rounded-full"
-              style={{
-                width: 60,
-                height: 60,
-                top: 420,
-                background: 'radial-gradient(circle, #000 0%, #1a0a0a 100%)',
-                boxShadow: '0 0 50px #7f1d1d, inset 0 0 30px rgba(0,0,0,0.8)',
-              }}
+        {/* Phase I */}
+        <PhaseDivider phase={1} lang={lang} />
+        <div className="space-y-3 mb-6">
+          {phase1.map((stage, index) => (
+            <StageCard
+              key={stage.id}
+              stage={stage}
+              index={index}
+              lang={lang}
+              isExpanded={expandedStage === stage.id}
+              onToggle={() => handleToggle(stage.id)}
             />
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Mobile View */}
-      <div className="lg:hidden pt-24">
-        <MobileView lang={lang} onStageClick={setSelectedStage} />
-      </div>
-
-      {/* Scroll hint - Desktop */}
-      <motion.div
-        className="fixed bottom-8 left-1/2 -translate-x-1/2 text-white/40 text-sm hidden lg:flex flex-col items-center gap-2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <span>{lang === 'ko' ? '스크롤하여 탐색' : 'Scroll to explore'}</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5 }}
-        >
-          ↓
-        </motion.div>
-      </motion.div>
-
-      {/* Legend */}
-      <div className="fixed bottom-8 right-8 hidden lg:block">
-        <div className="bg-black/40 backdrop-blur-md rounded-xl p-4 border border-white/10">
-          <div className="text-xs text-white/60 mb-2">
-            {lang === 'ko' ? '국면' : 'Phases'}
-          </div>
-          <div className="space-y-1.5">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-emerald-500" />
-              <span className="text-xs text-white/70">I: {lang === 'ko' ? '상호 승리' : 'Win-Win'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-amber-500" />
-              <span className="text-xs text-white/70">II: {lang === 'ko' ? '승패 구도' : 'Win-Lose'}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-600" />
-              <span className="text-xs text-white/70">III: {lang === 'ko' ? '상호 손실' : 'Lose-Lose'}</span>
-            </div>
-          </div>
+          ))}
         </div>
-      </div>
+
+        {/* Phase II */}
+        <PhaseDivider phase={2} lang={lang} />
+        <div className="space-y-3 mb-6">
+          {phase2.map((stage, index) => (
+            <StageCard
+              key={stage.id}
+              stage={stage}
+              index={index + 3}
+              lang={lang}
+              isExpanded={expandedStage === stage.id}
+              onToggle={() => handleToggle(stage.id)}
+            />
+          ))}
+        </div>
+
+        {/* Phase III */}
+        <PhaseDivider phase={3} lang={lang} />
+        <div className="space-y-3 mb-6">
+          {phase3.map((stage, index) => (
+            <StageCard
+              key={stage.id}
+              stage={stage}
+              index={index + 6}
+              lang={lang}
+              isExpanded={expandedStage === stage.id}
+              onToggle={() => handleToggle(stage.id)}
+            />
+          ))}
+        </div>
+
+        {/* Legend */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-8 p-4 bg-gray-50 rounded-2xl border border-gray-200"
+        >
+          <h3 className="font-bold text-gray-700 mb-3 text-sm">
+            📊 {lang === 'ko' ? '단계별 색상 의미' : 'Color Legend'}
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-gradient-to-r from-emerald-400 to-emerald-600" />
+              <span className="text-xs text-gray-600">
+                {lang === 'ko' ? '1-3: 대화 가능' : '1-3: Dialogue possible'}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-gradient-to-r from-amber-400 to-amber-600" />
+              <span className="text-xs text-gray-600">
+                {lang === 'ko' ? '4-6: 조정 필요' : '4-6: Mediation needed'}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-gradient-to-r from-red-400 to-red-600" />
+              <span className="text-xs text-gray-600">
+                {lang === 'ko' ? '7-9: 개입 필수' : '7-9: Intervention required'}
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      </main>
 
       {/* Footer */}
-      <footer className="fixed bottom-4 left-1/2 -translate-x-1/2 text-center lg:hidden">
-        <p className="text-white/30 text-xs">Friedrich Glasl, 1980</p>
+      <footer className="py-8 border-t border-gray-200 bg-gray-50 mt-8">
+        <div className="max-w-2xl mx-auto px-4 text-center">
+          <p className="text-gray-500 text-sm">
+            Glasl's Model of Conflict Escalation
+          </p>
+          <p className="text-gray-400 text-xs mt-1">
+            Friedrich Glasl, <em>Konfliktmanagement</em>, 1980
+          </p>
+        </div>
       </footer>
-
-      {/* Detail Modal */}
-      <AnimatePresence>
-        {selectedStage && (
-          <DetailModal
-            stage={selectedStage}
-            lang={lang}
-            onClose={() => setSelectedStage(null)}
-          />
-        )}
-      </AnimatePresence>
     </div>
   )
 }
