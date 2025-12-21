@@ -3,27 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="글라슬(Glasl) 갈등 격화 9단계 모델 - 인터랙티브 시각화" />
-    <meta name="theme-color" content="#0A0A0A" />
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Glasl 갈등 격화 9단계 모델 - 2025 최신 UX 트렌드 기반 인터랙티브 엔터프라이즈 대시보드" />
+    <meta name="theme-color" content="#2563EB" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Apple-specific meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Glasl Model" />
+
     <!-- Open Graph -->
     <meta property="og:title" content="Glasl's Conflict Escalation Model" />
-    <meta property="og:description" content="갈등이 어떻게 단계적으로 격화되는지 이해하세요." />
+    <meta property="og:description" content="갈등이 어떻게 단계적으로 격화되는지 이해하세요. Microsoft Fluent Design + Apple Liquid Glass 기반 인터랙티브 대시보드." />
     <meta property="og:type" content="website" />
-    
-    <!-- Pretendard 폰트 -->
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Glasl's Conflict Escalation Model" />
+    <meta name="twitter:description" content="9단계 갈등 격화 모델 - 인터랙티브 시각화 대시보드" />
+
+    <!-- Pretendard (Korean-optimized SF Pro equivalent) -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
 
-    <!-- Greek/Roman Classical Fonts -->
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <title>Glasl's Conflict Escalation | 갈등 격화 9단계</title>
+
+    <title>Glasl's Conflict Escalation Model | 갈등 격화 9단계</title>
+
+    <!-- Inline critical CSS for faster paint -->
+    <style>
+      :root {
+        --accent-blue: #2563EB;
+      }
+      body {
+        margin: 0;
+        font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
+        background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+        min-height: 100vh;
+      }
+      #root {
+        min-height: 100vh;
+      }
+      /* Prevent FOUC */
+      .loading-overlay {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.3s ease;
+      }
+      .loading-overlay.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .loading-spinner {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(90deg, #10B981 0%, #F59E0B 50%, #EF4444 100%);
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+
     <div id="root"></div>
+
     <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Hide loading overlay after React mounts -->
+    <script>
+      window.addEventListener('load', () => {
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+          setTimeout(() => {
+            overlay.classList.add('hidden');
+            setTimeout(() => overlay.remove(), 300);
+          }, 100);
+        }
+      });
+    </script>
   </body>
 </html>
