@@ -36,12 +36,24 @@ const stages = [
     successRate: 92,
     avgDuration: 2,
     characteristics: {
-      ko: ['입장이 충돌하지만 대화 가능', '아직 협력 의지 존재', '긴장감 있으나 해결 희망'],
-      en: ['Positions clash but dialogue possible', 'Still willing to cooperate', 'Tension exists but hope for resolution']
+      ko: ['간헐적 긴장', '의견 차이 표면화', '상호 존중 유지'],
+      en: ['Intermittent tension', 'Differences surfacing', 'Mutual respect maintained']
     },
     behaviors: {
       ko: ['입장 고수', '상대 의견 경청 감소', '사실 왜곡 시작'],
       en: ['Holding positions', 'Less listening to others', 'Facts start to distort']
+    },
+    warningSignals: {
+      ko: ['회의 분위기 냉각', '비언어적 긴장'],
+      en: ['Meeting atmosphere cooling', 'Non-verbal tension']
+    },
+    resolutionStrategy: {
+      ko: ['개방적 대화', '상호 이해 강화', '공동 목표 확인'],
+      en: ['Open dialogue', 'Strengthen mutual understanding', 'Confirm shared goals']
+    },
+    example: {
+      ko: '프로젝트 방향성에 대한 초기 의견 불일치',
+      en: 'Initial disagreement on project direction'
     },
     intervention: { ko: '자체 해결 가능', en: 'Self-resolution possible' },
     interventionType: 'self',
@@ -65,12 +77,24 @@ const stages = [
     successRate: 85,
     avgDuration: 3,
     characteristics: {
-      ko: ['언어적 대립 심화', '논리보다 감정 우세', '승리에 집착 시작'],
-      en: ['Verbal confrontation intensifies', 'Emotions over logic', 'Obsession with winning begins']
+      ko: ['분극화된 논쟁', '흑백논리 사고', '감정적 거리감 증가'],
+      en: ['Polarized debate', 'Black-and-white thinking', 'Increasing emotional distance']
     },
     behaviors: {
       ko: ['전술적 조작', '양극화 심화', '상대 폄하'],
       en: ['Tactical manipulation', 'Polarization deepens', 'Belittling opponent']
+    },
+    warningSignals: {
+      ko: ['상대방 입장 경청 거부', '반박 중심 대화'],
+      en: ['Refusing to listen to other side', 'Rebuttal-focused dialogue']
+    },
+    resolutionStrategy: {
+      ko: ['중재자 개입', '구조화된 토론', '공동 이익 발굴'],
+      en: ['Mediator intervention', 'Structured discussion', 'Discover shared interests']
+    },
+    example: {
+      ko: '팀 내 업무 방식에 대한 갈등',
+      en: 'Conflict over work methods within team'
     },
     intervention: { ko: '비공식 제3자 도움', en: 'Informal third-party help' },
     interventionType: 'self',
@@ -94,12 +118,24 @@ const stages = [
     successRate: 78,
     avgDuration: 4,
     characteristics: {
-      ko: ['대화 중단', '일방적 행동 시작', '공감 능력 저하'],
-      en: ['Dialogue stops', 'Unilateral actions begin', 'Empathy diminishes']
+      ko: ['대화 중단', '비언어적 압박', '공감 상실'],
+      en: ['Dialogue stops', 'Non-verbal pressure', 'Loss of empathy']
     },
     behaviors: {
       ko: ['기정사실화 전술', '말보다 행동', '압박 증가'],
       en: ['Fait accompli tactics', 'Actions over words', 'Increasing pressure']
+    },
+    warningSignals: {
+      ko: ['의사소통 두절', '일방적 행동'],
+      en: ['Communication breakdown', 'Unilateral actions']
+    },
+    resolutionStrategy: {
+      ko: ['전문 조정인 필요', '공식적 대화 채널 확립'],
+      en: ['Professional mediator needed', 'Establish formal communication channels']
+    },
+    example: {
+      ko: '상호 무시하며 독자적 의사결정',
+      en: 'Ignoring each other while making independent decisions'
     },
     intervention: { ko: '훈련된 조정인 필요', en: 'Trained mediator needed' },
     interventionType: 'mediator',
@@ -123,12 +159,24 @@ const stages = [
     successRate: 65,
     avgDuration: 6,
     characteristics: {
-      ko: ['상대를 적으로 인식', '동맹 형성 시작', '체면 중시'],
-      en: ['Seeing opponent as enemy', 'Alliance forming begins', 'Focus on saving face']
+      ko: ['지지자 모집', '편 갈라치기', '승패 구도 형성'],
+      en: ['Recruiting supporters', 'Taking sides', 'Win-lose dynamic forming']
     },
     behaviors: {
       ko: ['인신공격 시작', '흑백 논리', '지지자 모집'],
       en: ['Personal attacks begin', 'Black-white thinking', 'Recruiting supporters']
+    },
+    warningSignals: {
+      ko: ['파벌 형성', '상대방 비난'],
+      en: ['Faction forming', 'Blaming opponents']
+    },
+    resolutionStrategy: {
+      ko: ['중립적 중재', '이해관계자 분석', '공동 근거 마련'],
+      en: ['Neutral mediation', 'Stakeholder analysis', 'Establish common ground']
+    },
+    example: {
+      ko: '조직 내 파벌 싸움',
+      en: 'Factional fighting within organization'
     },
     intervention: { ko: '전문 조정인 필요', en: 'Professional mediator needed' },
     interventionType: 'mediator',
@@ -152,12 +200,24 @@ const stages = [
     successRate: 52,
     avgDuration: 8,
     characteristics: {
-      ko: ['상대 도덕성 공격', '완전한 불신', '공개적 망신'],
-      en: ['Attacking moral integrity', 'Complete distrust', 'Public humiliation']
+      ko: ['인신공격', '신뢰 완전 상실', '공개적 모욕'],
+      en: ['Personal attacks', 'Complete loss of trust', 'Public humiliation']
     },
     behaviors: {
       ko: ['조작과 방해', '비열한 수단', '상대 악마화'],
       en: ['Manipulation & sabotage', 'Foul play', 'Demonizing opponent']
+    },
+    warningSignals: {
+      ko: ['인격 공격', '평판 훼손'],
+      en: ['Character attacks', 'Reputation damage']
+    },
+    resolutionStrategy: {
+      ko: ['전문가 개입 필수', '관계 복원 프로그램'],
+      en: ['Expert intervention required', 'Relationship restoration program']
+    },
+    example: {
+      ko: '공개적인 비난과 조롱',
+      en: 'Public criticism and ridicule'
     },
     intervention: { ko: '전문 조정 필수', en: 'Professional mediation essential' },
     interventionType: 'mediator',
@@ -181,12 +241,24 @@ const stages = [
     successRate: 38,
     avgDuration: 10,
     characteristics: {
-      ko: ['위협과 맞위협', '통제력 상실', '요구와 최후통첩'],
-      en: ['Threats and counter-threats', 'Loss of control', 'Demands and ultimatums']
+      ko: ['제재 위협', '최후통첩', '통제 추구'],
+      en: ['Threatening sanctions', 'Ultimatums', 'Seeking control']
     },
     behaviors: {
       ko: ['제재 위협', '위협 악순환', '합리성 상실'],
       en: ['Threatening sanctions', 'Threat spiral', 'Loss of rationality']
+    },
+    warningSignals: {
+      ko: ['구체적 제재 언급', '압박 증가'],
+      en: ['Specific sanctions mentioned', 'Increasing pressure']
+    },
+    resolutionStrategy: {
+      ko: ['긴급 개입', '공식 중재', '법적 개입 고려'],
+      en: ['Emergency intervention', 'Formal mediation', 'Consider legal intervention']
+    },
+    example: {
+      ko: '법적 조치 위협',
+      en: 'Threatening legal action'
     },
     intervention: { ko: '전문 조정 필수', en: 'Professional mediation essential' },
     interventionType: 'intervention',
@@ -210,12 +282,24 @@ const stages = [
     successRate: 25,
     avgDuration: 14,
     characteristics: {
-      ko: ['상대에게 피해 주기', '소통 완전 단절', '적의 손실이 나의 이득'],
-      en: ['Causing harm to opponent', 'No communication', "Enemy's loss = my gain"]
+      ko: ['제한적 파괴적 행동', '상대 피해 수용'],
+      en: ['Limited destructive behavior', 'Accepting opponent harm']
     },
     behaviors: {
       ko: ['위협 실행', '반응 기대 않음', '피해 유발 목표'],
       en: ['Executing threats', 'No reaction expected', 'Damage is the goal']
+    },
+    warningSignals: {
+      ko: ['물리적 피해 발생'],
+      en: ['Physical damage occurring']
+    },
+    resolutionStrategy: {
+      ko: ['긴급 개입', '분리 조치', '권위 개입'],
+      en: ['Emergency intervention', 'Separation measures', 'Authority intervention']
+    },
+    example: {
+      ko: '자산 훼손, 업무 방해',
+      en: 'Asset damage, work obstruction'
     },
     intervention: { ko: '공식적 개입 필요', en: 'Formal intervention needed' },
     interventionType: 'intervention',
@@ -239,12 +323,24 @@ const stages = [
     successRate: 15,
     avgDuration: 18,
     characteristics: {
-      ko: ['조직적 파괴 시도', '존재 자체 위협', '생존 본능만 남음'],
-      en: ['Systematic destruction', 'Existential threat', 'Only survival instinct']
+      ko: ['상대 조직 파괴 추구', '통제력 무력화'],
+      en: ['Seeking to destroy opponent organization', 'Neutralizing control']
     },
     behaviors: {
       ko: ['물리적/심리적 공격', '핵심 기반 파괴', '직접적 공격'],
       en: ['Physical/psychological attacks', 'Destroying core foundation', 'Direct attacks']
+    },
+    warningSignals: {
+      ko: ['시스템 전체 공격'],
+      en: ['Attack on entire system']
+    },
+    resolutionStrategy: {
+      ko: ['법적 개입', '강제적 분리', '외부 관리'],
+      en: ['Legal intervention', 'Forced separation', 'External management']
+    },
+    example: {
+      ko: '조직 와해 시도',
+      en: 'Attempting to dismantle organization'
     },
     intervention: { ko: '강력한 외부 개입', en: 'Strong external intervention' },
     interventionType: 'intervention',
@@ -268,12 +364,24 @@ const stages = [
     successRate: 5,
     avgDuration: 24,
     characteristics: {
-      ko: ['자기 파멸 감수', '돌아갈 길 없음', '완전한 파멸 추구'],
-      en: ['Self-destruction accepted', 'No way back', 'Total annihilation sought']
+      ko: ['상호 파멸', '자해 포함 모든 수단 동원'],
+      en: ['Mutual destruction', 'Using all means including self-harm']
     },
     behaviors: {
       ko: ['함께 파멸', '모든 것 희생', '궁극적 파괴'],
       en: ['Mutual destruction', 'Sacrificing everything', 'Ultimate destruction']
+    },
+    warningSignals: {
+      ko: ['회복 불가능한 피해'],
+      en: ['Irreparable damage']
+    },
+    resolutionStrategy: {
+      ko: ['강제적 종결', '법적 해결', '장기 치료'],
+      en: ['Forced termination', 'Legal resolution', 'Long-term treatment']
+    },
+    example: {
+      ko: '모두를 파멸시키는 극단적 행동',
+      en: 'Extreme actions destroying everyone'
     },
     intervention: { ko: '강력한 외부 개입', en: 'Strong external intervention' },
     interventionType: 'intervention',
@@ -753,6 +861,23 @@ const DetailModal = ({ stage, lang, onClose }) => (
               )),
             },
             {
+              icon: '⚠️',
+              titleKo: '경고 신호',
+              titleEn: 'Warning Signals',
+              contentKo: stage.warningSignals?.ko.map((w, i) => (
+                <div key={i} className="flex items-start gap-2 mb-2">
+                  <span className="text-amber-500">!</span>
+                  <span>{w}</span>
+                </div>
+              )),
+              contentEn: stage.warningSignals?.en.map((w, i) => (
+                <div key={i} className="flex items-start gap-2 mb-2">
+                  <span className="text-amber-500">!</span>
+                  <span>{w}</span>
+                </div>
+              )),
+            },
+            {
               icon: '⚡',
               titleKo: '행동 패턴',
               titleEn: 'Behavioral Patterns',
@@ -769,8 +894,43 @@ const DetailModal = ({ stage, lang, onClose }) => (
                 </div>
               )),
             },
+            {
+              icon: '💡',
+              titleKo: '해결 전략',
+              titleEn: 'Resolution Strategy',
+              contentKo: stage.resolutionStrategy?.ko.map((r, i) => (
+                <div key={i} className="flex items-start gap-2 mb-2">
+                  <span className="text-emerald-500">✓</span>
+                  <span>{r}</span>
+                </div>
+              )),
+              contentEn: stage.resolutionStrategy?.en.map((r, i) => (
+                <div key={i} className="flex items-start gap-2 mb-2">
+                  <span className="text-emerald-500">✓</span>
+                  <span>{r}</span>
+                </div>
+              )),
+            },
           ]}
         />
+
+        {/* Example Case */}
+        {stage.example && (
+          <div
+            className="p-4 rounded-2xl border-l-4"
+            style={{ backgroundColor: '#F3F4F6', borderColor: stage.color }}
+          >
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-lg">📝</span>
+              <h4 className="font-semibold text-gray-800">
+                {lang === 'ko' ? '대표 예시' : 'Example Case'}
+              </h4>
+            </div>
+            <p className="text-gray-700 italic">
+              "{lang === 'ko' ? stage.example.ko : stage.example.en}"
+            </p>
+          </div>
+        )}
 
         {/* Intervention */}
         <div
@@ -828,7 +988,7 @@ const researchPapers = [
     titleEn: 'Nine-Stage Model of Conflict Escalation',
     publisher: 'University of Houston Law Center',
     citation: 'Cited by 37',
-    url: 'https://scholarship.law.uh.edu/faculty_scholarship/37/',
+    url: 'https://www.law.uh.edu/blakely/advocacy-survey/Conflict%20Escalation%20Glasl.pdf',
     summaryKo: 'Glasl의 원본 이론으로, 갈등이 협력에서 파괴로 진행되는 9단계를 체계적으로 분석한 기초 연구',
     summaryEn: 'Glasl\'s original theory systematically analyzing the 9 stages of conflict progression from cooperation to destruction',
     relatedStages: '전 단계 적용 가능',
@@ -842,7 +1002,7 @@ const researchPapers = [
     titleKo: '갈등 격화 설문지 개발 및 검증 연구',
     titleEn: 'Are you threatening me? Development and validation of the Conflict Escalation Questionnaire',
     publisher: 'Frontiers in Psychology',
-    url: 'https://www.frontiersin.org/articles/10.3389/fpsyg.2023.1125687/full',
+    url: 'https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2023.1164990/full',
     summaryKo: 'Glasl 모델 기반 갈등 격화 측정 도구의 과학적 검증 및 실증 연구',
     summaryEn: 'Scientific validation and empirical study of conflict escalation measurement tools based on the Glasl model',
     relatedStages: 'Stage 1-6 관련',
@@ -857,7 +1017,7 @@ const researchPapers = [
     titleKo: '갈등 완화: 이론과 실제',
     titleEn: 'De-escalating Conflicts',
     publisher: 'Rowman & Littlefield Publishers',
-    url: 'https://rowman.com/ISBN/9780847687732/Constructive-Conflicts-From-Escalation-to-Resolution',
+    url: 'https://www.beyondintractability.org/bksum/kriesberg-constructive',
     summaryKo: '갈등 완화의 조건, 과정, 전략에 대한 종합적 이론서',
     summaryEn: 'Comprehensive theoretical work on conditions, processes, and strategies of conflict de-escalation',
     relatedStages: '전 단계 적용 가능',
@@ -871,7 +1031,7 @@ const researchPapers = [
     titleKo: '효과적인 갈등 관리를 위한 10가지 완화 전략',
     titleEn: 'Top 10 De-escalation Tips: Effective Conflict Management Strategies',
     publisher: 'CPI',
-    url: 'https://www.crisisprevention.com/en-CA/Blog/Top-10-De-Escalation-Tips',
+    url: 'https://www.crisisprevention.com/blog/top-10-de-escalation-tips',
     summaryKo: '현장 적용 가능한 실용적 갈등 완화 기법과 커뮤니케이션 전략',
     summaryEn: 'Practical conflict de-escalation techniques and communication strategies applicable in the field',
     relatedStages: 'Stage 1-5 관련',
@@ -900,7 +1060,7 @@ const researchPapers = [
     titleKo: '공공갈등 조정의 성공조건: 제도적 담론분석',
     titleEn: 'Success Conditions for Public Conflict Mediation: Institutional Discourse Analysis',
     publisher: '한국지방자치학회보',
-    url: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci',
+    url: 'https://www.kci.go.kr/',
     summaryKo: '제도적 관점에서 본 공공갈등 조정 성공의 구조적 조건 연구',
     summaryEn: 'Study on structural conditions for successful public conflict mediation from an institutional perspective',
     relatedStages: 'Stage 4-6 관련',
@@ -929,7 +1089,7 @@ const researchPapers = [
     titleKo: '소셜 미디어를 통한 갈등 격화와 완화',
     titleEn: 'Social Media for Conflict Escalation and De-escalation',
     publisher: 'International Journal of Social Sciences',
-    url: 'https://ijss.org/',
+    url: 'https://www.toolshero.com/communication-methods/stages-of-conflict-escalation/',
     summaryKo: '디지털 플랫폼이 갈등 역학에 미치는 양면적 영향 분석',
     summaryEn: 'Analysis of the dual impact of digital platforms on conflict dynamics',
     relatedStages: 'Stage 2-5 관련',
