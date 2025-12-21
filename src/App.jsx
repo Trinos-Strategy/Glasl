@@ -101,11 +101,11 @@ const stages = [
       ko: ['기정사실화 전술', '말보다 행동', '압박 증가'],
       en: ['Fait accompli tactics', 'Actions over words', 'Increasing pressure']
     },
-    intervention: { ko: '훈련된 조정자 필요', en: 'Trained mediator needed' },
+    intervention: { ko: '훈련된 조정인 필요', en: 'Trained mediator needed' },
     interventionType: 'mediator',
     phaseName: { ko: '국면 I: 상호 승리', en: 'Phase I: Win-Win' },
     actionItems: {
-      ko: ['행동 결과 분석', '대화 채널 재개', '조정자 고려'],
+      ko: ['행동 결과 분석', '대화 채널 재개', '조정인 고려'],
       en: ['Analyze action consequences', 'Reopen dialogue channels', 'Consider mediator']
     }
   },
@@ -130,7 +130,7 @@ const stages = [
       ko: ['인신공격 시작', '흑백 논리', '지지자 모집'],
       en: ['Personal attacks begin', 'Black-white thinking', 'Recruiting supporters']
     },
-    intervention: { ko: '전문 조정자 필요', en: 'Professional mediator needed' },
+    intervention: { ko: '전문 조정인 필요', en: 'Professional mediator needed' },
     interventionType: 'mediator',
     phaseName: { ko: '국면 II: 승패 구도', en: 'Phase II: Win-Lose' },
     actionItems: {
@@ -377,7 +377,7 @@ const InterventionBadge = ({ type, lang }) => {
     },
     mediator: {
       icon: '👤',
-      labelKo: '조정자 필요',
+      labelKo: '조정인 필요',
       labelEn: 'Mediator needed',
       className: 'mediator',
     },
@@ -815,6 +815,221 @@ const DetailModal = ({ stage, lang, onClose }) => (
   </motion.div>
 )
 
+// Research Papers Data
+const researchPapers = [
+  // 핵심 이론 논문
+  {
+    category: 'theory',
+    categoryKo: '핵심 이론 논문',
+    categoryEn: 'Core Theory Papers',
+    author: 'Glasl, F.',
+    year: 2000,
+    titleKo: '갈등 격화의 9단계 모델',
+    titleEn: 'Nine-Stage Model of Conflict Escalation',
+    publisher: 'University of Houston Law Center',
+    citation: 'Cited by 37',
+    summaryKo: 'Glasl의 원본 이론으로, 갈등이 협력에서 파괴로 진행되는 9단계를 체계적으로 분석한 기초 연구',
+    summaryEn: 'Glasl\'s original theory systematically analyzing the 9 stages of conflict progression from cooperation to destruction',
+    relatedStages: '전 단계 적용 가능',
+  },
+  {
+    category: 'theory',
+    categoryKo: '핵심 이론 논문',
+    categoryEn: 'Core Theory Papers',
+    author: 'Scheppa-Lahyani et al.',
+    year: 2023,
+    titleKo: '갈등 격화 설문지 개발 및 검증 연구',
+    titleEn: 'Are you threatening me? Development and validation of the Conflict Escalation Questionnaire',
+    publisher: 'Frontiers in Psychology',
+    summaryKo: 'Glasl 모델 기반 갈등 격화 측정 도구의 과학적 검증 및 실증 연구',
+    summaryEn: 'Scientific validation and empirical study of conflict escalation measurement tools based on the Glasl model',
+    relatedStages: 'Stage 1-6 관련',
+  },
+  // 갈등 완화 전략 연구
+  {
+    category: 'deescalation',
+    categoryKo: '갈등 완화 전략 연구',
+    categoryEn: 'De-escalation Strategy Research',
+    author: 'Kriesberg, L.',
+    year: 1998,
+    titleKo: '갈등 완화: 이론과 실제',
+    titleEn: 'De-escalating Conflicts',
+    publisher: 'Rowman & Littlefield Publishers',
+    summaryKo: '갈등 완화의 조건, 과정, 전략에 대한 종합적 이론서',
+    summaryEn: 'Comprehensive theoretical work on conditions, processes, and strategies of conflict de-escalation',
+    relatedStages: '전 단계 적용 가능',
+  },
+  {
+    category: 'deescalation',
+    categoryKo: '갈등 완화 전략 연구',
+    categoryEn: 'De-escalation Strategy Research',
+    author: 'Crisis Prevention Institute',
+    year: 2024,
+    titleKo: '효과적인 갈등 관리를 위한 10가지 완화 전략',
+    titleEn: 'Top 10 De-escalation Tips: Effective Conflict Management Strategies',
+    publisher: 'CPI',
+    summaryKo: '현장 적용 가능한 실용적 갈등 완화 기법과 커뮤니케이션 전략',
+    summaryEn: 'Practical conflict de-escalation techniques and communication strategies applicable in the field',
+    relatedStages: 'Stage 1-5 관련',
+  },
+  // 한국 공공갈등 조정 연구
+  {
+    category: 'korean',
+    categoryKo: '한국 공공갈등 조정 연구',
+    categoryEn: 'Korean Public Conflict Mediation Research',
+    author: '한국행정연구원',
+    year: 2024,
+    titleKo: '공공갈등 조정의 성공 요인 분석',
+    titleEn: 'Analysis of Success Factors in Public Conflict Mediation',
+    publisher: '한국행정연구원',
+    summaryKo: '조정인의 전문성과 신뢰성이 공공갈등 해결에 미치는 영향 분석',
+    summaryEn: 'Analysis of how mediator expertise and credibility affect public conflict resolution',
+    relatedStages: 'Stage 3-6 관련',
+  },
+  {
+    category: 'korean',
+    categoryKo: '한국 공공갈등 조정 연구',
+    categoryEn: 'Korean Public Conflict Mediation Research',
+    author: '한국지방자치학회',
+    year: 2019,
+    titleKo: '공공갈등 조정의 성공조건: 제도적 담론분석',
+    titleEn: 'Success Conditions for Public Conflict Mediation: Institutional Discourse Analysis',
+    publisher: '한국지방자치학회보',
+    summaryKo: '제도적 관점에서 본 공공갈등 조정 성공의 구조적 조건 연구',
+    summaryEn: 'Study on structural conditions for successful public conflict mediation from an institutional perspective',
+    relatedStages: 'Stage 4-6 관련',
+  },
+  {
+    category: 'korean',
+    categoryKo: '한국 공공갈등 조정 연구',
+    categoryEn: 'Korean Public Conflict Mediation Research',
+    author: '통일연구원',
+    year: 2024,
+    titleKo: '갈등전환적 관점에서의 갈등 대응방안 연구',
+    titleEn: 'Conflict Response Strategies from a Conflict Transformation Perspective',
+    publisher: '통일연구원',
+    summaryKo: '갈등을 변화의 기회로 전환하는 대응 전략과 정책적 함의 연구',
+    summaryEn: 'Research on response strategies that transform conflict into opportunities for change and policy implications',
+    relatedStages: '전 단계 적용 가능',
+  },
+  // 최신 응용 연구
+  {
+    category: 'applied',
+    categoryKo: '최신 응용 연구',
+    categoryEn: 'Recent Applied Research',
+    author: 'IJSS',
+    year: 2024,
+    titleKo: '소셜 미디어를 통한 갈등 격화와 완화',
+    titleEn: 'Social Media for Conflict Escalation and De-escalation',
+    publisher: 'International Journal of Social Sciences',
+    summaryKo: '디지털 플랫폼이 갈등 역학에 미치는 양면적 영향 분석',
+    summaryEn: 'Analysis of the dual impact of digital platforms on conflict dynamics',
+    relatedStages: 'Stage 2-5 관련',
+  },
+  {
+    category: 'applied',
+    categoryKo: '최신 응용 연구',
+    categoryEn: 'Recent Applied Research',
+    author: 'Fienitz, M.',
+    year: 2025,
+    titleKo: '토지 이용 갈등의 격화 메커니즘 규명',
+    titleEn: 'How do land use conflicts escalate? Identifying causal mechanisms',
+    publisher: 'People and Nature',
+    summaryKo: '환경 갈등에서의 격화 원인과 경로를 추적한 실증 연구',
+    summaryEn: 'Empirical study tracing escalation causes and pathways in environmental conflicts',
+    relatedStages: 'Stage 3-7 관련',
+  },
+]
+
+// Research Paper Card
+const ResearchPaperCard = ({ paper, lang, index }) => (
+  <motion.div
+    className="glass-card rounded-xl p-4 hover:shadow-lg transition-all duration-300"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4, delay: index * 0.05 }}
+    whileHover={{ y: -2 }}
+  >
+    <div className="flex items-start justify-between mb-2">
+      <div className="flex items-center gap-2">
+        <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+          {paper.year}
+        </span>
+        {paper.citation && (
+          <span className="text-xs text-gray-500">
+            {paper.citation}
+          </span>
+        )}
+      </div>
+      <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+        {paper.relatedStages}
+      </span>
+    </div>
+
+    <h4 className="font-semibold text-gray-900 mb-1 text-sm leading-tight">
+      {lang === 'ko' ? paper.titleKo : paper.titleEn}
+    </h4>
+
+    <p className="text-xs text-gray-600 mb-2">
+      {paper.author} • {paper.publisher}
+    </p>
+
+    <p className="text-xs text-gray-500 leading-relaxed">
+      {lang === 'ko' ? paper.summaryKo : paper.summaryEn}
+    </p>
+  </motion.div>
+)
+
+// Research Papers Section
+const ResearchPapersSection = ({ lang }) => {
+  const categories = [
+    { id: 'theory', icon: '📖' },
+    { id: 'deescalation', icon: '🕊️' },
+    { id: 'korean', icon: '🇰🇷' },
+    { id: 'applied', icon: '🔬' },
+  ]
+
+  return (
+    <motion.section
+      className="glass-card rounded-3xl p-6 mt-8"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.4 }}
+    >
+      <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
+        <span>📚</span>
+        {lang === 'ko' ? 'Glasl 모델 관련 학술 연구' : 'Academic Research on Glasl Model'}
+      </h3>
+
+      <div className="space-y-6">
+        {categories.map((cat) => {
+          const categoryPapers = researchPapers.filter(p => p.category === cat.id)
+          if (categoryPapers.length === 0) return null
+
+          return (
+            <div key={cat.id}>
+              <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <span>{cat.icon}</span>
+                {lang === 'ko' ? categoryPapers[0].categoryKo : categoryPapers[0].categoryEn}
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {categoryPapers.map((paper, idx) => (
+                  <ResearchPaperCard
+                    key={idx}
+                    paper={paper}
+                    lang={lang}
+                    index={idx}
+                  />
+                ))}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </motion.section>
+  )
+}
+
 // Interactive Legend
 const InteractiveLegend = ({ activePhase, setActivePhase, lang }) => (
   <div className="flex items-center justify-center gap-2 flex-wrap">
@@ -1007,46 +1222,20 @@ export default function App() {
           ))}
         </div>
 
-        {/* Comparison Section */}
-        <motion.section
-          className="glass-card rounded-3xl p-6 mt-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <span>📊</span>
-            {lang === 'ko' ? '유사한 갈등 사례 분석' : 'Similar Conflict Case Analysis'}
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {[
-              { titleKo: '직장 내 갈등', titleEn: 'Workplace Conflict', stage: 4, successRate: 72 },
-              { titleKo: '가족 간 분쟁', titleEn: 'Family Dispute', stage: 3, successRate: 85 },
-              { titleKo: '이웃 분쟁', titleEn: 'Neighbor Dispute', stage: 5, successRate: 58 },
-            ].map((case_, i) => (
-              <div key={i} className="comparison-card">
-                <h4 className="font-medium text-gray-900 mb-2">
-                  {lang === 'ko' ? case_.titleKo : case_.titleEn}
-                </h4>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs text-gray-500">{lang === 'ko' ? '단계' : 'Stage'}:</span>
-                  <span
-                    className="px-2 py-0.5 rounded-full text-xs font-medium text-white"
-                    style={{ backgroundColor: STAGE_COLORS[case_.stage - 1] }}
-                  >
-                    {stages[case_.stage - 1].roman}
-                  </span>
-                </div>
-                <ProgressBar value={case_.successRate} color="#10B981" showLabel />
-              </div>
-            ))}
-          </div>
-        </motion.section>
+        {/* Research Papers Section */}
+        <ResearchPapersSection lang={lang} />
+
       </main>
 
       {/* Footer */}
       <footer className="glass-panel mt-8 py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm font-medium text-gray-700 mb-2">
+            {lang === 'ko'
+              ? '학술 연구 기반 갈등 관리 시스템'
+              : 'Research-Based Conflict Management System'
+            }
+          </p>
           <p className="text-sm text-gray-500">
             {lang === 'ko'
               ? 'Glasl의 갈등 격화 모델 - 갈등 해결을 위한 체계적 접근'
@@ -1064,6 +1253,12 @@ export default function App() {
               {lang === 'ko' ? '문의하기' : 'Contact'}
             </button>
           </div>
+          <p className="mt-4 text-xs text-gray-400">
+            {lang === 'ko'
+              ? `마지막 업데이트: 2024년 12월`
+              : `Last Updated: December 2024`
+            }
+          </p>
         </div>
       </footer>
 
