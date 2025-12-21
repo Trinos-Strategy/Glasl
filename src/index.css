@@ -18,36 +18,100 @@
   }
 
   body {
-    background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
-    color: #1f2937;
+    background: linear-gradient(135deg, #faf8f3 0%, #f5f0e6 50%, #ebe6d9 100%);
+    color: #44403c;
     font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* 밝은 테마 스크롤바 */
+  /* Classical serif fonts */
+  .font-cinzel {
+    font-family: 'Cinzel', 'Georgia', serif;
+  }
+
+  .font-playfair {
+    font-family: 'Playfair Display', 'Georgia', serif;
+  }
+
+  /* Classical marble scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #f3f4f6;
+    background: linear-gradient(to right, #f5f0e6, #ebe6d9);
+    border: 1px solid #d4c5a9;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #10B981, #F59E0B, #EF4444);
-    border-radius: 4px;
+    background: linear-gradient(180deg, #D4AF37, #C9A227, #B8860B);
+    border-radius: 5px;
+    border: 1px solid #f5f0e6;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, #059669, #D97706, #DC2626);
+    background: linear-gradient(180deg, #F4E4BA, #D4AF37, #C9A227);
   }
 
-  /* 선택 영역 */
+  /* Classical gold selection */
   ::selection {
-    background-color: rgba(16, 185, 129, 0.2);
-    color: #065f46;
+    background-color: rgba(212, 175, 55, 0.25);
+    color: #44403c;
+  }
+}
+
+@layer components {
+  /* Greek key border pattern */
+  .greek-border {
+    border-image: repeating-linear-gradient(
+      90deg,
+      #C9A227 0px,
+      #C9A227 10px,
+      transparent 10px,
+      transparent 15px,
+      #C9A227 15px,
+      #C9A227 25px
+    ) 1;
+  }
+
+  /* Marble texture effect */
+  .marble-texture {
+    background-image:
+      radial-gradient(ellipse at 20% 30%, rgba(245, 240, 230, 0.8) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(235, 230, 217, 0.8) 0%, transparent 50%),
+      linear-gradient(135deg, #faf8f3 0%, #f5f0e6 50%, #ebe6d9 100%);
+  }
+
+  /* Gold accent glow */
+  .gold-glow {
+    box-shadow:
+      0 0 10px rgba(212, 175, 55, 0.3),
+      0 0 20px rgba(212, 175, 55, 0.2),
+      0 0 30px rgba(212, 175, 55, 0.1);
+  }
+
+  /* Classical card styling */
+  .classical-card {
+    background: linear-gradient(135deg, #faf8f3 0%, #f5f0e6 50%, #ebe6d9 100%);
+    border: 2px solid #d4c5a9;
+    box-shadow:
+      0 4px 6px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  /* Bronze accent */
+  .bronze-accent {
+    background: linear-gradient(135deg, #CD7F32, #B87333, #8B4513);
+  }
+
+  /* Gold gradient text */
+  .gold-text {
+    background: linear-gradient(135deg, #D4AF37, #F4E4BA, #C9A227);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }
 
@@ -65,6 +129,31 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
+
+  /* 3D perspective utilities */
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .perspective-1500 {
+    perspective: 1500px;
+  }
+
+  /* Classical hover effects */
+  .hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 8px 25px rgba(0, 0, 0, 0.1),
+      0 0 15px rgba(212, 175, 55, 0.2);
+  }
 }
 
 /* 모션 감소 설정 존중 */
@@ -81,12 +170,47 @@
 /* 모바일 터치 최적화 */
 @media (hover: none) {
   button, a, .cursor-pointer {
-    -webkit-tap-highlight-color: rgba(16, 185, 129, 0.1);
+    -webkit-tap-highlight-color: rgba(212, 175, 55, 0.15);
   }
 }
 
-/* 부드러운 포커스 스타일 */
+/* Classical focus styles */
 button:focus-visible {
-  outline: 2px solid #10B981;
+  outline: 2px solid #C9A227;
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.2);
+}
+
+/* Responsive typography for classical feel */
+@media (max-width: 640px) {
+  .font-cinzel {
+    letter-spacing: 0.02em;
+  }
+
+  .font-playfair {
+    letter-spacing: 0.01em;
+  }
+}
+
+/* Classical animation keyframes */
+@keyframes gold-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #D4AF37 0%,
+    #F4E4BA 25%,
+    #D4AF37 50%,
+    #F4E4BA 75%,
+    #D4AF37 100%
+  );
+  background-size: 200% 100%;
+  animation: gold-shimmer 3s linear infinite;
 }
