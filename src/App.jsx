@@ -1,451 +1,586 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform, useSpring, useInView } from 'motion/react'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 
 // ═══════════════════════════════════════════════════════════════
-// DATA
+// DATA - Glasl's 9 Stages of Conflict Escalation
 // ═══════════════════════════════════════════════════════════════
 
 const phases = [
-  { id: 1, nameEn: 'Win–Win', nameKo: '상호 승리', descEn: 'Cooperation possible', descKo: '협력 가능', color: '#10B981', colorLight: 'rgba(16,185,129,0.12)', stages: [1,2,3] },
-  { id: 2, nameEn: 'Win–Lose', nameKo: '승패 구도', descEn: 'Distrust increases', descKo: '불신 증가', color: '#F59E0B', colorLight: 'rgba(245,158,11,0.12)', stages: [4,5,6] },
-  { id: 3, nameEn: 'Lose–Lose', nameKo: '상호 손실', descEn: 'Causing damage', descKo: '피해 유발', color: '#EF4444', colorLight: 'rgba(239,68,68,0.12)', stages: [7,8,9] },
+  {
+    id: 1,
+    nameEn: 'Phase I: Win-Win',
+    nameKo: '국면 I: 상호 승리',
+    subtitleEn: 'Cooperation still possible',
+    subtitleKo: '협력 가능',
+    color: '#10B981',
+    bgGradient: 'from-emerald-50 to-emerald-100',
+    headerBg: 'bg-emerald-500',
+    stages: [1, 2, 3]
+  },
+  {
+    id: 2,
+    nameEn: 'Phase II: Win-Lose',
+    nameKo: '국면 II: 승패 구도',
+    subtitleEn: 'One wins, one loses',
+    subtitleKo: '한쪽이 이기고 한쪽이 짐',
+    color: '#F59E0B',
+    bgGradient: 'from-amber-50 to-amber-100',
+    headerBg: 'bg-amber-500',
+    stages: [4, 5, 6]
+  },
+  {
+    id: 3,
+    nameEn: 'Phase III: Lose-Lose',
+    nameKo: '국면 III: 상호 손실',
+    subtitleEn: 'Both parties lose',
+    subtitleKo: '양쪽 모두 손실',
+    color: '#EF4444',
+    bgGradient: 'from-red-50 to-red-100',
+    headerBg: 'bg-red-500',
+    stages: [7, 8, 9]
+  },
 ]
 
 const stages = [
-  { id: 1, phaseId: 1, nameEn: 'Hardening', nameKo: '경직화', statusKo: '대화 가능', statusEn: 'Dialogue possible', 
-    characteristics: { en: ['Interests become positions', 'Only own view counts', 'Facts get distorted', 'Cooperation > competition'], ko: ['이해관계가 입장으로 변환', '자기 관점만 옳다고 인식', '사실이 왜곡되기 시작', '협력이 경쟁보다 우세'] },
-    interventionKo: '자체 해결 가능', interventionEn: 'Self-resolution possible' },
-  { id: 2, phaseId: 1, nameEn: 'Debate & Polemic', nameKo: '논쟁과 대립', statusKo: '대화→종료 과도기', statusEn: 'Dialogue ending',
-    characteristics: { en: ['Tactical manipulation', 'Verbal confrontations', 'Polarization deepens', 'Emotions over logic'], ko: ['전술적 조작', '언어적 대립', '양극화 심화', '감정이 이성 압도'] },
-    interventionKo: '비공식 도움으로 해결', interventionEn: 'Informal third party help' },
-  { id: 3, phaseId: 1, nameEn: 'Actions Not Words', nameKo: '계획을 행동으로', statusKo: '대화 종료', statusEn: 'End of dialogue',
-    characteristics: { en: ['One-sided actions', 'Fait accompli tactics', 'Empathy diminishes', 'Competition > cooperation'], ko: ['일방적 행동', '기정사실화 전술', '공감 능력 저하', '경쟁이 협력 압도'] },
-    interventionKo: '훈련받은 제3자 필요', interventionEn: 'Trained mediator needed' },
-  { id: 4, phaseId: 2, nameEn: 'Images & Coalitions', nameKo: '이미지와 연합', statusKo: '불신 증가', statusEn: 'Distrust grows',
-    characteristics: { en: ['Personal attacks begin', 'Black-white thinking', 'Forming alliances', 'Avoid losing face'], ko: ['인신공격 시작', '흑백 논리', '동맹 형성', '체면 손상 회피'] },
-    interventionKo: '전문 조정자 필요', interventionEn: 'Professional mediator needed' },
-  { id: 5, phaseId: 2, nameEn: 'Loss of Face', nameKo: '체면 손상', statusKo: '적대감 증가', statusEn: 'Animosity grows',
-    characteristics: { en: ['Attack moral integrity', 'See other negatively', 'Manipulation & sabotage', 'Foul games begin'], ko: ['도덕성 공격', '상대를 부정적으로만 인식', '조작과 방해 공작', '비열한 수단 동원'] },
-    interventionKo: '전문 조정자 필수', interventionEn: 'Professional mediator essential' },
-  { id: 6, phaseId: 2, nameEn: 'Threat Strategies', nameKo: '위협 전략', statusKo: '통제력 상실', statusEn: 'Control lost',
-    characteristics: { en: ['Demands & sanctions', 'Threat-counter-threat spiral', 'Loss of control', 'Increasingly complex'], ko: ['요구와 제재', '위협-맞위협 악순환', '통제력 상실', '점점 복잡해짐'] },
-    interventionKo: '전문 조정자 필수', interventionEn: 'Professional mediator essential' },
-  { id: 7, phaseId: 3, nameEn: 'Limited Destruction', nameKo: '손상 가하기', statusKo: '소통 단절', statusEn: 'No communication',
-    characteristics: { en: ['Execute threats', 'No reaction expected', 'Goal is causing damage', "Enemy's loss = my win"], ko: ['위협 실행', '반응 기대 않음', '피해 유발이 목표', '적의 손실 = 나의 승리'] },
-    interventionKo: '공식적 개입 필요', interventionEn: 'Formal intervention needed' },
-  { id: 8, phaseId: 3, nameEn: 'Fragmentation', nameKo: '적의 파괴', statusKo: '파괴 모드', statusEn: 'Destruction mode',
-    characteristics: { en: ['Physical/economic/psychological destruction', 'Direct attacks', 'Self-preservation only'], ko: ['물리적/경제적/심리적 파괴', '직접적 공격', '자기 보존 본능만 남음'] },
-    interventionKo: '공식적 전문 개입', interventionEn: 'Formal professional intervention' },
-  { id: 9, phaseId: 3, nameEn: 'Together into Abyss', nameKo: '함께 나락으로', statusKo: '돌아갈 길 없음', statusEn: 'No way back',
-    characteristics: { en: ['Destroy at cost of self-destruction', 'No way back', 'Total annihilation'], ko: ['자기 파멸 감수하고 파괴', '돌아갈 길 없음', '완전한 파멸'] },
-    interventionKo: '공식적 전문 개입', interventionEn: 'Formal professional intervention' },
-]
-
-const insights = [
-  { icon: '⚡', titleEn: 'Gravity Effect', titleKo: '중력 효과', descEn: 'Falling is easy, climbing back is hard.', descKo: '내려가기는 쉽고 올라오기는 어렵다.' },
-  { icon: '🚪', titleEn: 'Critical Thresholds', titleKo: '결정적 임계점', descEn: 'Stages 3→4 and 6→7 are turning points.', descKo: '3→4단계와 6→7단계가 전환점.' },
-  { icon: '💰', titleEn: 'Cost of Delay', titleKo: '지연의 대가', descEn: 'Intervention cost grows exponentially.', descKo: '개입 비용이 기하급수적 증가.' },
+  {
+    id: 1,
+    phaseId: 1,
+    nameEn: 'Hardening',
+    nameKo: '경직화',
+    colorIntensity: 'bg-emerald-100 border-emerald-300',
+    textColor: 'text-emerald-700',
+    characteristics: {
+      ko: ['입장이 충돌하지만 대화 가능', '아직 협력 의지 존재', '긴장감 있으나 해결 희망'],
+      en: ['Positions clash but dialogue possible', 'Still willing to cooperate', 'Tension exists but hope for resolution']
+    },
+    behaviors: {
+      ko: ['입장 고수', '상대 의견 경청 감소', '사실 왜곡 시작'],
+      en: ['Holding positions', 'Less listening to others', 'Facts start to distort']
+    },
+    intervention: {
+      ko: '자체 해결 가능',
+      en: 'Self-resolution possible'
+    }
+  },
+  {
+    id: 2,
+    phaseId: 1,
+    nameEn: 'Debate & Polemic',
+    nameKo: '논쟁',
+    colorIntensity: 'bg-emerald-200 border-emerald-400',
+    textColor: 'text-emerald-800',
+    characteristics: {
+      ko: ['언어적 대립 심화', '논리보다 감정 우세', '승리에 집착 시작'],
+      en: ['Verbal confrontation intensifies', 'Emotions over logic', 'Obsession with winning begins']
+    },
+    behaviors: {
+      ko: ['전술적 조작', '양극화 심화', '상대 폄하'],
+      en: ['Tactical manipulation', 'Polarization deepens', 'Belittling opponent']
+    },
+    intervention: {
+      ko: '비공식 제3자 도움',
+      en: 'Informal third-party help'
+    }
+  },
+  {
+    id: 3,
+    phaseId: 1,
+    nameEn: 'Actions, Not Words',
+    nameKo: '행동화',
+    colorIntensity: 'bg-emerald-300 border-emerald-500',
+    textColor: 'text-emerald-900',
+    characteristics: {
+      ko: ['대화 중단', '일방적 행동 시작', '공감 능력 저하'],
+      en: ['Dialogue stops', 'Unilateral actions begin', 'Empathy diminishes']
+    },
+    behaviors: {
+      ko: ['기정사실화 전술', '말보다 행동', '압박 증가'],
+      en: ['Fait accompli tactics', 'Actions over words', 'Increasing pressure']
+    },
+    intervention: {
+      ko: '훈련된 조정자 필요',
+      en: 'Trained mediator needed'
+    }
+  },
+  {
+    id: 4,
+    phaseId: 2,
+    nameEn: 'Images & Coalitions',
+    nameKo: '이미지/연합',
+    colorIntensity: 'bg-amber-100 border-amber-300',
+    textColor: 'text-amber-700',
+    characteristics: {
+      ko: ['상대를 적으로 인식', '동맹 형성 시작', '체면 중시'],
+      en: ['Seeing opponent as enemy', 'Alliance forming begins', 'Focus on saving face']
+    },
+    behaviors: {
+      ko: ['인신공격 시작', '흑백 논리', '지지자 모집'],
+      en: ['Personal attacks begin', 'Black-white thinking', 'Recruiting supporters']
+    },
+    intervention: {
+      ko: '전문 조정자 필요',
+      en: 'Professional mediator needed'
+    }
+  },
+  {
+    id: 5,
+    phaseId: 2,
+    nameEn: 'Loss of Face',
+    nameKo: '체면 손상',
+    colorIntensity: 'bg-amber-200 border-amber-400',
+    textColor: 'text-amber-800',
+    characteristics: {
+      ko: ['상대 도덕성 공격', '완전한 불신', '공개적 망신'],
+      en: ['Attacking moral integrity', 'Complete distrust', 'Public humiliation']
+    },
+    behaviors: {
+      ko: ['조작과 방해', '비열한 수단', '상대 악마화'],
+      en: ['Manipulation & sabotage', 'Foul play', 'Demonizing opponent']
+    },
+    intervention: {
+      ko: '전문 조정 필수',
+      en: 'Professional mediation essential'
+    }
+  },
+  {
+    id: 6,
+    phaseId: 2,
+    nameEn: 'Threat Strategies',
+    nameKo: '위협 전략',
+    colorIntensity: 'bg-amber-300 border-amber-500',
+    textColor: 'text-amber-900',
+    characteristics: {
+      ko: ['위협과 맞위협', '통제력 상실', '요구와 최후통첩'],
+      en: ['Threats and counter-threats', 'Loss of control', 'Demands and ultimatums']
+    },
+    behaviors: {
+      ko: ['제재 위협', '위협 악순환', '합리성 상실'],
+      en: ['Threatening sanctions', 'Threat spiral', 'Loss of rationality']
+    },
+    intervention: {
+      ko: '전문 조정 필수',
+      en: 'Professional mediation essential'
+    }
+  },
+  {
+    id: 7,
+    phaseId: 3,
+    nameEn: 'Limited Destruction',
+    nameKo: '제한적 파괴',
+    colorIntensity: 'bg-red-100 border-red-300',
+    textColor: 'text-red-700',
+    characteristics: {
+      ko: ['상대에게 피해 주기', '소통 완전 단절', '적의 손실이 나의 이득'],
+      en: ['Causing harm to opponent', 'No communication', "Enemy's loss = my gain"]
+    },
+    behaviors: {
+      ko: ['위협 실행', '반응 기대 않음', '피해 유발 목표'],
+      en: ['Executing threats', 'No reaction expected', 'Damage is the goal']
+    },
+    intervention: {
+      ko: '공식적 개입 필요',
+      en: 'Formal intervention needed'
+    }
+  },
+  {
+    id: 8,
+    phaseId: 3,
+    nameEn: 'Fragmentation',
+    nameKo: '분열/파괴',
+    colorIntensity: 'bg-red-200 border-red-400',
+    textColor: 'text-red-800',
+    characteristics: {
+      ko: ['조직적 파괴 시도', '존재 자체 위협', '생존 본능만 남음'],
+      en: ['Systematic destruction', 'Existential threat', 'Only survival instinct']
+    },
+    behaviors: {
+      ko: ['물리적/심리적 공격', '핵심 기반 파괴', '직접적 공격'],
+      en: ['Physical/psychological attacks', 'Destroying core foundation', 'Direct attacks']
+    },
+    intervention: {
+      ko: '강력한 외부 개입',
+      en: 'Strong external intervention'
+    }
+  },
+  {
+    id: 9,
+    phaseId: 3,
+    nameEn: 'Together into the Abyss',
+    nameKo: '함께 나락으로',
+    colorIntensity: 'bg-red-300 border-red-500',
+    textColor: 'text-red-900',
+    characteristics: {
+      ko: ['자기 파멸 감수', '돌아갈 길 없음', '완전한 파멸 추구'],
+      en: ['Self-destruction accepted', 'No way back', 'Total annihilation sought']
+    },
+    behaviors: {
+      ko: ['함께 파멸', '모든 것 희생', '궁극적 파괴'],
+      en: ['Mutual destruction', 'Sacrificing everything', 'Ultimate destruction']
+    },
+    intervention: {
+      ko: '강력한 외부 개입',
+      en: 'Strong external intervention'
+    }
+  },
 ]
 
 // ═══════════════════════════════════════════════════════════════
 // COMPONENTS
 // ═══════════════════════════════════════════════════════════════
 
-const getPhase = (id) => phases.find(p => p.stages.includes(id))
-
 const LanguageToggle = ({ lang, setLang }) => (
-  <div className="flex items-center gap-3 text-xs tracking-widest">
-    <button 
-      onClick={() => setLang('en')} 
-      className={`transition-all duration-300 hover:scale-105 ${lang === 'en' ? 'text-white font-medium' : 'text-white/40 hover:text-white/70'}`}
+  <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-gray-200">
+    <button
+      onClick={() => setLang('en')}
+      className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${
+        lang === 'en'
+          ? 'bg-gradient-to-r from-emerald-500 to-blue-500 text-white shadow-md'
+          : 'text-gray-500 hover:text-gray-700'
+      }`}
     >
       EN
     </button>
-    <span className="text-white/20">|</span>
-    <button 
-      onClick={() => setLang('ko')} 
-      className={`transition-all duration-300 hover:scale-105 ${lang === 'ko' ? 'text-white font-medium' : 'text-white/40 hover:text-white/70'}`}
+    <button
+      onClick={() => setLang('ko')}
+      className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${
+        lang === 'ko'
+          ? 'bg-gradient-to-r from-emerald-500 to-blue-500 text-white shadow-md'
+          : 'text-gray-500 hover:text-gray-700'
+      }`}
     >
       한국어
     </button>
   </div>
 )
 
-const PhaseNav = ({ activePhase, lang }) => (
-  <div className="hidden md:flex items-center gap-5">
-    {phases.map(p => (
-      <div key={p.id} className="flex items-center gap-2 group cursor-default">
-        <motion.div 
-          animate={{ scale: activePhase === p.id ? [1, 1.2, 1] : 1 }}
-          transition={{ duration: 0.5 }}
-          className="w-2 h-2 rounded-full transition-all duration-500" 
-          style={{ 
-            backgroundColor: activePhase === p.id ? p.color : 'rgba(255,255,255,0.2)', 
-            boxShadow: activePhase === p.id ? `0 0 12px ${p.color}` : 'none' 
-          }} 
-        />
-        <span 
-          className="text-[10px] tracking-widest uppercase transition-colors duration-300" 
-          style={{ color: activePhase === p.id ? p.color : 'rgba(255,255,255,0.35)' }}
+const StageCard = ({ stage, lang, onClick }) => {
+  const phase = phases.find(p => p.stages.includes(stage.id))
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: stage.id * 0.05 }}
+      whileHover={{ scale: 1.02, y: -4 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+      className={`${stage.colorIntensity} border-2 rounded-2xl p-4 cursor-pointer
+        shadow-lg hover:shadow-xl transition-all duration-300 min-w-[280px] md:min-w-0`}
+    >
+      {/* Stage Header */}
+      <div className="flex items-center gap-3 mb-3">
+        <div
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md"
+          style={{ backgroundColor: phase.color }}
         >
-          {lang === 'ko' ? p.nameKo : p.nameEn}
-        </span>
+          {stage.id}
+        </div>
+        <div>
+          <h3 className={`font-bold ${stage.textColor}`}>
+            {lang === 'ko' ? stage.nameKo : stage.nameEn}
+          </h3>
+          {lang === 'ko' && (
+            <p className="text-xs text-gray-500">{stage.nameEn}</p>
+          )}
+        </div>
       </div>
-    ))}
-  </div>
-)
 
-const InsightCard = ({ insight, lang, index }) => {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-60px' })
-  
-  return (
-    <motion.div 
-      ref={ref} 
-      initial={{ opacity: 0, y: 30, scale: 0.95 }} 
-      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-      whileHover={{ y: -4, borderColor: 'rgba(255,255,255,0.2)' }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="p-6 border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-sm cursor-default transition-all duration-500"
-    >
-      <motion.span 
-        className="text-2xl mb-3 block"
-        whileHover={{ scale: 1.1, rotate: [0, -5, 5, 0] }}
-        transition={{ duration: 0.3 }}
+      {/* Characteristics */}
+      <div className="mb-3">
+        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+          {lang === 'ko' ? '특징' : 'Characteristics'}
+        </h4>
+        <ul className="space-y-1">
+          {(lang === 'ko' ? stage.characteristics.ko : stage.characteristics.en).slice(0, 2).map((item, i) => (
+            <li key={i} className="text-xs text-gray-700 flex items-start gap-1.5">
+              <span className="mt-1 w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: phase.color }} />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Behaviors */}
+      <div className="mb-3">
+        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+          {lang === 'ko' ? '행동 패턴' : 'Behaviors'}
+        </h4>
+        <ul className="space-y-1">
+          {(lang === 'ko' ? stage.behaviors.ko : stage.behaviors.en).slice(0, 2).map((item, i) => (
+            <li key={i} className="text-xs text-gray-600 flex items-start gap-1.5">
+              <span className="text-gray-400">•</span>
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Intervention */}
+      <div
+        className="px-3 py-2 rounded-lg text-xs font-medium text-center"
+        style={{ backgroundColor: `${phase.color}20`, color: phase.color }}
       >
-        {insight.icon}
-      </motion.span>
-      <h3 className="text-base font-light tracking-wide mb-2">
-        {lang === 'ko' ? insight.titleKo : insight.titleEn}
-      </h3>
-      <p className="text-white/45 text-sm leading-relaxed">
-        {lang === 'ko' ? insight.descKo : insight.descEn}
-      </p>
+        🛡️ {lang === 'ko' ? stage.intervention.ko : stage.intervention.en}
+      </div>
     </motion.div>
   )
 }
 
-const StageCard = ({ stage, lang, onClick, index }) => {
-  const phase = getPhase(stage.id)
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-30px' })
-  
+const PhaseSection = ({ phase, lang, onStageClick }) => {
+  const phaseStages = stages.filter(s => phase.stages.includes(s.id))
+
   return (
-    <motion.div 
-      ref={ref} 
-      initial={{ opacity: 0, x: -40, rotateY: -5 }} 
-      animate={inView ? { opacity: 1, x: 0, rotateY: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-      onClick={onClick} 
-      className="group cursor-pointer" 
-      style={{ marginLeft: `${Math.min(index * 2.5, 20)}%`, marginTop: index === 0 ? 0 : '-0.5rem' }}
-    >
-      <motion.div 
-        whileHover={{ x: 12, scale: 1.008 }} 
-        whileTap={{ scale: 0.995 }}
-        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className="relative max-w-xl bg-gradient-to-br from-[#111111] to-[#0a0a0a] backdrop-blur-sm border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 overflow-hidden shadow-xl shadow-black/20"
-        style={{ borderLeftColor: phase.color, borderLeftWidth: '2px' }}
+    <div className="mb-8">
+      {/* Phase Header */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className={`${phase.headerBg} text-white rounded-2xl p-4 mb-4 shadow-lg`}
       >
-        <div 
-          className="absolute -top-px left-4 px-3 py-1 text-[9px] tracking-[0.15em] uppercase font-medium"
-          style={{ backgroundColor: phase.color, color: '#000' }}
-        >
-          {lang === 'ko' ? phase.nameKo : phase.nameEn}
-        </div>
-        
-        <div className="p-6 pt-8">
-          <div className="flex items-baseline gap-4 mb-3">
-            <motion.span 
-              className="font-mono text-4xl font-extralight" 
-              style={{ color: phase.color }}
-              whileHover={{ scale: 1.05 }}
-            >
-              {String(stage.id).padStart(2, '0')}
-            </motion.span>
-            <div>
-              <h3 className="text-xl font-light tracking-wide">
-                {lang === 'ko' ? stage.nameKo : stage.nameEn}
-              </h3>
-              {lang === 'ko' && (
-                <p className="text-white/25 text-xs mt-0.5 tracking-wide">{stage.nameEn}</p>
-              )}
-            </div>
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-bold">
+              {lang === 'ko' ? phase.nameKo : phase.nameEn}
+            </h2>
+            <p className="text-white/80 text-sm mt-0.5">
+              {lang === 'ko' ? phase.subtitleKo : phase.subtitleEn}
+            </p>
           </div>
-          
-          <div 
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 mb-3 text-[10px] tracking-wider rounded-sm"
-            style={{ backgroundColor: phase.colorLight, color: phase.color }}
-          >
-            <motion.span 
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="w-1 h-1 rounded-full" 
-              style={{ backgroundColor: phase.color }} 
-            />
-            {lang === 'ko' ? stage.statusKo : stage.statusEn}
-          </div>
-          
-          <p className="text-white/40 text-sm leading-relaxed line-clamp-1">
-            {lang === 'ko' ? stage.characteristics.ko[0] : stage.characteristics.en[0]}
-          </p>
-          
-          <div className="mt-4 flex items-center gap-2 text-white/20 text-[10px] tracking-wider group-hover:text-white/40 transition-colors">
-            <span>{lang === 'ko' ? '상세 보기' : 'View details'}</span>
-            <motion.span animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>→</motion.span>
+          <div className="text-4xl font-bold opacity-30">
+            {phase.id === 1 ? '🤝' : phase.id === 2 ? '⚔️' : '💥'}
           </div>
         </div>
-        
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileHover={{ opacity: 1 }}
-          className="absolute inset-0 transition-opacity duration-500 pointer-events-none"
-          style={{ background: `radial-gradient(ellipse at 20% 50%, ${phase.colorLight}, transparent 60%)` }} 
-        />
       </motion.div>
-    </motion.div>
+
+      {/* Stage Cards - Horizontal Scroll on Mobile, Grid on Desktop */}
+      <div className="overflow-x-auto pb-4 -mx-4 px-4 md:mx-0 md:px-0 md:overflow-visible">
+        <div className="flex gap-4 md:grid md:grid-cols-3">
+          {phaseStages.map(stage => (
+            <StageCard
+              key={stage.id}
+              stage={stage}
+              lang={lang}
+              onClick={() => onStageClick(stage)}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
   )
 }
 
-const DetailPanel = ({ stage, lang, onClose }) => {
-  const phase = getPhase(stage.id)
-  
-  // ESC 키로 닫기
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', handleEsc)
-    return () => window.removeEventListener('keydown', handleEsc)
-  }, [onClose])
-  
+const DetailModal = ({ stage, lang, onClose }) => {
+  const phase = phases.find(p => p.stages.includes(stage.id))
+
   return (
     <>
-      <motion.div 
-        initial={{ opacity: 0 }} 
-        animate={{ opacity: 1 }} 
-        exit={{ opacity: 0 }} 
-        transition={{ duration: 0.3 }}
-        onClick={onClose} 
-        className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md" 
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
       />
-      
-      <motion.aside 
-        initial={{ x: '100%', opacity: 0.5 }} 
-        animate={{ x: 0, opacity: 1 }} 
-        exit={{ x: '100%', opacity: 0.5 }}
-        transition={{ type: 'spring', damping: 30, stiffness: 250 }}
-        className="fixed right-0 top-0 bottom-0 z-50 w-full max-w-lg bg-gradient-to-b from-[#0d0d0d] to-[#080808] border-l border-white/10 overflow-y-auto"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2
+          md:w-full md:max-w-lg bg-white rounded-3xl shadow-2xl z-50 overflow-hidden"
       >
-        <header 
-          className="sticky top-0 z-10 px-8 py-6 border-b border-white/[0.06]"
-          style={{ background: `linear-gradient(135deg, ${phase.colorLight}, transparent 80%)` }}
+        {/* Modal Header */}
+        <div
+          className="p-6 text-white"
+          style={{ backgroundColor: phase.color }}
         >
-          <div className="flex items-start justify-between">
-            <div className="flex items-baseline gap-4">
-              <motion.span 
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="font-mono text-4xl font-extralight" 
-                style={{ color: phase.color }}
-              >
-                {String(stage.id).padStart(2, '0')}
-              </motion.span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-2xl font-bold">
+                {stage.id}
+              </div>
               <div>
-                <p className="text-[9px] tracking-[0.2em] uppercase mb-0.5" style={{ color: phase.color }}>
+                <p className="text-white/70 text-xs uppercase tracking-wider">
                   {lang === 'ko' ? phase.nameKo : phase.nameEn}
                 </p>
-                <h2 className="text-xl font-light tracking-wide">
+                <h2 className="text-xl font-bold">
                   {lang === 'ko' ? stage.nameKo : stage.nameEn}
                 </h2>
-                {lang === 'ko' && <p className="text-white/35 text-xs mt-0.5">{stage.nameEn}</p>}
+                {lang === 'ko' && (
+                  <p className="text-white/70 text-sm">{stage.nameEn}</p>
+                )}
               </div>
             </div>
-            <motion.button 
-              onClick={onClose} 
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              className="p-2 text-white/40 hover:text-white transition-colors" 
-              aria-label="Close"
+            <button
+              onClick={onClose}
+              className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-colors"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </motion.button>
+              ✕
+            </button>
           </div>
-        </header>
-        
-        <div className="px-8 py-8 space-y-8">
-          <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-            <h3 className="text-[9px] tracking-[0.2em] uppercase text-white/35 mb-3">
-              {lang === 'ko' ? '상태' : 'Status'}
+        </div>
+
+        {/* Modal Content */}
+        <div className="p-6 space-y-5 max-h-[60vh] overflow-y-auto">
+          {/* Characteristics */}
+          <div>
+            <h3 className="text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs" style={{ backgroundColor: `${phase.color}20`, color: phase.color }}>📋</span>
+              {lang === 'ko' ? '주요 특징' : 'Key Characteristics'}
             </h3>
-            <div 
-              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm rounded-sm" 
-              style={{ backgroundColor: phase.colorLight, color: phase.color }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: phase.color }} />
-              {lang === 'ko' ? stage.statusKo : stage.statusEn}
-            </div>
-          </motion.section>
-          
-          <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-            <h3 className="text-[9px] tracking-[0.2em] uppercase text-white/35 mb-4">
-              {lang === 'ko' ? '특징' : 'Characteristics'}
-            </h3>
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {(lang === 'ko' ? stage.characteristics.ko : stage.characteristics.en).map((item, i) => (
-                <motion.li 
-                  key={i} 
-                  initial={{ opacity: 0, x: 20 }} 
-                  animate={{ opacity: 1, x: 0 }} 
-                  transition={{ delay: 0.3 + i * 0.06 }}
-                  className="flex items-start gap-3 group"
-                >
-                  <span 
-                    className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0 transition-all duration-300 group-hover:scale-150" 
-                    style={{ backgroundColor: phase.color }} 
-                  />
-                  <span className="text-white/65 text-sm leading-relaxed">{item}</span>
-                </motion.li>
+                <li key={i} className="text-sm text-gray-600 flex items-start gap-2 bg-gray-50 p-2 rounded-lg">
+                  <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ backgroundColor: phase.color }} />
+                  {item}
+                </li>
               ))}
             </ul>
-          </motion.section>
-          
-          <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-            <h3 className="text-[9px] tracking-[0.2em] uppercase text-white/35 mb-3">
-              {lang === 'ko' ? '권장 개입' : 'Intervention'}
+          </div>
+
+          {/* Behaviors */}
+          <div>
+            <h3 className="text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+              <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs" style={{ backgroundColor: `${phase.color}20`, color: phase.color }}>⚡</span>
+              {lang === 'ko' ? '행동 패턴' : 'Behavioral Patterns'}
             </h3>
-            <div className="p-4 border border-white/10 bg-white/[0.02] rounded-sm">
-              <p className="text-white/60 text-sm">
-                {lang === 'ko' ? stage.interventionKo : stage.interventionEn}
-              </p>
-            </div>
-          </motion.section>
-          
-          <motion.section 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: 0.5 }}
-            className="p-5 border-l-2 rounded-sm" 
-            style={{ borderColor: phase.color, backgroundColor: phase.colorLight }}
+            <ul className="space-y-2">
+              {(lang === 'ko' ? stage.behaviors.ko : stage.behaviors.en).map((item, i) => (
+                <li key={i} className="text-sm text-gray-600 flex items-start gap-2 bg-gray-50 p-2 rounded-lg">
+                  <span className="text-gray-400">→</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Intervention */}
+          <div
+            className="p-4 rounded-2xl"
+            style={{ backgroundColor: `${phase.color}15` }}
           >
-            <h3 className="text-[9px] tracking-[0.2em] uppercase text-white/35 mb-1">
-              {lang === 'ko' ? '국면' : 'Phase'}
+            <h3 className="text-sm font-bold mb-1 flex items-center gap-2" style={{ color: phase.color }}>
+              🛡️ {lang === 'ko' ? '권장 개입' : 'Recommended Intervention'}
             </h3>
-            <p className="text-base font-light" style={{ color: phase.color }}>
-              {lang === 'ko' ? phase.descKo : phase.descEn}
+            <p className="text-sm text-gray-700">
+              {lang === 'ko' ? stage.intervention.ko : stage.intervention.en}
             </p>
-          </motion.section>
+          </div>
         </div>
-      </motion.aside>
+      </motion.div>
     </>
   )
 }
 
-const Hero = ({ lang }) => {
-  const { scrollYProgress } = useScroll()
-  const opacity = useTransform(scrollYProgress, [0, 0.1], [1, 0])
-  const y = useTransform(scrollYProgress, [0, 0.12], [0, -50])
-  const scale = useTransform(scrollYProgress, [0, 0.12], [1, 0.95])
-  
-  return (
-    <motion.section 
-      style={{ opacity, y, scale }} 
-      className="min-h-[80vh] flex flex-col justify-center items-center text-center px-6 relative overflow-hidden"
-    >
-      <div 
-        className="absolute inset-0 opacity-[0.02]" 
-        style={{ 
-          backgroundImage: 'linear-gradient(rgba(255,255,255,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.15) 1px, transparent 1px)', 
-          backgroundSize: '40px 40px' 
-        }} 
-      />
-      
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }} 
-        className="relative z-10"
-      >
-        <motion.p 
-          initial={{ opacity: 0, letterSpacing: '0.2em' }}
-          animate={{ opacity: 1, letterSpacing: '0.3em' }}
-          transition={{ duration: 1, delay: 0.2 }}
-          className="text-white/35 text-[10px] tracking-[0.3em] uppercase mb-6"
-        >
-          Friedrich Glasl, 1980
-        </motion.p>
-        
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight tracking-tight leading-[1.1]">
-          <motion.span 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="block"
-          >
-            {lang === 'ko' ? '갈등 격화' : 'Conflict'}
-          </motion.span>
-          <motion.span 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="block mt-1" 
-            style={{ 
-              background: 'linear-gradient(120deg, #10B981 0%, #F59E0B 50%, #EF4444 100%)', 
-              WebkitBackgroundClip: 'text', 
-              WebkitTextFillColor: 'transparent' 
-            }}
-          >
-            {lang === 'ko' ? '9단계' : 'Escalation'}
-          </motion.span>
-        </h1>
-        
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-white/40 text-base max-w-sm mx-auto leading-relaxed mt-6 font-light"
-        >
-          {lang === 'ko' 
-            ? '갈등이 어떻게 단계적으로 격화되는지 이해하세요.' 
-            : 'Understand how conflicts escalate through stages.'}
-        </motion.p>
-        
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{ opacity: { delay: 1 }, y: { repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}}
-          className="mt-12 text-white/25"
-        >
-          <svg className="w-5 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 20 32">
-            <rect x="4" y="1" width="12" height="18" rx="6" strokeWidth="1.5" />
-            <circle cx="10" cy="7" r="1.5" fill="currentColor" />
-            <path d="M10 22v6M7 26l3 3 3-3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </motion.div>
-      </motion.div>
-    </motion.section>
-  )
-}
-
-const ScrollProgress = () => {
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 80, damping: 20 })
-  
-  return (
-    <motion.div 
-      style={{ scaleX, transformOrigin: 'left' }} 
-      className="fixed top-0 left-0 right-0 h-[2px] z-50"
-    >
-      <div 
-        className="h-full w-full" 
-        style={{ background: 'linear-gradient(90deg, #10B981, #F59E0B, #EF4444)' }} 
-      />
-    </motion.div>
-  )
-}
+const TableView = ({ lang, onStageClick }) => (
+  <div className="hidden lg:block overflow-x-auto">
+    <table className="w-full border-collapse">
+      <thead>
+        <tr>
+          {phases.map(phase => (
+            <th
+              key={phase.id}
+              colSpan={3}
+              className="text-white text-center p-4 text-lg font-bold"
+              style={{ backgroundColor: phase.color }}
+            >
+              {lang === 'ko' ? phase.nameKo : phase.nameEn}
+              <div className="text-sm font-normal opacity-80 mt-0.5">
+                {lang === 'ko' ? phase.subtitleKo : phase.subtitleEn}
+              </div>
+            </th>
+          ))}
+        </tr>
+        <tr className="bg-gray-100">
+          {stages.map(stage => (
+            <th
+              key={stage.id}
+              className={`p-3 text-center border-x border-gray-200 ${stage.colorIntensity}`}
+            >
+              <div className="flex flex-col items-center gap-1">
+                <span
+                  className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm"
+                  style={{ backgroundColor: phases.find(p => p.stages.includes(stage.id)).color }}
+                >
+                  {stage.id}
+                </span>
+                <span className={`font-bold text-sm ${stage.textColor}`}>
+                  {lang === 'ko' ? stage.nameKo : stage.nameEn}
+                </span>
+              </div>
+            </th>
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {/* Characteristics Row */}
+        <tr>
+          {stages.map(stage => (
+            <td
+              key={stage.id}
+              className={`p-3 border border-gray-200 align-top ${stage.colorIntensity} bg-opacity-50`}
+              onClick={() => onStageClick(stage)}
+              style={{ cursor: 'pointer' }}
+            >
+              <h4 className="text-xs font-semibold text-gray-500 uppercase mb-2">
+                {lang === 'ko' ? '특징' : 'Characteristics'}
+              </h4>
+              <ul className="space-y-1.5 text-xs text-gray-700">
+                {(lang === 'ko' ? stage.characteristics.ko : stage.characteristics.en).map((item, i) => (
+                  <li key={i} className="flex items-start gap-1">
+                    <span
+                      className="w-1 h-1 rounded-full mt-1.5 flex-shrink-0"
+                      style={{ backgroundColor: phases.find(p => p.stages.includes(stage.id)).color }}
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </td>
+          ))}
+        </tr>
+        {/* Behaviors Row */}
+        <tr>
+          {stages.map(stage => (
+            <td
+              key={stage.id}
+              className={`p-3 border border-gray-200 align-top ${stage.colorIntensity} bg-opacity-30`}
+              onClick={() => onStageClick(stage)}
+              style={{ cursor: 'pointer' }}
+            >
+              <h4 className="text-xs font-semibold text-gray-500 uppercase mb-2">
+                {lang === 'ko' ? '행동' : 'Behaviors'}
+              </h4>
+              <ul className="space-y-1.5 text-xs text-gray-600">
+                {(lang === 'ko' ? stage.behaviors.ko : stage.behaviors.en).map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+            </td>
+          ))}
+        </tr>
+        {/* Intervention Row */}
+        <tr>
+          {stages.map(stage => {
+            const phase = phases.find(p => p.stages.includes(stage.id))
+            return (
+              <td
+                key={stage.id}
+                className="p-3 border border-gray-200 align-middle bg-gray-50"
+              >
+                <div
+                  className="text-xs font-medium text-center py-2 px-2 rounded-lg"
+                  style={{ backgroundColor: `${phase.color}20`, color: phase.color }}
+                >
+                  🛡️ {lang === 'ko' ? stage.intervention.ko : stage.intervention.en}
+                </div>
+              </td>
+            )
+          })}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+)
 
 // ═══════════════════════════════════════════════════════════════
 // MAIN APP
@@ -453,111 +588,116 @@ const ScrollProgress = () => {
 
 export default function App() {
   const [lang, setLang] = useState('ko')
-  const [activeStage, setActiveStage] = useState(null)
-  const [activePhase, setActivePhase] = useState(1)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const progress = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)
-      if (progress < 0.35) setActivePhase(1)
-      else if (progress < 0.65) setActivePhase(2)
-      else setActivePhase(3)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const [selectedStage, setSelectedStage] = useState(null)
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white selection:bg-white/20 selection:text-white">
-      <ScrollProgress />
-      
-      <header className="fixed top-0 left-0 right-0 z-40 px-5 md:px-8 py-5 bg-gradient-to-b from-black/50 to-transparent backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          <PhaseNav activePhase={activePhase} lang={lang} />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-100 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-emerald-600 via-amber-500 to-red-500 bg-clip-text text-transparent">
+              {lang === 'ko' ? 'Glasl 갈등 격화 9단계' : "Glasl's 9 Stages of Conflict"}
+            </h1>
+            <p className="text-xs text-gray-500 mt-0.5">Friedrich Glasl, 1980</p>
+          </div>
           <LanguageToggle lang={lang} setLang={setLang} />
         </div>
       </header>
-      
-      <Hero lang={lang} />
-      
-      <section className="py-16 px-5">
-        <div className="max-w-4xl mx-auto">
-          <motion.p 
-            initial={{ opacity: 0 }} 
-            whileInView={{ opacity: 1 }} 
-            viewport={{ once: true }}
-            className="text-[9px] tracking-[0.25em] uppercase text-white/35 mb-8 text-center"
-          >
-            {lang === 'ko' ? '핵심 인사이트' : 'Key Insights'}
-          </motion.p>
-          <div className="grid sm:grid-cols-3 gap-4">
-            {insights.map((insight, i) => (
-              <InsightCard key={i} insight={insight} lang={lang} index={i} />
-            ))}
-          </div>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        {/* Intro */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-8"
+        >
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            {lang === 'ko'
+              ? '갈등은 9단계를 거쳐 점점 격화됩니다. 각 단계를 클릭하여 상세 정보를 확인하세요.'
+              : 'Conflicts escalate through 9 stages. Click each stage for detailed information.'}
+          </p>
+        </motion.div>
+
+        {/* Escalation Arrow - Visual Indicator */}
+        <div className="hidden lg:flex items-center justify-center gap-2 mb-6">
+          <span className="text-emerald-500 font-semibold text-sm">
+            {lang === 'ko' ? '협력 가능' : 'Cooperation'}
+          </span>
+          <div className="flex-1 max-w-md h-2 rounded-full bg-gradient-to-r from-emerald-400 via-amber-400 to-red-500" />
+          <span className="text-red-500 font-semibold text-sm">
+            {lang === 'ko' ? '파괴' : 'Destruction'}
+          </span>
         </div>
-      </section>
-      
-      <section className="py-20 relative">
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="h-1/3" style={{ background: 'linear-gradient(180deg, rgba(16,185,129,0.02), transparent)' }} />
-          <div className="h-1/3" style={{ background: 'linear-gradient(180deg, rgba(245,158,11,0.02), transparent)' }} />
-          <div className="h-1/3" style={{ background: 'linear-gradient(180deg, rgba(239,68,68,0.02), transparent)' }} />
-        </div>
-        
-        <div className="max-w-4xl mx-auto px-5 mb-12">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }} 
-            transition={{ duration: 0.6 }}
-            className="text-2xl md:text-3xl font-extralight tracking-tight"
-          >
-            {lang === 'ko' ? '9단계 격화 계단' : 'The Nine Stages'}
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 15 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }} 
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-white/35 mt-2 max-w-md text-sm"
-          >
-            {lang === 'ko' 
-              ? '각 단계를 클릭하여 상세 정보를 확인하세요.' 
-              : 'Click each stage for detailed information.'}
-          </motion.p>
-        </div>
-        
-        <div className="max-w-4xl mx-auto px-5 relative">
-          {stages.map((stage, i) => (
-            <StageCard 
-              key={stage.id} 
-              stage={stage} 
-              lang={lang} 
-              onClick={() => setActiveStage(stage)} 
-              index={i} 
+
+        {/* Table View (Desktop) */}
+        <TableView lang={lang} onStageClick={setSelectedStage} />
+
+        {/* Card View (Mobile/Tablet) */}
+        <div className="lg:hidden">
+          {phases.map(phase => (
+            <PhaseSection
+              key={phase.id}
+              phase={phase}
+              lang={lang}
+              onStageClick={setSelectedStage}
             />
           ))}
         </div>
-      </section>
-      
-      <footer className="py-16 px-5 border-t border-white/[0.04]">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-white/25 text-xs tracking-wider">
+
+        {/* Legend */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="mt-8 p-4 bg-white rounded-2xl shadow-lg border border-gray-100"
+        >
+          <h3 className="font-bold text-gray-800 mb-3 text-sm">
+            {lang === 'ko' ? '📊 단계별 색상 의미' : '📊 Color Legend'}
+          </h3>
+          <div className="flex flex-wrap gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-gradient-to-r from-emerald-200 to-emerald-400" />
+              <span className="text-sm text-gray-600">
+                {lang === 'ko' ? '1-3단계: 대화로 해결 가능' : 'Stages 1-3: Dialogue possible'}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-gradient-to-r from-amber-200 to-amber-400" />
+              <span className="text-sm text-gray-600">
+                {lang === 'ko' ? '4-6단계: 전문 조정 필요' : 'Stages 4-6: Mediation needed'}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-4 h-4 rounded bg-gradient-to-r from-red-200 to-red-400" />
+              <span className="text-sm text-gray-600">
+                {lang === 'ko' ? '7-9단계: 강력한 개입 필수' : 'Stages 7-9: Intervention required'}
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      </main>
+
+      {/* Footer */}
+      <footer className="mt-12 py-6 border-t border-gray-200 bg-white">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <p className="text-gray-500 text-sm">
             Glasl's Model of Conflict Escalation
           </p>
-          <p className="text-white/15 text-[10px] mt-1.5">
+          <p className="text-gray-400 text-xs mt-1">
             Friedrich Glasl, <em>Konfliktmanagement</em>, 1980
           </p>
         </div>
       </footer>
-      
+
+      {/* Detail Modal */}
       <AnimatePresence>
-        {activeStage && (
-          <DetailPanel 
-            stage={activeStage} 
-            lang={lang} 
-            onClose={() => setActiveStage(null)} 
+        {selectedStage && (
+          <DetailModal
+            stage={selectedStage}
+            lang={lang}
+            onClose={() => setSelectedStage(null)}
           />
         )}
       </AnimatePresence>
