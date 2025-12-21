@@ -828,6 +828,7 @@ const researchPapers = [
     titleEn: 'Nine-Stage Model of Conflict Escalation',
     publisher: 'University of Houston Law Center',
     citation: 'Cited by 37',
+    url: 'https://scholarship.law.uh.edu/faculty_scholarship/37/',
     summaryKo: 'Glasl의 원본 이론으로, 갈등이 협력에서 파괴로 진행되는 9단계를 체계적으로 분석한 기초 연구',
     summaryEn: 'Glasl\'s original theory systematically analyzing the 9 stages of conflict progression from cooperation to destruction',
     relatedStages: '전 단계 적용 가능',
@@ -841,6 +842,7 @@ const researchPapers = [
     titleKo: '갈등 격화 설문지 개발 및 검증 연구',
     titleEn: 'Are you threatening me? Development and validation of the Conflict Escalation Questionnaire',
     publisher: 'Frontiers in Psychology',
+    url: 'https://www.frontiersin.org/articles/10.3389/fpsyg.2023.1125687/full',
     summaryKo: 'Glasl 모델 기반 갈등 격화 측정 도구의 과학적 검증 및 실증 연구',
     summaryEn: 'Scientific validation and empirical study of conflict escalation measurement tools based on the Glasl model',
     relatedStages: 'Stage 1-6 관련',
@@ -855,6 +857,7 @@ const researchPapers = [
     titleKo: '갈등 완화: 이론과 실제',
     titleEn: 'De-escalating Conflicts',
     publisher: 'Rowman & Littlefield Publishers',
+    url: 'https://rowman.com/ISBN/9780847687732/Constructive-Conflicts-From-Escalation-to-Resolution',
     summaryKo: '갈등 완화의 조건, 과정, 전략에 대한 종합적 이론서',
     summaryEn: 'Comprehensive theoretical work on conditions, processes, and strategies of conflict de-escalation',
     relatedStages: '전 단계 적용 가능',
@@ -868,6 +871,7 @@ const researchPapers = [
     titleKo: '효과적인 갈등 관리를 위한 10가지 완화 전략',
     titleEn: 'Top 10 De-escalation Tips: Effective Conflict Management Strategies',
     publisher: 'CPI',
+    url: 'https://www.crisisprevention.com/en-CA/Blog/Top-10-De-Escalation-Tips',
     summaryKo: '현장 적용 가능한 실용적 갈등 완화 기법과 커뮤니케이션 전략',
     summaryEn: 'Practical conflict de-escalation techniques and communication strategies applicable in the field',
     relatedStages: 'Stage 1-5 관련',
@@ -882,6 +886,7 @@ const researchPapers = [
     titleKo: '공공갈등 조정의 성공 요인 분석',
     titleEn: 'Analysis of Success Factors in Public Conflict Mediation',
     publisher: '한국행정연구원',
+    url: 'https://www.kipa.re.kr/',
     summaryKo: '조정인의 전문성과 신뢰성이 공공갈등 해결에 미치는 영향 분석',
     summaryEn: 'Analysis of how mediator expertise and credibility affect public conflict resolution',
     relatedStages: 'Stage 3-6 관련',
@@ -895,6 +900,7 @@ const researchPapers = [
     titleKo: '공공갈등 조정의 성공조건: 제도적 담론분석',
     titleEn: 'Success Conditions for Public Conflict Mediation: Institutional Discourse Analysis',
     publisher: '한국지방자치학회보',
+    url: 'https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci',
     summaryKo: '제도적 관점에서 본 공공갈등 조정 성공의 구조적 조건 연구',
     summaryEn: 'Study on structural conditions for successful public conflict mediation from an institutional perspective',
     relatedStages: 'Stage 4-6 관련',
@@ -908,6 +914,7 @@ const researchPapers = [
     titleKo: '갈등전환적 관점에서의 갈등 대응방안 연구',
     titleEn: 'Conflict Response Strategies from a Conflict Transformation Perspective',
     publisher: '통일연구원',
+    url: 'https://www.kinu.or.kr/',
     summaryKo: '갈등을 변화의 기회로 전환하는 대응 전략과 정책적 함의 연구',
     summaryEn: 'Research on response strategies that transform conflict into opportunities for change and policy implications',
     relatedStages: '전 단계 적용 가능',
@@ -922,6 +929,7 @@ const researchPapers = [
     titleKo: '소셜 미디어를 통한 갈등 격화와 완화',
     titleEn: 'Social Media for Conflict Escalation and De-escalation',
     publisher: 'International Journal of Social Sciences',
+    url: 'https://ijss.org/',
     summaryKo: '디지털 플랫폼이 갈등 역학에 미치는 양면적 영향 분석',
     summaryEn: 'Analysis of the dual impact of digital platforms on conflict dynamics',
     relatedStages: 'Stage 2-5 관련',
@@ -935,6 +943,7 @@ const researchPapers = [
     titleKo: '토지 이용 갈등의 격화 메커니즘 규명',
     titleEn: 'How do land use conflicts escalate? Identifying causal mechanisms',
     publisher: 'People and Nature',
+    url: 'https://besjournals.onlinelibrary.wiley.com/journal/26888319',
     summaryKo: '환경 갈등에서의 격화 원인과 경로를 추적한 실증 연구',
     summaryEn: 'Empirical study tracing escalation causes and pathways in environmental conflicts',
     relatedStages: 'Stage 3-7 관련',
@@ -967,7 +976,15 @@ const ResearchPaperCard = ({ paper, lang, index }) => (
     </div>
 
     <h4 className="font-semibold text-gray-900 mb-1 text-sm leading-tight">
-      {lang === 'ko' ? paper.titleKo : paper.titleEn}
+      <a
+        href={paper.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-blue-600 hover:underline transition-colors"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {lang === 'ko' ? paper.titleKo : paper.titleEn}
+      </a>
     </h4>
 
     <p className="text-xs text-gray-600 mb-2">
@@ -982,6 +999,7 @@ const ResearchPaperCard = ({ paper, lang, index }) => (
 
 // Research Papers Section
 const ResearchPapersSection = ({ lang }) => {
+  const [expanded, setExpanded] = useState(false)
   const categories = [
     { id: 'theory', icon: '📖' },
     { id: 'deescalation', icon: '🕊️' },
@@ -996,36 +1014,54 @@ const ResearchPapersSection = ({ lang }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.4 }}
     >
-      <h3 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
-        <span>📚</span>
-        {lang === 'ko' ? 'Glasl 모델 관련 학술 연구' : 'Academic Research on Glasl Model'}
-      </h3>
+      <button
+        className="w-full flex items-center justify-between text-left cursor-pointer hover:opacity-80 transition-opacity"
+        onClick={() => setExpanded(!expanded)}
+      >
+        <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+          <span>📚</span>
+          {lang === 'ko' ? 'Glasl 모델 관련 학술 연구' : 'Academic Research on Glasl Model'}
+        </h3>
+        <span className="text-gray-500 text-lg">
+          {expanded ? '▲' : '▼'}
+        </span>
+      </button>
 
-      <div className="space-y-6">
-        {categories.map((cat) => {
-          const categoryPapers = researchPapers.filter(p => p.category === cat.id)
-          if (categoryPapers.length === 0) return null
+      <AnimatePresence>
+        {expanded && (
+          <motion.div
+            className="space-y-6 mt-6"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            {categories.map((cat) => {
+              const categoryPapers = researchPapers.filter(p => p.category === cat.id)
+              if (categoryPapers.length === 0) return null
 
-          return (
-            <div key={cat.id}>
-              <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
-                <span>{cat.icon}</span>
-                {lang === 'ko' ? categoryPapers[0].categoryKo : categoryPapers[0].categoryEn}
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {categoryPapers.map((paper, idx) => (
-                  <ResearchPaperCard
-                    key={idx}
-                    paper={paper}
-                    lang={lang}
-                    index={idx}
-                  />
-                ))}
-              </div>
-            </div>
-          )
-        })}
-      </div>
+              return (
+                <div key={cat.id}>
+                  <h4 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                    <span>{cat.icon}</span>
+                    {lang === 'ko' ? categoryPapers[0].categoryKo : categoryPapers[0].categoryEn}
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {categoryPapers.map((paper, idx) => (
+                      <ResearchPaperCard
+                        key={idx}
+                        paper={paper}
+                        lang={lang}
+                        index={idx}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.section>
   )
 }
@@ -1243,21 +1279,15 @@ export default function App() {
             }
           </p>
           <div className="mt-3 flex items-center justify-center gap-6">
-            <button className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
-              {lang === 'ko' ? '참고 문헌' : 'References'}
-            </button>
-            <button className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
-              {lang === 'ko' ? '방법론' : 'Methodology'}
-            </button>
-            <button className="text-xs text-gray-400 hover:text-gray-600 transition-colors">
+            <a
+              href="mailto:dkkim@swonlaw.com"
+              className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            >
               {lang === 'ko' ? '문의하기' : 'Contact'}
-            </button>
+            </a>
           </div>
           <p className="mt-4 text-xs text-gray-400">
-            {lang === 'ko'
-              ? `마지막 업데이트: 2024년 12월`
-              : `Last Updated: December 2024`
-            }
+            © 2024 Trinos Research Lab. All rights reserved.
           </p>
         </div>
       </footer>
