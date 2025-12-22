@@ -665,6 +665,14 @@ const StageCard = ({ stage, lang, onClick, isActive, index }) => {
             <div className="text-gray-500">{lang === 'ko' ? '평균기간' : 'Duration'}</div>
           </div>
         </div>
+
+        <button
+          onClick={(e) => { e.stopPropagation(); onClick(); }}
+          className="mt-4 w-full py-2 px-4 rounded-lg font-semibold transition-all hover:opacity-90"
+          style={{ backgroundColor: stage.color, color: 'white' }}
+        >
+          {lang === 'ko' ? '상세' : 'Details'}
+        </button>
       </div>
     </motion.div>
   )
