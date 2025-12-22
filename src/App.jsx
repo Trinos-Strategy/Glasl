@@ -667,7 +667,12 @@ const StageCard = ({ stage, lang, onClick, isActive, index }) => {
         </div>
 
         <button
-          onClick={(e) => { e.stopPropagation(); onClick(); }}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation()
+            e.preventDefault()
+            onClick()
+          }}
           className="mt-4 w-full py-2 px-4 rounded-lg font-semibold transition-all hover:opacity-90"
           style={{ backgroundColor: stage.color, color: 'white' }}
         >
@@ -1461,9 +1466,10 @@ export default function App() {
       </footer>
 
       {/* Detail Modal */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {selectedStage && (
           <DetailModal
+            key={selectedStage.id}
             stage={selectedStage}
             lang={lang}
             onClose={() => {
