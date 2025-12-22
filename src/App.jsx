@@ -55,6 +55,18 @@ const stages = [
       ko: '프로젝트 방향성에 대한 초기 의견 불일치',
       en: 'Initial disagreement on project direction'
     },
+    mediatorStyle: {
+      type: 'Transformative',
+      typeKo: '관계변화형',
+      description: {
+        ko: '당사자들의 역량 강화와 상호 인정을 통해 관계 개선에 초점',
+        en: 'Focuses on empowerment and mutual recognition to improve relationships'
+      },
+      focus: {
+        ko: ['자기 결정력 강화', '상대방 관점 이해', '관계 회복'],
+        en: ['Enhancing self-determination', 'Understanding other perspectives', 'Relationship restoration']
+      }
+    },
     intervention: { ko: '자체 해결 가능', en: 'Self-resolution possible' },
     interventionType: 'self',
     phaseName: { ko: '국면 I: 상호 승리', en: 'Phase I: Win-Win' },
@@ -95,6 +107,18 @@ const stages = [
     example: {
       ko: '팀 내 업무 방식에 대한 갈등',
       en: 'Conflict over work methods within team'
+    },
+    mediatorStyle: {
+      type: 'Transformative',
+      typeKo: '관계변화형',
+      description: {
+        ko: '갈등을 성장의 기회로 전환하며 당사자 간 신뢰 구축 지원',
+        en: 'Transforms conflict into growth opportunity and supports trust building between parties'
+      },
+      focus: {
+        ko: ['감정 인정', '상호 이해 촉진', '자율적 해결 유도'],
+        en: ['Acknowledging emotions', 'Promoting mutual understanding', 'Encouraging autonomous resolution']
+      }
     },
     intervention: { ko: '비공식 제3자 도움', en: 'Informal third-party help' },
     interventionType: 'self',
@@ -137,6 +161,18 @@ const stages = [
       ko: '상호 무시하며 독자적 의사결정',
       en: 'Ignoring each other while making independent decisions'
     },
+    mediatorStyle: {
+      type: 'Transformative',
+      typeKo: '관계변화형',
+      description: {
+        ko: '행동 이면의 감정과 욕구를 탐색하며 대화 재개 유도',
+        en: 'Explores emotions and needs behind actions while encouraging dialogue resumption'
+      },
+      focus: {
+        ko: ['행동 동기 이해', '비폭력적 소통 훈련', '공감 능력 회복'],
+        en: ['Understanding action motives', 'Non-violent communication training', 'Restoring empathy']
+      }
+    },
     intervention: { ko: '훈련된 조정인 필요', en: 'Trained mediator needed' },
     interventionType: 'mediator',
     phaseName: { ko: '국면 I: 상호 승리', en: 'Phase I: Win-Win' },
@@ -177,6 +213,18 @@ const stages = [
     example: {
       ko: '조직 내 파벌 싸움',
       en: 'Factional fighting within organization'
+    },
+    mediatorStyle: {
+      type: 'Facilitative',
+      typeKo: '촉진형',
+      description: {
+        ko: '구조화된 협상 과정을 통해 당사자들이 스스로 해결책 도출하도록 지원',
+        en: 'Supports parties in finding their own solutions through structured negotiation process'
+      },
+      focus: {
+        ko: ['협상 구조 설계', '이해관계 분석', '창의적 대안 탐색'],
+        en: ['Designing negotiation structure', 'Interest analysis', 'Exploring creative alternatives']
+      }
     },
     intervention: { ko: '전문 조정인 필요', en: 'Professional mediator needed' },
     interventionType: 'mediator',
@@ -219,6 +267,18 @@ const stages = [
       ko: '공개적인 비난과 조롱',
       en: 'Public criticism and ridicule'
     },
+    mediatorStyle: {
+      type: 'Facilitative',
+      typeKo: '촉진형',
+      description: {
+        ko: '체면 회복 기회를 제공하며 비공개 환경에서 진정한 대화 유도',
+        en: 'Provides face-saving opportunities and facilitates genuine dialogue in private settings'
+      },
+      focus: {
+        ko: ['체면 보전 전략', '비공개 협상', '감정 정화 지원'],
+        en: ['Face-saving strategies', 'Private negotiation', 'Emotional catharsis support']
+      }
+    },
     intervention: { ko: '전문 조정 필수', en: 'Professional mediation essential' },
     interventionType: 'mediator',
     phaseName: { ko: '국면 II: 승패 구도', en: 'Phase II: Win-Lose' },
@@ -259,6 +319,18 @@ const stages = [
     example: {
       ko: '법적 조치 위협',
       en: 'Threatening legal action'
+    },
+    mediatorStyle: {
+      type: 'Facilitative',
+      typeKo: '촉진형',
+      description: {
+        ko: '위협의 악순환을 끊고 안전한 협상 환경 구축에 집중',
+        en: 'Focuses on breaking threat cycles and building safe negotiation environment'
+      },
+      focus: {
+        ko: ['위협 완화', '안전 보장 협상', '대안적 해결책 모색'],
+        en: ['Threat mitigation', 'Safety guarantee negotiation', 'Seeking alternative solutions']
+      }
     },
     intervention: { ko: '전문 조정 필수', en: 'Professional mediation essential' },
     interventionType: 'intervention',
@@ -301,6 +373,18 @@ const stages = [
       ko: '자산 훼손, 업무 방해',
       en: 'Asset damage, work obstruction'
     },
+    mediatorStyle: {
+      type: 'Evaluative',
+      typeKo: '평가형',
+      description: {
+        ko: '전문적 판단과 권고를 통해 분쟁 해결 방향 제시',
+        en: 'Provides dispute resolution direction through professional judgment and recommendations'
+      },
+      focus: {
+        ko: ['피해 평가', '법적 권고', '강제적 분리 조치'],
+        en: ['Damage assessment', 'Legal recommendations', 'Mandatory separation measures']
+      }
+    },
     intervention: { ko: '공식적 개입 필요', en: 'Formal intervention needed' },
     interventionType: 'intervention',
     phaseName: { ko: '국면 III: 상호 손실', en: 'Phase III: Lose-Lose' },
@@ -342,6 +426,18 @@ const stages = [
       ko: '조직 와해 시도',
       en: 'Attempting to dismantle organization'
     },
+    mediatorStyle: {
+      type: 'Evaluative',
+      typeKo: '평가형',
+      description: {
+        ko: '법적 권한을 가진 중재자가 구속력 있는 결정 도출',
+        en: 'Mediator with legal authority derives binding decisions'
+      },
+      focus: {
+        ko: ['법적 판단', '강제 집행', '시스템 보호'],
+        en: ['Legal judgment', 'Enforcement', 'System protection']
+      }
+    },
     intervention: { ko: '강력한 외부 개입', en: 'Strong external intervention' },
     interventionType: 'intervention',
     phaseName: { ko: '국면 III: 상호 손실', en: 'Phase III: Lose-Lose' },
@@ -382,6 +478,18 @@ const stages = [
     example: {
       ko: '모두를 파멸시키는 극단적 행동',
       en: 'Extreme actions destroying everyone'
+    },
+    mediatorStyle: {
+      type: 'Evaluative',
+      typeKo: '평가형',
+      description: {
+        ko: '위기 개입 전문가와 법적 권한자의 즉각적이고 결정적인 조치',
+        en: 'Immediate and decisive action by crisis intervention specialists and legal authorities'
+      },
+      focus: {
+        ko: ['위기 관리', '강제 격리', '장기 치료 계획'],
+        en: ['Crisis management', 'Forced isolation', 'Long-term treatment planning']
+      }
     },
     intervention: { ko: '강력한 외부 개입', en: 'Strong external intervention' },
     interventionType: 'intervention',
@@ -655,7 +763,7 @@ const StageCard = ({ stage, lang, onClick, isActive, index }) => {
         </div>
 
         {/* Stats Row */}
-        <div className="grid grid-cols-2 gap-2 text-xs">
+        <div className="grid grid-cols-2 gap-2 text-xs mb-3">
           <div className="bg-gray-50 rounded-lg p-2 text-center">
             <div className="font-semibold text-gray-900">{stage.successRate}%</div>
             <div className="text-gray-500">{lang === 'ko' ? '해결률' : 'Success'}</div>
@@ -665,6 +773,22 @@ const StageCard = ({ stage, lang, onClick, isActive, index }) => {
             <div className="text-gray-500">{lang === 'ko' ? '평균기간' : 'Duration'}</div>
           </div>
         </div>
+
+        {/* Detail Button */}
+        <button
+          className="w-full py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-90"
+          style={{
+            backgroundColor: `${stage.color}15`,
+            color: stage.color,
+            border: `1px solid ${stage.color}30`
+          }}
+          onClick={(e) => {
+            e.stopPropagation()
+            onClick()
+          }}
+        >
+          {lang === 'ko' ? '상세 보기' : 'View Details'}
+        </button>
       </div>
     </motion.div>
   )
@@ -929,6 +1053,48 @@ const DetailModal = ({ stage, lang, onClose }) => (
             <p className="text-gray-700 italic">
               "{lang === 'ko' ? stage.example.ko : stage.example.en}"
             </p>
+          </div>
+        )}
+
+        {/* Mediator Style */}
+        {stage.mediatorStyle && (
+          <div
+            className="p-4 rounded-2xl border"
+            style={{ borderColor: `${stage.color}40`, backgroundColor: `${stage.color}05` }}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <span className="text-xl">👤</span>
+                <h4 className="font-semibold" style={{ color: stage.color }}>
+                  {lang === 'ko' ? '조정인 스타일' : 'Mediator Style'}
+                </h4>
+              </div>
+              <span
+                className="px-3 py-1 rounded-full text-xs font-bold text-white"
+                style={{ backgroundColor: stage.color }}
+              >
+                {lang === 'ko' ? stage.mediatorStyle.typeKo : stage.mediatorStyle.type}
+              </span>
+            </div>
+            <p className="text-gray-700 mb-3 text-sm">
+              {lang === 'ko' ? stage.mediatorStyle.description.ko : stage.mediatorStyle.description.en}
+            </p>
+            <div className="bg-white/50 rounded-lg p-3">
+              <div className="text-xs font-semibold text-gray-600 mb-2">
+                {lang === 'ko' ? '주요 초점' : 'Key Focus Areas'}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {(lang === 'ko' ? stage.mediatorStyle.focus.ko : stage.mediatorStyle.focus.en).map((f, i) => (
+                  <span
+                    key={i}
+                    className="px-2 py-1 rounded-full text-xs font-medium"
+                    style={{ backgroundColor: `${stage.color}20`, color: stage.color }}
+                  >
+                    {f}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
