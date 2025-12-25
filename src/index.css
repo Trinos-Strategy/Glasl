@@ -28,26 +28,43 @@
     --accent-gold-light: #C9B382;  /* Champagne Bronze */
     --accent-gold-warm: #D4AF71;   /* Cream Gold - highlight */
 
-    /* Phase I - Sage Green (YSL Vert Celadon) */
-    --phase-1: #A4B494;
-    --phase-1-light: #B8C4A8;
-    --phase-1-dark: #8FA880;
-    --phase-1-bg: rgba(164, 180, 148, 0.05);
-    --phase-1-text: rgba(164, 180, 148, 0.7);
+    /* ═══════════════════════════════════════════════════════════════════════
+       COLOR PSYCHOLOGY BASED PHASE COLORS (Traffic Light Paradigm)
+       Green (Safe) → Amber (Caution) → Red (Crisis)
+       ═══════════════════════════════════════════════════════════════════════ */
 
-    /* Phase II - Coffee Brown (Hermès Tan) */
-    --phase-2: #A68A6A;
-    --phase-2-light: #B89F84;
-    --phase-2-dark: #8D6F52;
-    --phase-2-bg: rgba(166, 138, 106, 0.05);
-    --phase-2-text: rgba(166, 138, 106, 0.7);
+    /* Phase I - GREEN ZONE (Win-Win: Cooperation, Harmony, Growth) */
+    --phase-1: #7CB342;
+    --phase-1-mid: #9CCC65;
+    --phase-1-light: #AED581;
+    --phase-1-dark: #689F38;
+    --phase-1-gradient: linear-gradient(135deg, #7CB342 0%, #9CCC65 50%, #AED581 100%);
+    --phase-1-bg: linear-gradient(135deg, rgba(124, 179, 66, 0.12) 0%, rgba(156, 204, 101, 0.08) 100%);
+    --phase-1-hover: rgba(124, 179, 66, 0.18);
+    --phase-1-text: #5D8A2F;
+    --phase-1-glow: rgba(124, 179, 66, 0.25);
 
-    /* Phase III - Dusty Rose (Dior Rose Grey) */
-    --phase-3: #C9A9A6;
-    --phase-3-light: #D9BCB9;
-    --phase-3-dark: #B08F8C;
-    --phase-3-bg: rgba(201, 169, 166, 0.05);
-    --phase-3-text: rgba(201, 169, 166, 0.7);
+    /* Phase II - AMBER ZONE (Win-Lose: Caution, Tension, Anxiety) */
+    --phase-2: #F57C00;
+    --phase-2-mid: #FB8C00;
+    --phase-2-light: #FFA726;
+    --phase-2-dark: #E65100;
+    --phase-2-gradient: linear-gradient(135deg, #F57C00 0%, #FB8C00 50%, #FFA726 100%);
+    --phase-2-bg: linear-gradient(135deg, rgba(245, 124, 0, 0.12) 0%, rgba(255, 167, 38, 0.08) 100%);
+    --phase-2-hover: rgba(245, 124, 0, 0.18);
+    --phase-2-text: #C56200;
+    --phase-2-glow: rgba(245, 124, 0, 0.25);
+
+    /* Phase III - RED ZONE (Lose-Lose: Crisis, Destruction, Emergency) */
+    --phase-3: #D32F2F;
+    --phase-3-mid: #E53935;
+    --phase-3-light: #EF5350;
+    --phase-3-dark: #B71C1C;
+    --phase-3-gradient: linear-gradient(135deg, #D32F2F 0%, #E53935 50%, #EF5350 100%);
+    --phase-3-bg: linear-gradient(135deg, rgba(211, 47, 47, 0.12) 0%, rgba(239, 83, 80, 0.08) 100%);
+    --phase-3-hover: rgba(211, 47, 47, 0.18);
+    --phase-3-text: #B52828;
+    --phase-3-glow: rgba(211, 47, 47, 0.25);
 
     /* Borders & Dividers */
     --border-light: #e8e6e3;
@@ -304,72 +321,105 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
-     STAGE CARDS - Minimal with Luxury Phase Colors
+     STAGE CARDS - Color Psychology Based Design
      ═══════════════════════════════════════════════════════════════════════ */
 
   .stage-card {
-    background: transparent;
+    background: var(--color-bg-primary);
     border: 1px solid var(--border-light);
+    border-left: 4px solid var(--card-accent, var(--border-light));
     border-radius: 0;
     padding: var(--space-element);
     transition: all var(--transition-base);
     cursor: pointer;
     position: relative;
+    overflow: hidden;
   }
 
+  /* Subtle gradient background */
   .stage-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--card-bg-gradient, transparent);
+    opacity: 0.6;
+    transition: opacity var(--transition-base);
+    pointer-events: none;
+  }
+
+  /* Top accent line on hover */
+  .stage-card::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 0;
-    height: 1px;
-    background: var(--card-accent, var(--accent-gold));
+    height: 2px;
+    background: var(--card-gradient, var(--accent-gold));
     transition: width var(--transition-slow);
   }
 
   .stage-card:hover {
     border-color: var(--card-accent, var(--accent-gold));
-    background: var(--card-bg, rgba(184, 149, 106, 0.03));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--card-glow, rgba(0,0,0,0.08));
   }
 
   .stage-card:hover::before {
+    opacity: 1;
+  }
+
+  .stage-card:hover::after {
     width: 100%;
   }
 
-  /* Phase-specific card colors */
+  /* Phase I - Green Zone */
   .stage-card.phase-1 {
     --card-accent: var(--phase-1);
-    --card-bg: var(--phase-1-bg);
+    --card-bg-gradient: var(--phase-1-bg);
+    --card-gradient: var(--phase-1-gradient);
+    --card-glow: var(--phase-1-glow);
   }
 
+  /* Phase II - Amber Zone */
   .stage-card.phase-2 {
     --card-accent: var(--phase-2);
-    --card-bg: var(--phase-2-bg);
+    --card-bg-gradient: var(--phase-2-bg);
+    --card-gradient: var(--phase-2-gradient);
+    --card-glow: var(--phase-2-glow);
   }
 
+  /* Phase III - Red Zone */
   .stage-card.phase-3 {
     --card-accent: var(--phase-3);
-    --card-bg: var(--phase-3-bg);
+    --card-bg-gradient: var(--phase-3-bg);
+    --card-gradient: var(--phase-3-gradient);
+    --card-glow: var(--phase-3-glow);
   }
 
   .stage-number {
     font-family: var(--font-serif);
     font-size: 4rem;
     font-weight: 300;
-    color: var(--number-color, var(--text-muted));
     line-height: 1;
     margin-bottom: var(--space-item);
     letter-spacing: 0.05em;
-    transition: color var(--transition-base);
+    transition: all var(--transition-base);
+    position: relative;
+    z-index: 1;
+    /* Gradient text */
+    background: var(--number-gradient, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .stage-card.phase-1 .stage-number { --number-color: var(--phase-1-text); }
-  .stage-card.phase-2 .stage-number { --number-color: var(--phase-2-text); }
-  .stage-card.phase-3 .stage-number { --number-color: var(--phase-3-text); }
+  .stage-card.phase-1 .stage-number { --number-gradient: var(--phase-1-gradient); }
+  .stage-card.phase-2 .stage-number { --number-gradient: var(--phase-2-gradient); }
+  .stage-card.phase-3 .stage-number { --number-gradient: var(--phase-3-gradient); }
 
   .stage-card:hover .stage-number {
-    color: var(--card-accent, var(--accent-gold));
+    transform: scale(1.05);
   }
 
   .stage-name {
@@ -419,35 +469,67 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
-     PHASE SECTIONS - Luxury Brand Colors
+     PHASE SECTIONS - Traffic Light Color System
      ═══════════════════════════════════════════════════════════════════════ */
 
   .phase-section {
     margin-bottom: var(--space-section);
+    position: relative;
   }
 
   .phase-header {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-item);
     margin-bottom: var(--space-element);
-    padding-bottom: var(--space-item);
+    padding: var(--space-item) var(--space-item);
     border-bottom: 1px solid var(--border-light);
+    background: var(--phase-header-bg, transparent);
+    position: relative;
+  }
+
+  /* Left accent bar on header */
+  .phase-header::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--phase-header-accent, var(--accent-gold));
   }
 
   .phase-number {
     font-family: var(--font-serif);
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--phase-accent, var(--accent-gold));
+    padding: 8px 16px;
+    background: var(--phase-number-gradient, var(--accent-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   /* Phase-specific header colors */
-  .phase-section.phase-1 .phase-number { --phase-accent: var(--phase-1); }
-  .phase-section.phase-2 .phase-number { --phase-accent: var(--phase-2); }
-  .phase-section.phase-3 .phase-number { --phase-accent: var(--phase-3); }
+  .phase-section.phase-1 .phase-header {
+    --phase-header-bg: var(--phase-1-bg);
+    --phase-header-accent: var(--phase-1-gradient);
+  }
+  .phase-section.phase-1 .phase-number { --phase-number-gradient: var(--phase-1-gradient); }
+
+  .phase-section.phase-2 .phase-header {
+    --phase-header-bg: var(--phase-2-bg);
+    --phase-header-accent: var(--phase-2-gradient);
+  }
+  .phase-section.phase-2 .phase-number { --phase-number-gradient: var(--phase-2-gradient); }
+
+  .phase-section.phase-3 .phase-header {
+    --phase-header-bg: var(--phase-3-bg);
+    --phase-header-accent: var(--phase-3-gradient);
+  }
+  .phase-section.phase-3 .phase-number { --phase-number-gradient: var(--phase-3-gradient); }
 
   .phase-title {
     font-family: var(--font-serif);
@@ -458,32 +540,34 @@
   }
 
   .phase-subtitle {
-    font-size: 11px;
-    font-weight: 500;
+    font-size: 10px;
+    font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--text-muted);
     margin-left: auto;
     padding: 6px 14px;
-    background: linear-gradient(135deg, var(--phase-badge-from, var(--accent-gold-light)), var(--phase-badge-to, var(--accent-gold-warm)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    border: 1px solid var(--phase-badge-border, var(--border-light));
+    background: var(--phase-badge-bg, transparent);
+    color: var(--phase-badge-color, var(--text-tertiary));
+    transition: all var(--transition-fast);
   }
 
   .phase-section.phase-1 .phase-subtitle {
-    --phase-badge-from: var(--phase-1);
-    --phase-badge-to: var(--phase-1-light);
+    --phase-badge-border: rgba(124, 179, 66, 0.4);
+    --phase-badge-bg: rgba(124, 179, 66, 0.08);
+    --phase-badge-color: var(--phase-1-text);
   }
 
   .phase-section.phase-2 .phase-subtitle {
-    --phase-badge-from: var(--phase-2);
-    --phase-badge-to: var(--phase-2-light);
+    --phase-badge-border: rgba(245, 124, 0, 0.4);
+    --phase-badge-bg: rgba(245, 124, 0, 0.08);
+    --phase-badge-color: var(--phase-2-text);
   }
 
   .phase-section.phase-3 .phase-subtitle {
-    --phase-badge-from: var(--phase-3);
-    --phase-badge-to: var(--phase-3-light);
+    --phase-badge-border: rgba(211, 47, 47, 0.4);
+    --phase-badge-bg: rgba(211, 47, 47, 0.08);
+    --phase-badge-color: var(--phase-3-text);
   }
 
   .stages-grid {
