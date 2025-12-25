@@ -321,6 +321,55 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
+     STAGE ICONS - Luxury Minimalist Line Icons
+     ═══════════════════════════════════════════════════════════════════════ */
+
+  .stage-icon {
+    width: 28px;
+    height: 28px;
+    margin-bottom: 16px;
+    opacity: 0.7;
+    color: var(--icon-color, var(--text-muted));
+    stroke-width: 1.5px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Phase-specific icon colors */
+  .phase-1 .stage-icon { --icon-color: var(--phase-1); }
+  .phase-2 .stage-icon { --icon-color: var(--phase-2); }
+  .phase-3 .stage-icon { --icon-color: var(--phase-3); }
+
+  .stage-card:hover .stage-icon {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════
+     PHASE ICONS - Section Header Icons
+     ═══════════════════════════════════════════════════════════════════════ */
+
+  .phase-icon {
+    width: 24px;
+    height: 24px;
+    opacity: 0.8;
+    color: var(--phase-icon-color, var(--accent-gold));
+    stroke-width: 1.5px;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .phase-section.phase-1 .phase-icon { --phase-icon-color: var(--phase-1); }
+  .phase-section.phase-2 .phase-icon { --phase-icon-color: var(--phase-2); }
+  .phase-section.phase-3 .phase-icon { --phase-icon-color: var(--phase-3); }
+
+  .phase-header:hover .phase-icon {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════════
      STAGE CARDS - Color Psychology Based Design
      ═══════════════════════════════════════════════════════════════════════ */
 
