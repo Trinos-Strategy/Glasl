@@ -23,16 +23,31 @@
     --text-tertiary: #7a7a7a;
     --text-muted: #a0a0a0;
 
-    /* Gold Accents */
-    --accent-gold: #C9B382;
-    --accent-gold-light: #D4C49A;
-    --accent-gold-dark: #B8A271;
-    --accent-warm: #D4AF71;
+    /* Gold Accents - Luxury Brands */
+    --accent-gold: #B8956A;        /* Chanel Gold - primary accent */
+    --accent-gold-light: #C9B382;  /* Champagne Bronze */
+    --accent-gold-warm: #D4AF71;   /* Cream Gold - highlight */
 
-    /* Phase Colors - Muted, Refined */
-    --phase-1: #8B9A7D;
-    --phase-2: #C9B382;
-    --phase-3: #9B7B6B;
+    /* Phase I - Sage Green (YSL Vert Celadon) */
+    --phase-1: #A4B494;
+    --phase-1-light: #B8C4A8;
+    --phase-1-dark: #8FA880;
+    --phase-1-bg: rgba(164, 180, 148, 0.05);
+    --phase-1-text: rgba(164, 180, 148, 0.7);
+
+    /* Phase II - Coffee Brown (Hermès Tan) */
+    --phase-2: #A68A6A;
+    --phase-2-light: #B89F84;
+    --phase-2-dark: #8D6F52;
+    --phase-2-bg: rgba(166, 138, 106, 0.05);
+    --phase-2-text: rgba(166, 138, 106, 0.7);
+
+    /* Phase III - Dusty Rose (Dior Rose Grey) */
+    --phase-3: #C9A9A6;
+    --phase-3-light: #D9BCB9;
+    --phase-3-dark: #B08F8C;
+    --phase-3-bg: rgba(201, 169, 166, 0.05);
+    --phase-3-text: rgba(201, 169, 166, 0.7);
 
     /* Borders & Dividers */
     --border-light: #e8e6e3;
@@ -289,7 +304,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
-     STAGE CARDS - Minimal, No Border Radius
+     STAGE CARDS - Minimal with Luxury Phase Colors
      ═══════════════════════════════════════════════════════════════════════ */
 
   .stage-card {
@@ -309,27 +324,52 @@
     left: 0;
     width: 0;
     height: 1px;
-    background: var(--accent-gold);
+    background: var(--card-accent, var(--accent-gold));
     transition: width var(--transition-slow);
   }
 
   .stage-card:hover {
-    border-color: var(--accent-gold);
-    background: rgba(201, 179, 130, 0.03);
+    border-color: var(--card-accent, var(--accent-gold));
+    background: var(--card-bg, rgba(184, 149, 106, 0.03));
   }
 
   .stage-card:hover::before {
     width: 100%;
   }
 
+  /* Phase-specific card colors */
+  .stage-card.phase-1 {
+    --card-accent: var(--phase-1);
+    --card-bg: var(--phase-1-bg);
+  }
+
+  .stage-card.phase-2 {
+    --card-accent: var(--phase-2);
+    --card-bg: var(--phase-2-bg);
+  }
+
+  .stage-card.phase-3 {
+    --card-accent: var(--phase-3);
+    --card-bg: var(--phase-3-bg);
+  }
+
   .stage-number {
     font-family: var(--font-serif);
     font-size: 4rem;
     font-weight: 300;
-    color: var(--text-muted);
+    color: var(--number-color, var(--text-muted));
     line-height: 1;
     margin-bottom: var(--space-item);
     letter-spacing: 0.05em;
+    transition: color var(--transition-base);
+  }
+
+  .stage-card.phase-1 .stage-number { --number-color: var(--phase-1-text); }
+  .stage-card.phase-2 .stage-number { --number-color: var(--phase-2-text); }
+  .stage-card.phase-3 .stage-number { --number-color: var(--phase-3-text); }
+
+  .stage-card:hover .stage-number {
+    color: var(--card-accent, var(--accent-gold));
   }
 
   .stage-name {
@@ -379,7 +419,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
-     PHASE SECTIONS
+     PHASE SECTIONS - Luxury Brand Colors
      ═══════════════════════════════════════════════════════════════════════ */
 
   .phase-section {
@@ -401,8 +441,13 @@
     font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--accent-gold);
+    color: var(--phase-accent, var(--accent-gold));
   }
+
+  /* Phase-specific header colors */
+  .phase-section.phase-1 .phase-number { --phase-accent: var(--phase-1); }
+  .phase-section.phase-2 .phase-number { --phase-accent: var(--phase-2); }
+  .phase-section.phase-3 .phase-number { --phase-accent: var(--phase-3); }
 
   .phase-title {
     font-family: var(--font-serif);
@@ -413,11 +458,32 @@
   }
 
   .phase-subtitle {
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    color: var(--text-tertiary);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
     margin-left: auto;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, var(--phase-badge-from, var(--accent-gold-light)), var(--phase-badge-to, var(--accent-gold-warm)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .phase-section.phase-1 .phase-subtitle {
+    --phase-badge-from: var(--phase-1);
+    --phase-badge-to: var(--phase-1-light);
+  }
+
+  .phase-section.phase-2 .phase-subtitle {
+    --phase-badge-from: var(--phase-2);
+    --phase-badge-to: var(--phase-2-light);
+  }
+
+  .phase-section.phase-3 .phase-subtitle {
+    --phase-badge-from: var(--phase-3);
+    --phase-badge-to: var(--phase-3-light);
   }
 
   .stages-grid {
@@ -444,7 +510,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
-     TIMELINE - Minimal Line Design
+     TIMELINE - Minimal Line with Luxury Phase Colors
      ═══════════════════════════════════════════════════════════════════════ */
 
   .timeline {
@@ -462,10 +528,12 @@
     background: linear-gradient(
       to right,
       transparent,
-      var(--border-medium) 10%,
-      var(--border-medium) 90%,
+      var(--phase-1-light) 10%,
+      var(--phase-2) 50%,
+      var(--phase-3-light) 90%,
       transparent
     );
+    opacity: 0.5;
   }
 
   .timeline-nodes {
@@ -488,17 +556,22 @@
   }
 
   .timeline-dot {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     background: var(--color-bg-primary);
-    border: 1px solid var(--border-medium);
+    border: 1px solid var(--node-color, var(--border-medium));
     transition: all var(--transition-base);
   }
 
+  /* Phase-specific timeline node colors */
+  .timeline-node.phase-1 { --node-color: var(--phase-1); }
+  .timeline-node.phase-2 { --node-color: var(--phase-2); }
+  .timeline-node.phase-3 { --node-color: var(--phase-3); }
+
   .timeline-node:hover .timeline-dot,
   .timeline-node.active .timeline-dot {
-    border-color: var(--accent-gold);
-    background: var(--accent-gold);
+    border-color: var(--node-color, var(--accent-gold));
+    background: var(--node-color, var(--accent-gold));
   }
 
   .timeline-label {
@@ -511,7 +584,7 @@
 
   .timeline-node:hover .timeline-label,
   .timeline-node.active .timeline-label {
-    color: var(--text-primary);
+    color: var(--node-color, var(--text-primary));
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
@@ -657,7 +730,7 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
-     BUTTONS - Thin Border Style
+     BUTTONS - Luxury Brand Style
      ═══════════════════════════════════════════════════════════════════════ */
 
   .btn {
@@ -681,8 +754,9 @@
   }
 
   .btn-primary:hover {
-    background: transparent;
-    color: var(--text-primary);
+    background: var(--accent-gold);
+    border-color: var(--accent-gold);
+    color: white;
   }
 
   .btn-secondary {
@@ -692,8 +766,9 @@
   }
 
   .btn-secondary:hover {
-    background: var(--text-primary);
-    color: var(--color-bg-primary);
+    background: rgba(184, 149, 106, 0.05);
+    border-color: var(--accent-gold);
+    color: var(--accent-gold);
   }
 
   .btn-ghost {
@@ -704,11 +779,11 @@
   }
 
   .btn-ghost:hover {
-    color: var(--text-primary);
+    color: var(--accent-gold);
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
-     INTERVENTION BADGES - Subtle
+     INTERVENTION BADGES - Phase-Specific Luxury Colors
      ═══════════════════════════════════════════════════════════════════════ */
 
   .badge {
@@ -722,7 +797,26 @@
     text-transform: uppercase;
     border: 1px solid var(--border-light);
     color: var(--text-secondary);
+    background: var(--badge-bg, transparent);
     transition: all var(--transition-fast);
+  }
+
+  .badge.phase-1 {
+    --badge-bg: var(--phase-1-bg);
+    border-color: rgba(164, 180, 148, 0.3);
+    color: var(--phase-1-dark);
+  }
+
+  .badge.phase-2 {
+    --badge-bg: var(--phase-2-bg);
+    border-color: rgba(166, 138, 106, 0.3);
+    color: var(--phase-2-dark);
+  }
+
+  .badge.phase-3 {
+    --badge-bg: var(--phase-3-bg);
+    border-color: rgba(201, 169, 166, 0.3);
+    color: var(--phase-3-dark);
   }
 
   .badge:hover {
