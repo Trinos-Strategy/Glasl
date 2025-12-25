@@ -81,15 +81,48 @@
     --transition-base: 400ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Typography */
+    /* Typography - Font Families */
     --font-serif: 'Cormorant Garamond', 'Georgia', serif;
-    --font-sans: 'Inter', 'Pretendard Variable', -apple-system, sans-serif;
+    --font-sans: 'Inter', 'Noto Sans KR', 'Apple SD Gothic Neo', -apple-system, sans-serif;
 
-    /* Spacing - Generous */
-    --space-section: 200px;
-    --space-component: 100px;
-    --space-element: 48px;
-    --space-item: 24px;
+    /* ═══════════════════════════════════════════════════════════════════════
+       FLUID TYPOGRAPHY SCALE (2025 Best Practices)
+       Mobile-first with clamp() for seamless scaling
+       ═══════════════════════════════════════════════════════════════════════ */
+
+    /* Display & Hero Text */
+    --fs-hero: clamp(3rem, 2rem + 5vw, 5.5rem);           /* 48-88px */
+    --fs-display: clamp(2.5rem, 1.75rem + 3.75vw, 4.5rem); /* 40-72px */
+
+    /* Headings */
+    --fs-h1: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);         /* 32-56px */
+    --fs-h2: clamp(1.75rem, 1.4rem + 1.75vw, 2.75rem);    /* 28-44px */
+    --fs-h3: clamp(1.5rem, 1.25rem + 1.25vw, 2.25rem);    /* 24-36px */
+
+    /* Stage Card Typography */
+    --fs-roman: clamp(3rem, 2.5rem + 2.5vw, 4.5rem);      /* 48-72px - MUCH larger */
+    --fs-card-title: clamp(1.5rem, 1.25rem + 1.25vw, 2rem); /* 24-32px */
+    --fs-card-stat: clamp(2.25rem, 1.875rem + 1.875vw, 3.25rem); /* 36-52px */
+
+    /* Body & Labels */
+    --fs-body: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);    /* 16-20px */
+    --fs-label: clamp(0.8125rem, 0.775rem + 0.1875vw, 0.9375rem); /* 13-15px */
+    --fs-small: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem); /* 12-14px */
+    --fs-xs: clamp(0.6875rem, 0.65rem + 0.1875vw, 0.8125rem); /* 11-13px */
+
+    /* Font Weights - Clear Hierarchy */
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    /* Spacing - Generous (1.5x increase) */
+    --space-section: 280px;
+    --space-component: 140px;
+    --space-element: 72px;
+    --space-item: 36px;
+    --space-xs: 16px;
   }
 
   * {
@@ -184,21 +217,23 @@
 
   .hero-title {
     font-family: var(--font-serif);
-    font-weight: 300;
-    font-size: clamp(2.5rem, 7vw, 5rem);
-    letter-spacing: 0.12em;
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-hero);
+    letter-spacing: -0.02em;
     text-transform: uppercase;
     color: var(--text-primary);
     margin-bottom: var(--space-item);
+    line-height: 1.1;
   }
 
   .hero-subtitle {
     font-family: var(--font-sans);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.25em;
+    font-size: var(--fs-label);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
+    margin-top: var(--space-xs);
   }
 
   .scroll-indicator {
@@ -249,9 +284,9 @@
 
   .logo {
     font-family: var(--font-serif);
-    font-size: 20px;
-    font-weight: 400;
-    letter-spacing: 0.15em;
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--text-primary);
   }
@@ -263,16 +298,16 @@
   }
 
   .nav-link {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-tertiary);
     background: none;
     border: none;
     cursor: pointer;
     transition: color var(--transition-fast);
-    padding: 0;
+    padding: var(--space-xs);
   }
 
   .nav-link:hover,
@@ -296,9 +331,9 @@
   }
 
   .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.25em;
+    font-size: var(--fs-label);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent-gold);
     margin-bottom: var(--space-item);
@@ -307,10 +342,11 @@
 
   .section-title {
     font-family: var(--font-serif);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 400;
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-bold);
     color: var(--text-primary);
-    letter-spacing: 0.06em;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
   }
 
   .section-divider {
@@ -448,11 +484,11 @@
 
   .stage-number {
     font-family: var(--font-serif);
-    font-size: 4rem;
-    font-weight: 300;
+    font-size: var(--fs-roman);
+    font-weight: var(--fw-light);
     line-height: 1;
     margin-bottom: var(--space-item);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
     transition: all var(--transition-base);
     position: relative;
     z-index: 1;
@@ -473,19 +509,20 @@
 
   .stage-name {
     font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: var(--fs-card-title);
+    font-weight: var(--fw-bold);
     color: var(--text-primary);
-    margin-bottom: 8px;
-    letter-spacing: 0.03em;
+    margin-bottom: var(--space-xs);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
   }
 
   .stage-name-en {
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.15em;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--text-tertiary);
+    color: var(--text-secondary);
     margin-bottom: var(--space-item);
   }
 
@@ -502,19 +539,20 @@
 
   .stage-stat-value {
     font-family: var(--font-serif);
-    font-size: 2rem;
-    font-weight: 300;
+    font-size: var(--fs-card-stat);
+    font-weight: var(--fw-bold);
     color: var(--text-primary);
     line-height: 1;
+    letter-spacing: -0.02em;
   }
 
   .stage-stat-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 8px;
+    color: var(--text-tertiary);
+    margin-top: var(--space-xs);
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
@@ -550,11 +588,11 @@
 
   .phase-number {
     font-family: var(--font-serif);
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
+    font-size: var(--fs-label);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 8px 16px;
+    padding: var(--space-xs) var(--space-item);
     background: var(--phase-number-gradient, var(--accent-gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -582,19 +620,20 @@
 
   .phase-title {
     font-family: var(--font-serif);
-    font-size: 1.25rem;
-    font-weight: 400;
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-bold);
     color: var(--text-primary);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
   }
 
   .phase-subtitle {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-left: auto;
-    padding: 6px 14px;
+    padding: var(--space-xs) var(--space-item);
     border: 1px solid var(--phase-badge-border, var(--border-light));
     background: var(--phase-badge-bg, transparent);
     color: var(--phase-badge-color, var(--text-tertiary));
@@ -739,20 +778,20 @@
 
   .stat-value {
     font-family: var(--font-serif);
-    font-size: 3.5rem;
-    font-weight: 300;
+    font-size: var(--fs-display);
+    font-weight: var(--fw-bold);
     color: var(--text-primary);
     line-height: 1;
     letter-spacing: -0.02em;
   }
 
   .stat-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.25em;
+    font-size: var(--fs-label);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--text-muted);
-    margin-top: 16px;
+    color: var(--text-tertiary);
+    margin-top: var(--space-xs);
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
@@ -1024,16 +1063,18 @@
   }
 
   .lang-btn {
-    padding: 8px 12px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
+    padding: var(--space-xs);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     background: none;
     border: none;
     color: var(--text-muted);
     cursor: pointer;
     transition: color var(--transition-fast);
+    min-height: 44px;
+    min-width: 44px;
   }
 
   .lang-btn:hover {
@@ -1056,8 +1097,8 @@
 
   .footer-logo {
     font-family: var(--font-serif);
-    font-size: 24px;
-    font-weight: 400;
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-semibold);
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-primary);
@@ -1065,19 +1106,20 @@
   }
 
   .footer-text {
-    font-size: 12px;
-    color: var(--text-tertiary);
-    letter-spacing: 0.05em;
-    max-width: 400px;
+    font-size: var(--fs-body);
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    max-width: 500px;
     margin: 0 auto var(--space-item);
-    line-height: 1.8;
+    line-height: 1.7;
   }
 
   .footer-credit {
-    font-size: 10px;
-    letter-spacing: 0.15em;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text-tertiary);
   }
 
   /* ═══════════════════════════════════════════════════════════════════════
@@ -1092,18 +1134,18 @@
 
   .quote-text {
     font-family: var(--font-serif);
-    font-size: 1.125rem;
+    font-size: var(--fs-h3);
     font-style: italic;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.6;
   }
 
   .quote-label {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--text-muted);
+    color: var(--text-tertiary);
     margin-top: var(--space-item);
   }
 
@@ -1260,13 +1302,58 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   RESPONSIVE - Maintain Elegance
+   RESPONSIVE - Maintain Elegance with Proper Typography Scaling
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @media (max-width: 1024px) {
   :root {
+    --space-section: 160px;
+    --space-component: 100px;
+    --space-element: 56px;
+  }
+
+  /* Tighter line heights for tablet */
+  h1, h2, h3 { line-height: 1.15; }
+
+  .phase-header {
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .phase-subtitle {
+    margin-left: 0;
+    margin-top: var(--space-xs);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
     --space-section: 120px;
     --space-component: 80px;
+    --space-element: 48px;
+    --space-item: 28px;
+  }
+
+  /* Mobile-optimized line heights */
+  h1, h2, h3 { line-height: 1.15; }
+  p, .stage-name-en { line-height: 1.6; }
+
+  .hero-title {
+    letter-spacing: 0;
+  }
+
+  .section-title {
+    letter-spacing: 0;
+  }
+
+  .phase-title {
+    font-size: var(--fs-h3);
+  }
+
+  /* Ensure touch-friendly targets */
+  button, .btn {
+    min-height: 48px;
+    padding: 14px 28px;
   }
 }
 
@@ -1274,24 +1361,34 @@
   :root {
     --space-section: 80px;
     --space-component: 60px;
-    --space-element: 32px;
+    --space-element: 40px;
+    --space-item: 24px;
+    --space-xs: 12px;
+  }
+
+  .hero {
+    padding: var(--space-component) var(--space-item);
   }
 
   .hero-title {
-    letter-spacing: 0.08em;
-  }
-
-  .stage-number {
-    font-size: 3rem;
-  }
-
-  .stat-value {
-    font-size: 2.5rem;
+    letter-spacing: -0.01em;
   }
 
   .stats-row {
     flex-direction: column;
     gap: var(--space-element);
+  }
+
+  .phase-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: var(--space-item);
+  }
+
+  .phase-subtitle {
+    width: 100%;
+    text-align: center;
+    margin-top: var(--space-xs);
   }
 
   .timeline-nodes {
@@ -1301,7 +1398,17 @@
   }
 
   .modal-content {
-    margin: var(--space-item);
+    margin: var(--space-xs);
+  }
+
+  .modal-header,
+  .modal-body {
+    padding: var(--space-item);
+  }
+
+  /* Grid adjustments for mobile */
+  .stages-grid {
+    grid-template-columns: 1fr;
   }
 }
 
