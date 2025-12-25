@@ -178,10 +178,10 @@ const LanguageToggle = ({ lang, setLang }) => (
   </div>
 )
 
-// Stage Card - Luxury Minimal Design
+// Stage Card - Luxury Minimal Design with Phase Colors
 const StageCard = ({ stage, lang, onClick, index }) => (
   <motion.article
-    className="stage-card"
+    className={`stage-card phase-${stage.phase}`}
     onClick={onClick}
     initial={{ opacity: 0 }}
     whileInView={{ opacity: 1 }}
@@ -205,9 +205,9 @@ const StageCard = ({ stage, lang, onClick, index }) => (
   </motion.article>
 )
 
-// Phase Section
+// Phase Section with Phase-Specific Colors
 const PhaseSection = ({ phase, children, lang }) => (
-  <section className="phase-section">
+  <section className={`phase-section phase-${phase.id}`}>
     <div className="phase-header">
       <span className="phase-number">{lang === 'ko' ? phase.nameKo : phase.nameEn}</span>
       <h2 className="phase-title">{lang === 'ko' ? phase.subtitleKo : phase.subtitleEn}</h2>
@@ -221,7 +221,7 @@ const PhaseSection = ({ phase, children, lang }) => (
   </section>
 )
 
-// Timeline
+// Timeline with Phase-Specific Node Colors
 const Timeline = ({ stages, activeStage, setActiveStage, lang }) => (
   <div className="timeline">
     <div className="timeline-line" />
@@ -229,7 +229,7 @@ const Timeline = ({ stages, activeStage, setActiveStage, lang }) => (
       {stages.map((stage) => (
         <button
           key={stage.id}
-          className={`timeline-node ${activeStage?.id === stage.id ? 'active' : ''}`}
+          className={`timeline-node phase-${stage.phase} ${activeStage?.id === stage.id ? 'active' : ''}`}
           onClick={() => setActiveStage(stage)}
         >
           <div className="timeline-dot" />
@@ -463,7 +463,7 @@ const DetailModal = ({ stage, lang, onClose }) => (
           <p className="intervention-text">
             {lang === 'ko' ? stage.intervention.ko : stage.intervention.en}
           </p>
-          <span className="badge">
+          <span className={`badge phase-${stage.phase}`}>
             {stage.interventionType === 'self' && (lang === 'ko' ? '자체 해결' : 'Self-resolve')}
             {stage.interventionType === 'mediator' && (lang === 'ko' ? '조정인 필요' : 'Mediator needed')}
             {stage.interventionType === 'intervention' && (lang === 'ko' ? '긴급 개입' : 'Emergency intervention')}
