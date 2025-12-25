@@ -160,6 +160,137 @@ const useAnimatedCounter = (end, duration = 2000) => {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
+// STAGE ICONS - Luxury Minimalist Line Icons (1.5px stroke)
+// ═══════════════════════════════════════════════════════════════════════════
+
+const StageIcons = {
+  // Stage I - Hardening: Interlocking chains/lock
+  1: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Hardening - positions solidifying">
+      <rect x="3" y="11" width="18" height="11" rx="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      <circle cx="12" cy="16" r="1" />
+    </svg>
+  ),
+
+  // Stage II - Debate: Two overlapping speech bubbles
+  2: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Debate - verbal confrontation">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      <path d="M8 12h.01M12 12h.01M16 12h.01" />
+    </svg>
+  ),
+
+  // Stage III - Actions: Lightning bolt / energy
+  3: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Actions - escalation to behavioral level">
+      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+    </svg>
+  ),
+
+  // Stage IV - Coalitions: Multiple figures forming groups
+  4: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Coalitions - alliance building">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="9" cy="7" r="4" />
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+    </svg>
+  ),
+
+  // Stage V - Loss of Face: Broken mask / cracked face
+  5: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Loss of Face - reputation damage">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M8 15s1.5 2 4 2 4-2 4-2" />
+      <line x1="9" y1="9" x2="9.01" y2="9" />
+      <line x1="15" y1="9" x2="15.01" y2="9" />
+      <path d="M12 2v4M12 18v4" strokeDasharray="2 2" />
+    </svg>
+  ),
+
+  // Stage VI - Threats: Warning triangle with exclamation
+  6: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Threats - intimidation">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+      <line x1="12" y1="9" x2="12" y2="13" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </svg>
+  ),
+
+  // Stage VII - Destruction: Explosion burst / fracture lines
+  7: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Destruction - relationship destruction">
+      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      <path d="M12 8v4M10 12h4" />
+    </svg>
+  ),
+
+  // Stage VIII - Fragmentation: Crossed swords / sharp divide
+  8: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Fragmentation - hostile separation">
+      <path d="M14.5 17.5L3 6V3h3l11.5 11.5" />
+      <path d="M13 19l6-6" />
+      <path d="M16 16l4 4" />
+      <path d="M19 21l2-2" />
+      <path d="M9.5 6.5L21 18V21h-3L6.5 9.5" />
+      <path d="M5 8l3-3" />
+      <path d="M2 5l2-2" />
+    </svg>
+  ),
+
+  // Stage IX - Abyss: Downward spiral / void
+  9: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Abyss - mutual annihilation">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2a10 10 0 0 1 0 20" strokeDasharray="4 4" />
+      <path d="M12 6a6 6 0 0 1 0 12" />
+      <path d="M12 10a2 2 0 0 1 0 4" />
+      <circle cx="12" cy="12" r="1" fill="currentColor" />
+    </svg>
+  ),
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PHASE ICONS - Luxury Minimalist Line Icons
+// ═══════════════════════════════════════════════════════════════════════════
+
+const PhaseIcons = {
+  // Phase I - Win-Win: Handshake (cooperation)
+  1: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Win-Win - cooperation">
+      <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z" />
+      <path d="M12 5.36V12" />
+      <path d="M8 9l4 3 4-3" />
+    </svg>
+  ),
+
+  // Phase II - Win-Lose: Balance scales
+  2: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Win-Lose - competition">
+      <path d="M12 3v18" />
+      <path d="M5 7l7-4 7 4" />
+      <path d="M5 7v3c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2V7" />
+      <path d="M13 7v3c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2V7" />
+      <path d="M8 21h8" />
+    </svg>
+  ),
+
+  // Phase III - Lose-Lose: Skull / warning
+  3: ({ className }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Lose-Lose - mutual destruction">
+      <circle cx="12" cy="10" r="8" />
+      <path d="M12 18v4" />
+      <path d="M8 22h8" />
+      <circle cx="9" cy="9" r="1.5" />
+      <circle cx="15" cy="9" r="1.5" />
+      <path d="M9 14h6" />
+      <path d="M10 14v2M12 14v2M14 14v2" />
+    </svg>
+  ),
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
 // COMPONENTS
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -178,48 +309,58 @@ const LanguageToggle = ({ lang, setLang }) => (
   </div>
 )
 
-// Stage Card - Luxury Minimal Design with Phase Colors
-const StageCard = ({ stage, lang, onClick, index }) => (
-  <motion.article
-    className={`stage-card phase-${stage.phase}`}
-    onClick={onClick}
-    initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    viewport={{ once: true, margin: "-50px" }}
-    transition={{ duration: 0.8, delay: index * 0.1 }}
-  >
-    <div className="stage-number">{stage.roman}</div>
-    <h3 className="stage-name">{lang === 'ko' ? stage.nameKo : stage.nameEn}</h3>
-    {lang === 'ko' && <p className="stage-name-en">{stage.nameEn}</p>}
+// Stage Card - Luxury Minimal Design with Phase Colors and Icons
+const StageCard = ({ stage, lang, onClick, index }) => {
+  const IconComponent = StageIcons[stage.id]
 
-    <div className="stage-meta">
-      <div className="stage-stat">
-        <div className="stage-stat-value">{stage.riskLevel}%</div>
-        <div className="stage-stat-label">{lang === 'ko' ? '위험도' : 'Risk'}</div>
-      </div>
-      <div className="stage-stat">
-        <div className="stage-stat-value">{stage.successRate}%</div>
-        <div className="stage-stat-label">{lang === 'ko' ? '해결률' : 'Resolution'}</div>
-      </div>
-    </div>
-  </motion.article>
-)
+  return (
+    <motion.article
+      className={`stage-card phase-${stage.phase}`}
+      onClick={onClick}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
+    >
+      {IconComponent && <IconComponent className="stage-icon" />}
+      <div className="stage-number">{stage.roman}</div>
+      <h3 className="stage-name">{lang === 'ko' ? stage.nameKo : stage.nameEn}</h3>
+      {lang === 'ko' && <p className="stage-name-en">{stage.nameEn}</p>}
 
-// Phase Section with Phase-Specific Colors
-const PhaseSection = ({ phase, children, lang }) => (
-  <section className={`phase-section phase-${phase.id}`}>
-    <div className="phase-header">
-      <span className="phase-number">{lang === 'ko' ? phase.nameKo : phase.nameEn}</span>
-      <h2 className="phase-title">{lang === 'ko' ? phase.subtitleKo : phase.subtitleEn}</h2>
-      <span className="phase-subtitle">
-        {lang === 'ko' ? `${phase.stages.length}개 단계` : `${phase.stages.length} Stages`}
-      </span>
-    </div>
-    <div className="stages-grid">
-      {children}
-    </div>
-  </section>
-)
+      <div className="stage-meta">
+        <div className="stage-stat">
+          <div className="stage-stat-value">{stage.riskLevel}%</div>
+          <div className="stage-stat-label">{lang === 'ko' ? '위험도' : 'Risk'}</div>
+        </div>
+        <div className="stage-stat">
+          <div className="stage-stat-value">{stage.successRate}%</div>
+          <div className="stage-stat-label">{lang === 'ko' ? '해결률' : 'Resolution'}</div>
+        </div>
+      </div>
+    </motion.article>
+  )
+}
+
+// Phase Section with Phase-Specific Colors and Icons
+const PhaseSection = ({ phase, children, lang }) => {
+  const PhaseIcon = PhaseIcons[phase.id]
+
+  return (
+    <section className={`phase-section phase-${phase.id}`}>
+      <div className="phase-header">
+        {PhaseIcon && <PhaseIcon className="phase-icon" />}
+        <span className="phase-number">{lang === 'ko' ? phase.nameKo : phase.nameEn}</span>
+        <h2 className="phase-title">{lang === 'ko' ? phase.subtitleKo : phase.subtitleEn}</h2>
+        <span className="phase-subtitle">
+          {lang === 'ko' ? `${phase.stages.length}개 단계` : `${phase.stages.length} Stages`}
+        </span>
+      </div>
+      <div className="stages-grid">
+        {children}
+      </div>
+    </section>
+  )
+}
 
 // Timeline with Phase-Specific Node Colors
 const Timeline = ({ stages, activeStage, setActiveStage, lang }) => (
