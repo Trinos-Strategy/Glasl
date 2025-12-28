@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useInView } from 'motion/react'
+import AssessmentIntro from './components/AssessmentIntro'
+import QuestionFlow from './components/QuestionFlow'
+import AnalyzingTransition from './components/AnalyzingTransition'
+import ResultPage from './components/ResultPage'
+import { calculateStage } from './utils/assessmentLogic'
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DATA - Glasl's 9 Stages of Conflict Escalation
@@ -643,6 +648,10 @@ export default function App() {
   const [activeTimelineStage, setActiveTimelineStage] = useState(null)
   const [isScrolled, setIsScrolled] = useState(false)
 
+  // Assessment flow state
+  const [appState, setAppState] = useState('landing') // landing | assessment | analyzing | result | model
+  const [diagnosisResult, setDiagnosisResult] = useState(null)
+
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -654,91 +663,196 @@ export default function App() {
     return stages.filter(s => phase.stages.includes(s.id))
   }
 
+  const handleAssessmentComplete = (answers) => {
+    setAppState('analyzing')
+    // Simulate analysis time for better UX
+    setTimeout(() => {
+      const result = calculateStage(answers)
+      setDiagnosisResult(result)
+      setAppState('result')
+    }, 2500)
+  }
+
+  const handleRestart = () => {
+    setDiagnosisResult(null)
+    setAppState('landing')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const scrollToModel = () => {
+    setAppState('model')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Render Assessment Flow screens
+  if (appState === 'assessment') {
+    return (
+      <div style={{ background: 'var(--color-bg-primary)', minHeight: '100vh' }}>
+        <header className={`header scrolled`}>
+          <div className="header-inner">
+            <button className="logo" onClick={handleRestart} style={{ cursor: 'pointer', background: 'none', border: 'none' }}>
+              Glasl
+            </button>
+            <div className="nav-links">
+              <LanguageToggle lang={lang} setLang={setLang} />
+            </div>
+          </div>
+        </header>
+        <QuestionFlow
+          lang={lang}
+          onComplete={handleAssessmentComplete}
+          onBack={handleRestart}
+        />
+      </div>
+    )
+  }
+
+  if (appState === 'analyzing') {
+    return (
+      <div style={{ background: 'var(--color-bg-primary)', minHeight: '100vh' }}>
+        <AnalyzingTransition lang={lang} />
+      </div>
+    )
+  }
+
+  if (appState === 'result') {
+    return (
+      <div style={{ background: 'var(--color-bg-primary)', minHeight: '100vh' }}>
+        <header className={`header scrolled`}>
+          <div className="header-inner">
+            <button className="logo" onClick={handleRestart} style={{ cursor: 'pointer', background: 'none', border: 'none' }}>
+              Glasl
+            </button>
+            <div className="nav-links">
+              <LanguageToggle lang={lang} setLang={setLang} />
+            </div>
+          </div>
+        </header>
+        <ResultPage
+          result={diagnosisResult}
+          lang={lang}
+          onViewFullModel={scrollToModel}
+          onRestart={handleRestart}
+        />
+      </div>
+    )
+  }
+
+  // Landing or Model view
   return (
     <div style={{ background: 'var(--color-bg-primary)', minHeight: '100vh' }}>
       {/* Header */}
       <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="header-inner">
-          <div className="logo">Glasl</div>
+          <button className="logo" onClick={handleRestart} style={{ cursor: 'pointer', background: 'none', border: 'none' }}>
+            Glasl
+          </button>
           <div className="nav-links">
             <LanguageToggle lang={lang} setLang={setLang} />
           </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="hero">
-        <motion.h1
-          className="hero-title"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2 }}
-        >
-          {lang === 'ko' ? '갈등 격화 모델' : 'Conflict Escalation'}
-        </motion.h1>
-        <motion.p
-          className="hero-subtitle"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.6 }}
-        >
-          Friedrich Glasl, 1980
-        </motion.p>
-        <div className="scroll-indicator" />
-      </section>
-
-      {/* Stats Section */}
-      <section className="section">
-        <StatsRow lang={lang} />
-      </section>
-
-      {/* Timeline Section */}
-      <section className="section">
-        <div className="section-header">
-          <span className="section-label">{lang === 'ko' ? '진행 과정' : 'Progression'}</span>
-          <h2 className="section-title">
-            {lang === 'ko' ? '9단계 갈등 격화 과정' : 'Nine Stages of Escalation'}
-          </h2>
-        </div>
-        <div className="section-divider" />
-        <Timeline
-          stages={stages}
-          activeStage={activeTimelineStage}
-          setActiveStage={(stage) => {
-            setActiveTimelineStage(stage)
-            setSelectedStage(stage)
-          }}
+      {/* Assessment Intro (Landing) */}
+      {appState === 'landing' && (
+        <AssessmentIntro
           lang={lang}
+          onStart={() => setAppState('assessment')}
+          onViewModel={scrollToModel}
         />
-      </section>
+      )}
 
-      {/* Phase Sections */}
-      <section className="section">
-        {phases.map((phase) => (
-          <PhaseSection key={phase.id} phase={phase} lang={lang}>
-            {getVisibleStages(phase.id).map((stage, index) => (
-              <StageCard
-                key={stage.id}
-                stage={stage}
-                lang={lang}
-                onClick={() => setSelectedStage(stage)}
-                index={index}
-              />
+      {/* Model View - Show full content */}
+      {appState === 'model' && (
+        <>
+          {/* Hero Section */}
+          <section className="hero">
+            <motion.h1
+              className="hero-title"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+            >
+              {lang === 'ko' ? '갈등 격화 모델' : 'Conflict Escalation'}
+            </motion.h1>
+            <motion.p
+              className="hero-subtitle"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.6 }}
+            >
+              Friedrich Glasl, 1980
+            </motion.p>
+            <div className="scroll-indicator" />
+          </section>
+
+          {/* Back to Assessment CTA */}
+          <section className="section" style={{ paddingTop: 0, paddingBottom: 'var(--space-element)' }}>
+            <div style={{ textAlign: 'center' }}>
+              <button
+                className="btn btn-secondary"
+                onClick={() => setAppState('landing')}
+                style={{ margin: '0 auto' }}
+              >
+                {lang === 'ko' ? '갈등 진단하러 가기' : 'Take Conflict Assessment'}
+              </button>
+            </div>
+          </section>
+
+          {/* Stats Section */}
+          <section className="section">
+            <StatsRow lang={lang} />
+          </section>
+
+          {/* Timeline Section */}
+          <section className="section">
+            <div className="section-header">
+              <span className="section-label">{lang === 'ko' ? '진행 과정' : 'Progression'}</span>
+              <h2 className="section-title">
+                {lang === 'ko' ? '9단계 갈등 격화 과정' : 'Nine Stages of Escalation'}
+              </h2>
+            </div>
+            <div className="section-divider" />
+            <Timeline
+              stages={stages}
+              activeStage={activeTimelineStage}
+              setActiveStage={(stage) => {
+                setActiveTimelineStage(stage)
+                setSelectedStage(stage)
+              }}
+              lang={lang}
+            />
+          </section>
+
+          {/* Phase Sections */}
+          <section className="section">
+            {phases.map((phase) => (
+              <PhaseSection key={phase.id} phase={phase} lang={lang}>
+                {getVisibleStages(phase.id).map((stage, index) => (
+                  <StageCard
+                    key={stage.id}
+                    stage={stage}
+                    lang={lang}
+                    onClick={() => setSelectedStage(stage)}
+                    index={index}
+                  />
+                ))}
+              </PhaseSection>
             ))}
-          </PhaseSection>
-        ))}
-      </section>
+          </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="footer-logo">Glasl</div>
-        <p className="footer-text">
-          {lang === 'ko'
-            ? 'Friedrich Glasl의 갈등 격화 모델을 기반으로 한 체계적 갈등 분석 도구'
-            : "A systematic conflict analysis tool based on Friedrich Glasl's escalation model"}
-        </p>
-        <p className="footer-credit">Trinos Research Lab</p>
-      </footer>
+          {/* Footer */}
+          <footer className="footer">
+            <div className="footer-logo">Glasl</div>
+            <p className="footer-text">
+              {lang === 'ko'
+                ? 'Friedrich Glasl의 갈등 격화 모델을 기반으로 한 체계적 갈등 분석 도구'
+                : "A systematic conflict analysis tool based on Friedrich Glasl's escalation model"}
+            </p>
+            <p className="footer-credit">Trinos Research Lab</p>
+          </footer>
+        </>
+      )}
 
       {/* Modal */}
       <AnimatePresence mode="wait">
