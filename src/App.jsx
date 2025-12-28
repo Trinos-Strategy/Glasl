@@ -4,6 +4,7 @@ import AssessmentIntro from './components/AssessmentIntro'
 import QuestionFlow from './components/QuestionFlow'
 import AnalyzingTransition from './components/AnalyzingTransition'
 import ResultPage from './components/ResultPage'
+import HamburgerMenu from './components/HamburgerMenu'
 import { calculateStage } from './utils/assessmentLogic'
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -695,6 +696,13 @@ export default function App() {
             </button>
             <div className="nav-links">
               <LanguageToggle lang={lang} setLang={setLang} />
+              <HamburgerMenu
+                lang={lang}
+                onViewAll={scrollToModel}
+                onAssessment={() => setAppState('landing')}
+                stages={stages}
+                onSelectStage={setSelectedStage}
+              />
             </div>
           </div>
         </header>
@@ -725,6 +733,13 @@ export default function App() {
             </button>
             <div className="nav-links">
               <LanguageToggle lang={lang} setLang={setLang} />
+              <HamburgerMenu
+                lang={lang}
+                onViewAll={scrollToModel}
+                onAssessment={() => setAppState('landing')}
+                stages={stages}
+                onSelectStage={setSelectedStage}
+              />
             </div>
           </div>
         </header>
@@ -749,6 +764,13 @@ export default function App() {
           </button>
           <div className="nav-links">
             <LanguageToggle lang={lang} setLang={setLang} />
+            <HamburgerMenu
+              lang={lang}
+              onViewAll={scrollToModel}
+              onAssessment={() => setAppState('landing')}
+              stages={stages}
+              onSelectStage={setSelectedStage}
+            />
           </div>
         </div>
       </header>
