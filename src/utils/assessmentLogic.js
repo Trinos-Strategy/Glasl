@@ -15,7 +15,7 @@ export const questions = [
   {
     id: 'Q2',
     text: {
-      ko: '우리는 서로의 주장을 입증하려고 열띤 토론을 자주 한다',
+      ko: '우리는 서로의 주장을 증명하려고 열띤 토론을 자주 한다',
       en: 'We frequently have heated debates trying to prove our respective points'
     },
     stage: 2,
