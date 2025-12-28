@@ -5,6 +5,7 @@ import QuestionFlow from './components/QuestionFlow'
 import AnalyzingTransition from './components/AnalyzingTransition'
 import ResultPage from './components/ResultPage'
 import HamburgerMenu from './components/HamburgerMenu'
+import Footer from './components/Footer'
 import { calculateStage } from './utils/assessmentLogic'
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -711,6 +712,7 @@ export default function App() {
           onComplete={handleAssessmentComplete}
           onBack={handleRestart}
         />
+        <Footer lang={lang} />
       </div>
     )
   }
@@ -749,6 +751,7 @@ export default function App() {
           onViewFullModel={scrollToModel}
           onRestart={handleRestart}
         />
+        <Footer lang={lang} />
       </div>
     )
   }
@@ -777,11 +780,14 @@ export default function App() {
 
       {/* Assessment Intro (Landing) */}
       {appState === 'landing' && (
-        <AssessmentIntro
-          lang={lang}
-          onStart={() => setAppState('assessment')}
-          onViewModel={scrollToModel}
-        />
+        <>
+          <AssessmentIntro
+            lang={lang}
+            onStart={() => setAppState('assessment')}
+            onViewModel={scrollToModel}
+          />
+          <Footer lang={lang} />
+        </>
       )}
 
       {/* Model View - Show full content */}
@@ -864,15 +870,7 @@ export default function App() {
           </section>
 
           {/* Footer */}
-          <footer className="footer">
-            <div className="footer-logo">Glasl</div>
-            <p className="footer-text">
-              {lang === 'ko'
-                ? 'Friedrich Glasl의 갈등 격화 모델을 기반으로 한 체계적 갈등 분석 도구'
-                : "A systematic conflict analysis tool based on Friedrich Glasl's escalation model"}
-            </p>
-            <p className="footer-credit">Trinos Research Lab</p>
-          </footer>
+          <Footer lang={lang} />
         </>
       )}
 
