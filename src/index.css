@@ -1269,7 +1269,19 @@
     font-size: 15px;
     color: var(--text-secondary);
     line-height: 1.7;
+    margin-bottom: var(--space-xs);
+  }
+
+  .intervention-focus {
+    font-size: 14px;
+    color: var(--text-tertiary);
+    line-height: 1.6;
     margin-bottom: var(--space-item);
+  }
+
+  .intervention-focus strong {
+    color: var(--accent-gold);
+    font-weight: var(--fw-semibold);
   }
 }
 

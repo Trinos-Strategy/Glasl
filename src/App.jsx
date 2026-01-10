@@ -14,121 +14,184 @@ import { calculateStage } from './utils/assessmentLogic'
 
 const stages = [
   {
-    id: 1, roman: 'I', nameEn: 'Hardening', nameKo: '경직화',
+    id: 1, roman: 'I', nameEn: 'Hardening', nameKo: '입장 강화',
     phase: 1, riskLevel: 15, successRate: 92, avgDuration: 2,
-    characteristics: { ko: ['간헐적 긴장', '의견 차이 표면화', '상호 존중 유지'], en: ['Intermittent tension', 'Differences surfacing', 'Mutual respect maintained'] },
-    behaviors: { ko: ['입장 고수', '상대 의견 경청 감소', '사실 왜곡 시작'], en: ['Holding positions', 'Less listening', 'Facts distorting'] },
-    warningSignals: { ko: ['회의 분위기 냉각', '비언어적 긴장'], en: ['Cooling atmosphere', 'Non-verbal tension'] },
-    resolutionStrategy: { ko: ['개방적 대화', '상호 이해 강화', '공동 목표 확인'], en: ['Open dialogue', 'Mutual understanding', 'Shared goals'] },
+    characteristics: {
+      ko: ['이해관계가 고정된 입장으로 경직됨', '자기 관점만 정당하다고 인식', '해석이 사실을 대체하며 독자적 생명을 얻음', '입장·관계의 경직화'],
+      en: ['Interests harden into fixed positions', 'Only own perspective seen as valid', 'Interpretations replace facts', 'Positions and relationships rigidify']
+    },
+    behaviors: {
+      ko: ['대화 빈도·질 저하', '초기 교착 조짐', '상호 이해·공감 감소'],
+      en: ['Declining dialogue frequency and quality', 'Early signs of deadlock', 'Reduced mutual understanding and empathy']
+    },
+    warningSignals: { ko: ['협력이 아직 경쟁보다 우세하나 긴장 증가'], en: ['Cooperation still dominates but tension rising'] },
+    resolutionStrategy: { ko: ['개방적 대화', '상호 이해 강화', '공동 목표 확인'], en: ['Open dialogue', 'Strengthen mutual understanding', 'Confirm shared goals'] },
     example: { ko: '프로젝트 방향성에 대한 초기 의견 불일치', en: 'Initial disagreement on project direction' },
-    intervention: { ko: '자체 해결 가능', en: 'Self-resolution possible' },
+    intervention: { ko: '자체 해결 가능하나, 조정·코칭 등 조기 개입이 효과적', en: 'Self-resolution possible, but early mediation/coaching is effective' },
+    interventionFocus: { ko: '확대 방지·잠재력 활용', en: 'Prevent escalation, leverage potential' },
     interventionType: 'self',
     phaseName: { ko: '국면 I: 상호 승리', en: 'Phase I: Win-Win' },
-    actionItems: { ko: ['직접 대화 시도', '공통 관심사 파악', '감정 표현 장려'], en: ['Direct dialogue', 'Find common interests', 'Express emotions'] }
+    actionItems: { ko: ['직접 대화 시도', '공통 관심사 파악', '감정 표현 장려'], en: ['Attempt direct dialogue', 'Identify common interests', 'Encourage expression of feelings'] }
   },
   {
-    id: 2, roman: 'II', nameEn: 'Debate', nameKo: '논쟁',
+    id: 2, roman: 'II', nameEn: 'Debate', nameKo: '논쟁과 대립',
     phase: 1, riskLevel: 25, successRate: 85, avgDuration: 3,
-    characteristics: { ko: ['분극화된 논쟁', '흑백논리 사고', '감정적 거리감 증가'], en: ['Polarized debate', 'Black-and-white thinking', 'Emotional distance'] },
-    behaviors: { ko: ['전술적 조작', '양극화 심화', '상대 폄하'], en: ['Tactical manipulation', 'Polarization', 'Belittling opponent'] },
-    warningSignals: { ko: ['상대방 입장 경청 거부', '반박 중심 대화'], en: ['Refusing to listen', 'Rebuttal-focused'] },
-    resolutionStrategy: { ko: ['중재자 개입', '구조화된 토론', '공동 이익 발굴'], en: ['Mediator intervention', 'Structured discussion', 'Find shared interests'] },
-    example: { ko: '팀 내 업무 방식에 대한 갈등', en: 'Conflict over work methods' },
-    intervention: { ko: '비공식 제3자 도움', en: 'Informal third-party help' },
+    characteristics: {
+      ko: ['대화 대신 전술적 행동·심리적 조작', '언어적 공격과 정면 대립', '입장·집단의 양극화'],
+      en: ['Tactical behavior and psychological manipulation replace dialogue', 'Verbal attacks and confrontation', 'Polarization of positions and groups']
+    },
+    behaviors: {
+      ko: ['갈등이 점차 개인화되고 상호 짜증·분노 증가', '이성적 논증에서 감정·권력 이슈로 이동', '제3자·관중 앞에서 평판·점수 경쟁'],
+      en: ['Conflict becomes personal with mutual irritation', 'Shift from rational argument to emotional/power issues', 'Competition for reputation before third parties']
+    },
+    warningSignals: { ko: ['협력 중심에서 경쟁 중심 관계로 전환'], en: ['Shifting from cooperation-centered to competition-centered relationship'] },
+    resolutionStrategy: { ko: ['구조화된 토론', '감정과 이슈 분리', '공동 이익 발굴'], en: ['Structured discussion', 'Separate emotions from issues', 'Discover shared interests'] },
+    example: { ko: '팀 내 업무 방식에 대한 갈등', en: 'Conflict over work methods within team' },
+    intervention: { ko: '자체 해결 가능하나, 조정·코칭 등 조기 개입이 효과적', en: 'Self-resolution possible, but early mediation/coaching is effective' },
+    interventionFocus: { ko: '논쟁에서 대화로 전환', en: 'Shift from debate to dialogue' },
     interventionType: 'self',
     phaseName: { ko: '국면 I: 상호 승리', en: 'Phase I: Win-Win' },
-    actionItems: { ko: ['중립적 관점 도입', '논쟁 규칙 설정', '쉬는 시간 제안'], en: ['Neutral perspective', 'Set rules', 'Take breaks'] }
+    actionItems: { ko: ['중립적 관점 도입', '논쟁 규칙 설정', '쉬는 시간 제안'], en: ['Introduce neutral perspective', 'Set debate rules', 'Suggest breaks'] }
   },
   {
-    id: 3, roman: 'III', nameEn: 'Actions', nameKo: '행동화',
+    id: 3, roman: 'III', nameEn: 'Actions', nameKo: '행동 개시',
     phase: 1, riskLevel: 35, successRate: 78, avgDuration: 4,
-    characteristics: { ko: ['대화 중단', '비언어적 압박', '공감 상실'], en: ['Dialogue stops', 'Non-verbal pressure', 'Loss of empathy'] },
-    behaviors: { ko: ['기정사실화 전술', '말보다 행동', '압박 증가'], en: ['Fait accompli tactics', 'Actions over words', 'Increasing pressure'] },
-    warningSignals: { ko: ['의사소통 두절', '일방적 행동'], en: ['Communication breakdown', 'Unilateral actions'] },
-    resolutionStrategy: { ko: ['전문 조정인 필요', '공식적 대화 채널 확립'], en: ['Professional mediator needed', 'Establish formal channels'] },
+    characteristics: {
+      ko: ['사전 협의 없는 일방적 조치', '대화 중단, 기정사실화 전략', '구조적 오해·곡해 증폭'],
+      en: ['Unilateral actions without prior consultation', 'Dialogue stops, fait accompli strategy', 'Structural misunderstandings amplified']
+    },
+    behaviors: {
+      ko: ['부정적 악순환, 격화의 가속', '공감·상호 고려의 급격한 감소', '해결을 공동 책임으로 보지 않음'],
+      en: ['Negative spiral, acceleration of escalation', 'Sharp decline in empathy and mutual consideration', 'Resolution not seen as shared responsibility']
+    },
+    warningSignals: { ko: ['경쟁이 협력보다 우세한 관계로 고착'], en: ['Competition dominates over cooperation'] },
+    resolutionStrategy: { ko: ['대화 채널 재구축', '공식적 대화 프로세스 확립'], en: ['Rebuild dialogue channels', 'Establish formal dialogue process'] },
     example: { ko: '상호 무시하며 독자적 의사결정', en: 'Independent decisions while ignoring each other' },
-    intervention: { ko: '훈련된 조정인 필요', en: 'Trained mediator needed' },
+    intervention: { ko: '동료·상급자·내부 HR/법무 또는 외부 조정인에 의한 비공식 개입 권장', en: 'Informal intervention by colleagues, supervisors, internal HR/legal, or external mediator recommended' },
+    interventionFocus: { ko: '통제 회복·대화 재구축', en: 'Regain control, rebuild dialogue' },
     interventionType: 'mediator',
     phaseName: { ko: '국면 I: 상호 승리', en: 'Phase I: Win-Win' },
-    actionItems: { ko: ['행동 결과 분석', '대화 채널 재개', '조정인 고려'], en: ['Analyze consequences', 'Reopen dialogue', 'Consider mediator'] }
+    actionItems: { ko: ['행동 결과 분석', '대화 채널 재개', '조정인 고려'], en: ['Analyze consequences of actions', 'Reopen dialogue channels', 'Consider mediator'] }
   },
   {
-    id: 4, roman: 'IV', nameEn: 'Coalitions', nameKo: '연합',
+    id: 4, roman: 'IV', nameEn: 'Coalitions', nameKo: '이미지 공격과 연합 형성',
     phase: 2, riskLevel: 50, successRate: 65, avgDuration: 6,
-    characteristics: { ko: ['지지자 모집', '편 갈라치기', '승패 구도 형성'], en: ['Recruiting supporters', 'Taking sides', 'Win-lose dynamic'] },
-    behaviors: { ko: ['인신공격 시작', '흑백 논리', '지지자 모집'], en: ['Personal attacks begin', 'Black-white thinking', 'Recruiting'] },
-    warningSignals: { ko: ['파벌 형성', '상대방 비난'], en: ['Faction forming', 'Blaming opponents'] },
-    resolutionStrategy: { ko: ['중립적 중재', '이해관계자 분석', '공동 근거 마련'], en: ['Neutral mediation', 'Stakeholder analysis', 'Common ground'] },
+    characteristics: {
+      ko: ['능력·전문성·인격을 겨냥한 인신공격', '흑백 논리: 자기 집단은 선, 상대는 전적으로 부정적', '연합·파워 블록 형성'],
+      en: ['Personal attacks targeting competence, expertise, character', 'Black-white logic: own group is good, opponent entirely negative', 'Coalition and power bloc formation']
+    },
+    behaviors: {
+      ko: ['체면 손상 회피·방어', '지지자 모집 활동', '상대방 고립시키기'],
+      en: ['Avoiding and defending against loss of face', 'Recruiting supporters', 'Isolating the opponent']
+    },
+    warningSignals: { ko: ['파벌 형성', '상대방 비난 캠페인'], en: ['Faction forming', 'Blame campaigns against opponent'] },
+    resolutionStrategy: { ko: ['중립적 중재', '이해관계자 분석', '공동 근거 마련'], en: ['Neutral mediation', 'Stakeholder analysis', 'Establish common ground'] },
     example: { ko: '조직 내 파벌 싸움', en: 'Factional fighting within organization' },
-    intervention: { ko: '전문 조정인 필요', en: 'Professional mediator needed' },
+    intervention: { ko: '훈련된 제3자의 도움 필수(조정, 프로세스 지원 등)', en: 'Trained third-party help essential (mediation, process support, etc.)' },
+    interventionFocus: { ko: '갈등 완화·관점 명료화·신뢰 재구축', en: 'De-escalate conflict, clarify perspectives, rebuild trust' },
     interventionType: 'mediator',
     phaseName: { ko: '국면 II: 승패 구도', en: 'Phase II: Win-Lose' },
-    actionItems: { ko: ['전문 조정 요청', '동맹 해체 시도', '개인적 만남 주선'], en: ['Request mediation', 'Dissolve alliances', 'Arrange meetings'] }
+    actionItems: { ko: ['전문 조정 요청', '동맹 해체 시도', '개인적 만남 주선'], en: ['Request professional mediation', 'Attempt to dissolve alliances', 'Arrange personal meetings'] }
   },
   {
-    id: 5, roman: 'V', nameEn: 'Loss of Face', nameKo: '체면 손상',
+    id: 5, roman: 'V', nameEn: 'Loss of Face', nameKo: '공개 공격과 체면 손상',
     phase: 2, riskLevel: 65, successRate: 52, avgDuration: 8,
-    characteristics: { ko: ['인신공격', '신뢰 완전 상실', '공개적 모욕'], en: ['Personal attacks', 'Complete loss of trust', 'Public humiliation'] },
-    behaviors: { ko: ['조작과 방해', '비열한 수단', '상대 악마화'], en: ['Manipulation & sabotage', 'Foul play', 'Demonizing'] },
-    warningSignals: { ko: ['인격 공격', '평판 훼손'], en: ['Character attacks', 'Reputation damage'] },
-    resolutionStrategy: { ko: ['전문가 개입 필수', '관계 복원 프로그램'], en: ['Expert intervention required', 'Relationship restoration'] },
+    characteristics: {
+      ko: ['도덕적 진실성·인격에 대한 공격', '전면적 불신, 상대를 전적으로 부정적으로 인식', '조직·관계에 대한 조작·사보타주'],
+      en: ['Attacks on moral integrity and character', 'Complete distrust, opponent seen as entirely negative', 'Manipulation and sabotage of organization/relationships']
+    },
+    behaviors: {
+      ko: ['비열한 수단·규범 위반 행위', '공개적 망신 주기', '상대 악마화'],
+      en: ['Foul play and norm violations', 'Public humiliation', 'Demonizing opponent']
+    },
+    warningSignals: { ko: ['인격 공격', '평판 훼손 시도'], en: ['Character attacks', 'Reputation damage attempts'] },
+    resolutionStrategy: { ko: ['전문가 개입 필수', '체면 회복 기회 제공'], en: ['Expert intervention essential', 'Provide face-saving opportunities'] },
     example: { ko: '공개적인 비난과 조롱', en: 'Public criticism and ridicule' },
-    intervention: { ko: '전문 조정 필수', en: 'Professional mediation essential' },
+    intervention: { ko: '고난도 전문 개입(심리·조직·법적 프로세스 연계 필요)', en: 'High-level expert intervention (psychological, organizational, legal process linkage needed)' },
+    interventionFocus: { ko: '추가 피해 방지·구조적 개입', en: 'Prevent further damage, structural intervention' },
     interventionType: 'mediator',
     phaseName: { ko: '국면 II: 승패 구도', en: 'Phase II: Win-Lose' },
-    actionItems: { ko: ['체면 회복 기회 제공', '비공개 협상 시도', '감정 치유 시간'], en: ['Provide face-saving', 'Private negotiations', 'Allow healing'] }
+    actionItems: { ko: ['체면 회복 기회 제공', '비공개 협상 시도', '감정 치유 시간'], en: ['Provide face-saving opportunities', 'Attempt private negotiations', 'Allow time for emotional healing'] }
   },
   {
-    id: 6, roman: 'VI', nameEn: 'Threats', nameKo: '위협',
+    id: 6, roman: 'VI', nameEn: 'Threats', nameKo: '위협 전략',
     phase: 2, riskLevel: 75, successRate: 38, avgDuration: 10,
-    characteristics: { ko: ['제재 위협', '최후통첩', '통제 추구'], en: ['Threatening sanctions', 'Ultimatums', 'Seeking control'] },
-    behaviors: { ko: ['제재 위협', '위협 악순환', '합리성 상실'], en: ['Threatening sanctions', 'Threat spiral', 'Loss of rationality'] },
-    warningSignals: { ko: ['구체적 제재 언급', '압박 증가'], en: ['Specific sanctions', 'Increasing pressure'] },
-    resolutionStrategy: { ko: ['긴급 개입', '공식 중재', '법적 개입 고려'], en: ['Emergency intervention', 'Formal mediation', 'Consider legal'] },
+    characteristics: {
+      ko: ['명시적 요구와 제재 선언', '통제력 상실, 상호 위협의 악순환에 갇힘', '위협의 3단계: 요구 제시 → 제재 예고 → 제재 능력 과시'],
+      en: ['Explicit demands and sanction declarations', 'Loss of control, trapped in threat spiral', 'Three stages: demand → sanction warning → demonstrate capability']
+    },
+    behaviors: {
+      ko: ['갈등·심리 역학이 고도로 복잡해짐', '당사자·내부 리더십 차원에서 통제 곤란', '최후통첩 제시'],
+      en: ['Conflict and psychological dynamics become highly complex', 'Control difficult at party/leadership level', 'Ultimatums presented']
+    },
+    warningSignals: { ko: ['구체적 제재 언급', '압박 급격히 증가'], en: ['Specific sanctions mentioned', 'Pressure increasing sharply'] },
+    resolutionStrategy: { ko: ['긴급 개입', '외부 권위 도입', '법적 개입 고려'], en: ['Emergency intervention', 'Introduce external authority', 'Consider legal intervention'] },
     example: { ko: '법적 조치 위협', en: 'Threatening legal action' },
-    intervention: { ko: '전문 조정 필수', en: 'Professional mediation essential' },
+    intervention: { ko: '전문 조정·중재·법적 절차 등 다층적 외부 개입 필요', en: 'Multi-layered external intervention needed (mediation, arbitration, legal procedures)' },
+    interventionFocus: { ko: '역학 차단·외부 권위 도입', en: 'Break dynamics, introduce external authority' },
     interventionType: 'intervention',
     phaseName: { ko: '국면 II: 승패 구도', en: 'Phase II: Win-Lose' },
-    actionItems: { ko: ['위협 중단 요청', '안전 보장 확보', '전문가 긴급 투입'], en: ['Request threat cessation', 'Secure safety', 'Deploy expert'] }
+    actionItems: { ko: ['위협 중단 요청', '안전 보장 확보', '전문가 긴급 투입'], en: ['Request threat cessation', 'Secure safety guarantees', 'Deploy experts urgently'] }
   },
   {
-    id: 7, roman: 'VII', nameEn: 'Destruction', nameKo: '파괴',
+    id: 7, roman: 'VII', nameEn: 'Limited Destruction', nameKo: '의도적 피해 가하기',
     phase: 3, riskLevel: 85, successRate: 25, avgDuration: 14,
-    characteristics: { ko: ['제한적 파괴적 행동', '상대 피해 수용'], en: ['Limited destructive behavior', 'Accepting opponent harm'] },
-    behaviors: { ko: ['위협 실행', '반응 기대 않음', '피해 유발 목표'], en: ['Executing threats', 'No reaction expected', 'Damage is goal'] },
-    warningSignals: { ko: ['물리적 피해 발생'], en: ['Physical damage occurring'] },
-    resolutionStrategy: { ko: ['긴급 개입', '분리 조치', '권위 개입'], en: ['Emergency intervention', 'Separation', 'Authority intervention'] },
+    characteristics: {
+      ko: ['위협의 실제 실행', '상대의 건설적 반응은 더 이상 기대하지 않음', '실질적 소통 부재'],
+      en: ['Actual execution of threats', 'No longer expecting constructive response from opponent', 'Absence of meaningful communication']
+    },
+    behaviors: {
+      ko: ['피해 유발 자체가 주요 목표', '상대의 손실을 자신의 승리로 간주', '제한적이나 의도적인 파괴 행위'],
+      en: ['Causing damage becomes primary goal', 'Opponent\'s loss seen as own victory', 'Limited but intentional destruction']
+    },
+    warningSignals: { ko: ['물리적·경제적·심리적 피해 발생'], en: ['Physical, economic, psychological damage occurring'] },
+    resolutionStrategy: { ko: ['긴급 개입', '분리 조치', '권위 개입'], en: ['Emergency intervention', 'Separation measures', 'Authority intervention'] },
     example: { ko: '자산 훼손, 업무 방해', en: 'Asset damage, work obstruction' },
-    intervention: { ko: '공식적 개입 필요', en: 'Formal intervention needed' },
+    intervention: { ko: '강력한 외부 개입(조정+법적·조직적 개입 결합) 필수', en: 'Strong external intervention essential (mediation + legal/organizational intervention combined)' },
+    interventionFocus: { ko: '피해 최소화·법적 보호', en: 'Minimize damage, legal protection' },
     interventionType: 'intervention',
     phaseName: { ko: '국면 III: 상호 손실', en: 'Phase III: Lose-Lose' },
-    actionItems: { ko: ['피해 최소화 조치', '공식 중재 기관 투입', '법적 보호 검토'], en: ['Minimize damage', 'Deploy arbitration', 'Review legal protection'] }
+    actionItems: { ko: ['피해 최소화 조치', '공식 중재 기관 투입', '법적 보호 검토'], en: ['Minimize damage', 'Deploy formal arbitration', 'Review legal protection'] }
   },
   {
-    id: 8, roman: 'VIII', nameEn: 'Fragmentation', nameKo: '분열',
+    id: 8, roman: 'VIII', nameEn: 'Total Annihilation', nameKo: '적의 파괴',
     phase: 3, riskLevel: 92, successRate: 15, avgDuration: 18,
-    characteristics: { ko: ['상대 조직 파괴 추구', '통제력 무력화'], en: ['Seeking to destroy opponent', 'Neutralizing control'] },
-    behaviors: { ko: ['물리적/심리적 공격', '핵심 기반 파괴', '직접적 공격'], en: ['Physical/psychological attacks', 'Destroying foundation', 'Direct attacks'] },
-    warningSignals: { ko: ['시스템 전체 공격'], en: ['Attack on entire system'] },
+    characteristics: {
+      ko: ['물리적·경제적·심리적 파괴 추구', '직접적·전면적 공격', '자기 보존은 있으나 상대 파괴를 위해 후퇴'],
+      en: ['Seeking physical, economic, psychological destruction', 'Direct and total attacks', 'Self-preservation exists but retreats for opponent destruction']
+    },
+    behaviors: {
+      ko: ['상대 조직/시스템 전체 파괴 시도', '핵심 기반 파괴', '무차별적 공격'],
+      en: ['Attempting to destroy entire opponent organization/system', 'Destroying core foundations', 'Indiscriminate attacks']
+    },
+    warningSignals: { ko: ['시스템 전체에 대한 공격'], en: ['Attacks on entire system'] },
     resolutionStrategy: { ko: ['법적 개입', '강제적 분리', '외부 관리'], en: ['Legal intervention', 'Forced separation', 'External management'] },
     example: { ko: '조직 와해 시도', en: 'Attempting to dismantle organization' },
-    intervention: { ko: '강력한 외부 개입', en: 'Strong external intervention' },
+    intervention: { ko: '고강도 공식 개입(중재·법원·강제력 행사 등) 필요', en: 'High-intensity formal intervention needed (arbitration, courts, enforcement, etc.)' },
+    interventionFocus: { ko: '강제적 분리·피해 방지', en: 'Forced separation, prevent damage' },
     interventionType: 'intervention',
     phaseName: { ko: '국면 III: 상호 손실', en: 'Phase III: Lose-Lose' },
-    actionItems: { ko: ['즉각적 분리 조치', '안전 확보 최우선', '장기 회복 계획'], en: ['Immediate separation', 'Safety first', 'Long-term recovery'] }
+    actionItems: { ko: ['즉각적 분리 조치', '안전 확보 최우선', '장기 회복 계획'], en: ['Immediate separation', 'Safety as top priority', 'Long-term recovery planning'] }
   },
   {
-    id: 9, roman: 'IX', nameEn: 'Abyss', nameKo: '나락',
+    id: 9, roman: 'IX', nameEn: 'Together into the Abyss', nameKo: '상호 파멸',
     phase: 3, riskLevel: 100, successRate: 5, avgDuration: 24,
-    characteristics: { ko: ['상호 파멸', '자해 포함 모든 수단 동원'], en: ['Mutual destruction', 'Using all means including self-harm'] },
-    behaviors: { ko: ['함께 파멸', '모든 것 희생', '궁극적 파괴'], en: ['Mutual destruction', 'Sacrificing everything', 'Ultimate destruction'] },
+    characteristics: {
+      ko: ['자기 파멸을 감수하면서 상대 파괴 추구', '사실상 되돌릴 수 없는 지점', '상호 파멸 각오'],
+      en: ['Seeking opponent destruction while accepting self-destruction', 'Point of no return', 'Mutual destruction accepted']
+    },
+    behaviors: {
+      ko: ['함께 파멸', '모든 것 희생', '궁극적 파괴'],
+      en: ['Mutual destruction', 'Sacrificing everything', 'Ultimate destruction']
+    },
     warningSignals: { ko: ['회복 불가능한 피해'], en: ['Irreparable damage'] },
-    resolutionStrategy: { ko: ['강제적 종결', '법적 해결', '장기 치료'], en: ['Forced termination', 'Legal resolution', 'Long-term treatment'] },
+    resolutionStrategy: { ko: ['강제적 종결', '공권력 개입', '장기 치료'], en: ['Forced termination', 'Public authority intervention', 'Long-term treatment'] },
     example: { ko: '모두를 파멸시키는 극단적 행동', en: 'Extreme actions destroying everyone' },
-    intervention: { ko: '강력한 외부 개입', en: 'Strong external intervention' },
+    intervention: { ko: '실질적 강제력에 의한 개입만 가능(공권력 등)', en: 'Only intervention through actual enforcement possible (public authority, etc.)' },
+    interventionFocus: { ko: '강제적 분리·피해 방지', en: 'Forced separation, prevent damage' },
     interventionType: 'intervention',
     phaseName: { ko: '국면 III: 상호 손실', en: 'Phase III: Lose-Lose' },
-    actionItems: { ko: ['긴급 위기 개입', '전문 심리 지원', '완전한 격리 및 보호'], en: ['Emergency crisis intervention', 'Professional support', 'Complete isolation'] }
+    actionItems: { ko: ['긴급 위기 개입', '전문 심리 지원', '완전한 격리 및 보호'], en: ['Emergency crisis intervention', 'Professional psychological support', 'Complete isolation and protection'] }
   },
 ]
 
@@ -611,6 +674,12 @@ const DetailModal = ({ stage, lang, onClose }) => (
           <p className="intervention-text">
             {lang === 'ko' ? stage.intervention.ko : stage.intervention.en}
           </p>
+          {stage.interventionFocus && (
+            <p className="intervention-focus">
+              <strong>{lang === 'ko' ? '개입 초점: ' : 'Focus: '}</strong>
+              {lang === 'ko' ? stage.interventionFocus.ko : stage.interventionFocus.en}
+            </p>
+          )}
           <span className={`badge phase-${stage.phase}`}>
             {stage.interventionType === 'self' && (lang === 'ko' ? '자체 해결' : 'Self-resolve')}
             {stage.interventionType === 'mediator' && (lang === 'ko' ? '조정인 필요' : 'Mediator needed')}

@@ -6,30 +6,30 @@ export const stageAdvice = {
   1: {
     characteristics: {
       ko: [
-        '대화에서 긴장감과 경계심 증가',
-        '입장이 점점 고착화되기 시작',
-        '상대방 말을 경청하는 시간 감소',
-        '의견 차이가 표면화되지만 아직 관계는 유지'
+        '이해관계가 고정된 입장으로 경직됨',
+        '자기 관점만 정당하다고 인식',
+        '해석이 사실을 대체하며 독자적 생명을 얻음',
+        '입장·관계의 경직화, 대화 빈도·질 저하'
       ],
       en: [
-        'Increased tension and guardedness in conversations',
-        'Positions beginning to solidify',
-        'Less time spent listening to the other party',
-        'Differences emerge but relationship still maintained'
+        'Interests harden into fixed positions',
+        'Only own perspective seen as valid',
+        'Interpretations replace facts and take on a life of their own',
+        'Positions and relationships rigidify, dialogue quality declines'
       ]
     },
     warnings: {
       ko: [
+        '상호 이해·공감 감소',
+        '초기 교착 조짐 발생',
         '의견 차이를 개인적 공격으로 해석하기 시작',
-        '과거 갈등 사례를 자주 언급',
-        '유머나 가벼운 대화가 사라짐',
-        '상대방의 의도를 부정적으로 추측'
+        '협력이 아직 경쟁보다 우세하나 긴장 증가'
       ],
       en: [
+        'Reduced mutual understanding and empathy',
+        'Early signs of deadlock emerging',
         'Starting to interpret disagreements as personal attacks',
-        'Frequently referencing past conflicts',
-        'Humor and light conversation disappearing',
-        'Assuming negative intentions'
+        'Cooperation still dominates but tension rising'
       ]
     },
     doNow: {
@@ -61,38 +61,42 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '자체 해결 가능',
-      en: 'Self-resolution possible'
+      ko: '자체 해결 가능하나, 조정·코칭 등 조기 개입이 효과적',
+      en: 'Self-resolution possible, but early mediation/coaching is effective'
+    },
+    interventionFocus: {
+      ko: '확대 방지·잠재력 활용',
+      en: 'Prevent escalation, leverage potential'
     }
   },
 
   2: {
     characteristics: {
       ko: [
-        '분극화된 논쟁이 반복됨',
-        '흑백논리와 이분법적 사고',
-        '감정적 거리감 증가',
-        '상대방을 설득하려는 강한 욕구'
+        '대화 대신 전술적 행동·심리적 조작',
+        '언어적 공격과 정면 대립',
+        '입장·집단의 양극화',
+        '갈등이 점차 개인화되고 상호 짜증·분노 증가'
       ],
       en: [
-        'Polarized debates recurring',
-        'Black-and-white, binary thinking',
-        'Increasing emotional distance',
-        'Strong desire to convince the other party'
+        'Tactical behavior and psychological manipulation replace dialogue',
+        'Verbal attacks and confrontation',
+        'Polarization of positions and groups',
+        'Conflict becomes personal with mutual irritation increasing'
       ]
     },
     warnings: {
       ko: [
-        '상대방 말을 끊고 반박 준비',
-        '"항상", "절대" 같은 극단적 표현 사용',
-        '상대방 입장을 왜곡하여 이해',
-        '자신의 주장에 대한 과신'
+        '이성적 논증에서 감정·권력 이슈로 이동',
+        '제3자·관중 앞에서 평판·점수 경쟁',
+        '협력 중심에서 경쟁 중심 관계로 전환',
+        '"항상", "절대" 같은 극단적 표현 사용'
       ],
       en: [
-        'Interrupting and preparing rebuttals',
-        'Using extreme words like "always" and "never"',
-        'Distorting the other party\'s position',
-        'Overconfidence in own arguments'
+        'Shift from rational argument to emotional/power issues',
+        'Competition for reputation before third parties',
+        'Shifting from cooperation-centered to competition-centered relationship',
+        'Using extreme words like "always" and "never"'
       ]
     },
     doNow: {
@@ -100,13 +104,13 @@ export const stageAdvice = {
         '중립적인 제3자의 의견 구하기',
         '토론 규칙 설정하기 (발언 시간 등)',
         '쉬는 시간 갖고 냉정해지기',
-        '사실과 의견을 구분하기'
+        '감정과 이슈를 분리하기'
       ],
       en: [
         'Seek a neutral third party\'s opinion',
         'Set debate rules (speaking time, etc.)',
         'Take breaks to cool down',
-        'Distinguish facts from opinions'
+        'Separate emotions from issues'
       ]
     },
     avoid: {
@@ -124,49 +128,53 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '비공식 제3자 도움 권장',
-      en: 'Informal third-party help recommended'
+      ko: '자체 해결 가능하나, 조정·코칭 등 조기 개입이 효과적',
+      en: 'Self-resolution possible, but early mediation/coaching is effective'
+    },
+    interventionFocus: {
+      ko: '논쟁에서 대화로 전환',
+      en: 'Shift from debate to dialogue'
     }
   },
 
   3: {
     characteristics: {
       ko: [
-        '말보다 행동으로 압박',
-        '대화가 점점 줄어듦',
-        '기정사실화 전술 사용',
-        '공감 능력 상실 시작'
+        '사전 협의 없는 일방적 조치',
+        '대화 중단, 기정사실화 전략',
+        '구조적 오해·곡해 증폭',
+        '부정적 악순환, 격화의 가속'
       ],
       en: [
-        'Pressure through actions rather than words',
-        'Communication decreasing',
-        'Using fait accompli tactics',
-        'Beginning to lose empathy'
+        'Unilateral actions without prior consultation',
+        'Dialogue stops, fait accompli strategy',
+        'Structural misunderstandings amplified',
+        'Negative spiral, acceleration of escalation'
       ]
     },
     warnings: {
       ko: [
-        '일방적인 결정과 통보',
-        '상대방을 배제한 행동',
-        '비언어적 압박 (무시, 냉대)',
+        '공감·상호 고려의 급격한 감소',
+        '해결을 공동 책임으로 보지 않음',
+        '경쟁이 협력보다 우세한 관계로 고착',
         '정보 공유 중단'
       ],
       en: [
-        'Unilateral decisions and notifications',
-        'Actions that exclude the other party',
-        'Non-verbal pressure (ignoring, cold treatment)',
-        'Stopping information sharing'
+        'Sharp decline in empathy and mutual consideration',
+        'Resolution not seen as shared responsibility',
+        'Competition dominates over cooperation',
+        'Information sharing stops'
       ]
     },
     doNow: {
       ko: [
-        '공식적인 대화 채널 확립하기',
+        '대화 채널 재구축하기',
         '행동의 결과를 냉정히 분석하기',
         '전문 조정인 개입 고려하기',
         '서면으로 합의 사항 기록하기'
       ],
       en: [
-        'Establish formal communication channels',
+        'Rebuild dialogue channels',
         'Analyze consequences of actions objectively',
         'Consider professional mediator involvement',
         'Document agreements in writing'
@@ -187,36 +195,40 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '훈련된 조정인 필요',
-      en: 'Trained mediator needed'
+      ko: '동료·상급자·내부 HR/법무 또는 외부 조정인에 의한 비공식 개입 권장',
+      en: 'Informal intervention by colleagues, supervisors, internal HR/legal, or external mediator recommended'
+    },
+    interventionFocus: {
+      ko: '통제 회복·대화 재구축',
+      en: 'Regain control, rebuild dialogue'
     }
   },
 
   4: {
     characteristics: {
       ko: [
-        '동맹과 연합 형성',
-        '편 갈라치기 시작',
-        '승패 구도로 전환',
-        '집단 간 갈등으로 확대'
+        '능력·전문성·인격을 겨냥한 인신공격',
+        '흑백 논리: 자기 집단은 선, 상대는 전적으로 부정적',
+        '연합·파워 블록 형성',
+        '체면 손상 회피·방어'
       ],
       en: [
-        'Alliance and coalition formation',
-        'Taking sides begins',
-        'Shift to win-lose dynamic',
-        'Expansion to inter-group conflict'
+        'Personal attacks targeting competence, expertise, character',
+        'Black-white logic: own group is good, opponent entirely negative',
+        'Coalition and power bloc formation',
+        'Avoiding and defending against loss of face'
       ]
     },
     warnings: {
       ko: [
         '지지자 모집 활동',
-        '상대방에 대한 부정적 캠페인',
+        '상대방에 대한 비난 캠페인',
         '조직 내 파벌 형성',
         '"우리 vs 그들" 프레임'
       ],
       en: [
         'Recruiting supporters',
-        'Negative campaigns against the other party',
+        'Blame campaigns against the other party',
         'Faction formation within organization',
         '"Us vs. Them" framing'
       ]
@@ -250,24 +262,28 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '전문 조정인 필요',
-      en: 'Professional mediator needed'
+      ko: '훈련된 제3자의 도움 필수(조정, 프로세스 지원 등)',
+      en: 'Trained third-party help essential (mediation, process support, etc.)'
+    },
+    interventionFocus: {
+      ko: '갈등 완화·관점 명료화·신뢰 재구축',
+      en: 'De-escalate conflict, clarify perspectives, rebuild trust'
     }
   },
 
   5: {
     characteristics: {
       ko: [
-        '개인적 공격과 모욕',
-        '신뢰의 완전한 상실',
-        '상대방의 도덕성 의심',
-        '공개적 망신주기'
+        '도덕적 진실성·인격에 대한 공격',
+        '전면적 불신, 상대를 전적으로 부정적으로 인식',
+        '조직·관계에 대한 조작·사보타주',
+        '비열한 수단·규범 위반 행위'
       ],
       en: [
-        'Personal attacks and insults',
-        'Complete loss of trust',
-        'Questioning the other party\'s morality',
-        'Public humiliation attempts'
+        'Attacks on moral integrity and character',
+        'Complete distrust, opponent seen as entirely negative',
+        'Manipulation and sabotage of organization/relationships',
+        'Foul play and norm violations'
       ]
     },
     warnings: {
@@ -313,37 +329,41 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '전문 조정 필수',
-      en: 'Professional mediation essential'
+      ko: '고난도 전문 개입(심리·조직·법적 프로세스 연계 필요)',
+      en: 'High-level expert intervention (psychological, organizational, legal process linkage needed)'
+    },
+    interventionFocus: {
+      ko: '추가 피해 방지·구조적 개입',
+      en: 'Prevent further damage, structural intervention'
     }
   },
 
   6: {
     characteristics: {
       ko: [
-        '명시적 위협과 협박',
-        '최후통첩 발행',
-        '제재와 처벌 언급',
-        '통제권 확보 시도'
+        '명시적 요구와 제재 선언',
+        '통제력 상실, 상호 위협의 악순환에 갇힘',
+        '위협의 3단계: 요구 제시 → 제재 예고 → 제재 능력 과시',
+        '갈등·심리 역학이 고도로 복잡해짐'
       ],
       en: [
-        'Explicit threats and intimidation',
-        'Issuing ultimatums',
-        'Mentioning sanctions and punishments',
-        'Attempting to gain control'
+        'Explicit demands and sanction declarations',
+        'Loss of control, trapped in threat spiral',
+        'Three stages: demand → sanction warning → demonstrate capability',
+        'Conflict and psychological dynamics become highly complex'
       ]
     },
     warnings: {
       ko: [
+        '당사자·내부 리더십 차원에서 통제 곤란',
         '구체적 제재 내용 언급',
         '기한 설정과 압박',
-        '협박 수위 상승',
         '합리적 대화 거부'
       ],
       en: [
+        'Control difficult at party/leadership level',
         'Mentioning specific sanctions',
         'Setting deadlines and pressure',
-        'Escalating threat levels',
         'Refusing rational dialogue'
       ]
     },
@@ -376,38 +396,42 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '긴급 전문 개입 필수',
-      en: 'Urgent professional intervention essential'
+      ko: '전문 조정·중재·법적 절차 등 다층적 외부 개입 필요',
+      en: 'Multi-layered external intervention needed (mediation, arbitration, legal procedures)'
+    },
+    interventionFocus: {
+      ko: '역학 차단·외부 권위 도입',
+      en: 'Break dynamics, introduce external authority'
     }
   },
 
   7: {
     characteristics: {
       ko: [
-        '제한적 파괴 행동 시작',
-        '상대방 피해가 목표',
-        '자기 손해 감수',
-        '위협의 실행'
+        '위협의 실제 실행',
+        '상대의 건설적 반응은 더 이상 기대하지 않음',
+        '실질적 소통 부재',
+        '피해 유발 자체가 주요 목표'
       ],
       en: [
-        'Limited destructive actions begin',
-        'Harming the other party becomes the goal',
-        'Accepting self-damage',
-        'Executing threats'
+        'Actual execution of threats',
+        'No longer expecting constructive response from opponent',
+        'Absence of meaningful communication',
+        'Causing damage becomes primary goal'
       ]
     },
     warnings: {
       ko: [
+        '상대의 손실을 자신의 승리로 간주',
         '재산이나 자원 손상',
         '업무 방해 행위',
-        '물리적/심리적 공격',
-        '보복 행동의 실행'
+        '물리적/경제적/심리적 피해 발생'
       ],
       en: [
+        'Opponent\'s loss seen as own victory',
         'Damage to property or resources',
         'Work obstruction',
-        'Physical/psychological attacks',
-        'Execution of retaliatory actions'
+        'Physical, economic, psychological damage occurring'
       ]
     },
     doNow: {
@@ -439,36 +463,40 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '공식적 개입 필요',
-      en: 'Formal intervention needed'
+      ko: '강력한 외부 개입(조정+법적·조직적 개입 결합) 필수',
+      en: 'Strong external intervention essential (mediation + legal/organizational intervention combined)'
+    },
+    interventionFocus: {
+      ko: '피해 최소화·법적 보호',
+      en: 'Minimize damage, legal protection'
     }
   },
 
   8: {
     characteristics: {
       ko: [
-        '상대 조직/시스템 파괴 추구',
-        '핵심 기반 공격',
-        '통제력 무력화',
-        '전면적 공격'
+        '물리적·경제적·심리적 파괴 추구',
+        '직접적·전면적 공격',
+        '자기 보존은 있으나 상대 파괴를 위해 후퇴',
+        '상대 조직/시스템 전체 파괴 시도'
       ],
       en: [
-        'Seeking to destroy opponent\'s organization/system',
-        'Attacking core foundations',
-        'Neutralizing control',
-        'Full-scale attacks'
+        'Seeking physical, economic, psychological destruction',
+        'Direct and total attacks',
+        'Self-preservation exists but retreats for opponent destruction',
+        'Attempting to destroy entire opponent organization/system'
       ]
     },
     warnings: {
       ko: [
-        '조직 전체에 대한 공격',
-        '생존 기반 위협',
+        '핵심 기반 파괴',
+        '시스템 전체에 대한 공격',
         '극단적 수단 동원',
         '제3자 피해 확산'
       ],
       en: [
-        'Attacks on the entire organization',
-        'Threats to survival foundation',
+        'Destroying core foundations',
+        'Attacks on entire system',
         'Mobilizing extreme measures',
         'Collateral damage spreading'
       ]
@@ -502,24 +530,28 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '강력한 외부 개입',
-      en: 'Strong external intervention'
+      ko: '고강도 공식 개입(중재·법원·강제력 행사 등) 필요',
+      en: 'High-intensity formal intervention needed (arbitration, courts, enforcement, etc.)'
+    },
+    interventionFocus: {
+      ko: '강제적 분리·피해 방지',
+      en: 'Forced separation, prevent damage'
     }
   },
 
   9: {
     characteristics: {
       ko: [
-        '상호 파멸 추구',
-        '자기 파괴도 감수',
+        '자기 파멸을 감수하면서 상대 파괴 추구',
+        '사실상 되돌릴 수 없는 지점',
         '모든 것 희생 각오',
-        '돌이킬 수 없는 상태'
+        '상호 파멸 각오'
       ],
       en: [
-        'Seeking mutual destruction',
-        'Accepting self-destruction',
+        'Seeking opponent destruction while accepting self-destruction',
+        'Point of no return',
         'Willing to sacrifice everything',
-        'Point of no return'
+        'Mutual destruction accepted'
       ]
     },
     warnings: {
@@ -565,8 +597,12 @@ export const stageAdvice = {
       ]
     },
     intervention: {
-      ko: '긴급 강제 개입',
-      en: 'Emergency forced intervention'
+      ko: '실질적 강제력에 의한 개입만 가능(공권력 등)',
+      en: 'Only intervention through actual enforcement possible (public authority, etc.)'
+    },
+    interventionFocus: {
+      ko: '강제적 분리·피해 방지',
+      en: 'Forced separation, prevent damage'
     }
   }
 };
